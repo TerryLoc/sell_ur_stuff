@@ -32,7 +32,7 @@ Our application addresses these issues by:
 
 ## User Stories
 
-### A. Seller (Private User) Stories
+### A. Seller Stories
 
 - **Seller-01:** As a seller, I want to register an account so that I can list my products securely and manage my listings over time.
   
