@@ -27,7 +27,14 @@ SECRET_KEY = "django-insecure-2%ek4)y646i#h=0#u63&ygwlq#^093z3kw08=*c*+=&=7(go!@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["sell_ur_stuff.herokuapp.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    os.environ.get("HEROKU_APP_NAME", "sell_ur_stuff.herokuapp.com"),
+    "localhost",
+    "127.0.0.1",
+]
+
+# This is the URL where the user will be redirected after logging in.
+CSRF_TRUSTED_ORIGINS = ["https://sell-ur-stuff-19632c616966.herokuapp.com"]
 
 
 # Application definition
