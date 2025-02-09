@@ -57,6 +57,9 @@ INSTALLED_APPS = [
     "market",
 ]
 
+# Allauth settings for email verification
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",  # Default backend
     "allauth.account.auth_backends.AuthenticationBackend",  # Allauth backend
