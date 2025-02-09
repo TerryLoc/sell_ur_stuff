@@ -46,7 +46,18 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Allauth apps
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",  # If using social authentication
+    "allauth.socialaccount.providers.google",  # Google provider
 ]
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",  # Default backend
+    "allauth.account.auth_backends.AuthenticationBackend",  # Allauth backend
+]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -57,6 +68,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 
@@ -79,6 +91,17 @@ TEMPLATES = [
         },
     },
 ]
+
+
+SITE_ID = 1  # Required by allauth
+
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_USERNAME_MIN_LENGTH = 5
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # Options: 'none', 'optional', 'mandatory'
+ACCOUNT_SIGNUP_REDIRECT_URL = "/"  # Redirect after signup
+LOGIN_REDIRECT_URL = "/"  # Redirect after login
+LOGOUT_REDIRECT_URL = "/"  # Redirect after logout
 
 
 # Database
