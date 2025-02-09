@@ -6,7 +6,7 @@
 <div class="container">
     <h2 class="text-center">Marketplace</h2>
     <div class="row">
-        {% for product in products %}
+        {% comment %} {% for product in products %}
             <div class="col-md-4 mb-4">
                 <div class="card">
                     {% if product.image %}
@@ -23,7 +23,7 @@
             </div>
         {% empty %}
             <p class="text-center">No items available in the marketplace.</p>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
     </div>
 </div>
 {% endblock content %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ sale.title }}</h2>
+<p>{{ sale.description }}</p>
+<p>Price: ${{ sale.price }}</p>
+
+{% if sale.image %}
+    <img src="{{ sale.image.url }}" alt="{{ sale.title }}" class="img-responsive" width="" height="">
+{% endif %}
+
+{% if sale.video %}
+    <video controls class="video-responsive">
+        <source src="{{ sale.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+{% endif %}
+
+{% if user == sale.user %}
+    <a href="{% url 'sale_update' sale.id %}" class="btn btn-warning">Edit</a>
+    <form method="post" action="{% url 'sale_delete' sale.id %}" class="inline-form">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+{% endif %}
+{% endblock content %}

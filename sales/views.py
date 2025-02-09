@@ -6,10 +6,8 @@ from .forms import SaleForm
 
 # List all sales
 def sales_list(request):
-    """
-    List all available sales and display them
-    """
-    sales = Sale.objects.filter(status="available")
+    # Show all available products
+    sales = Sale.objects.filter(status="available")  # Filter by status if needed
     return render(request, "sales/sales_list.html", {"sales": sales})
 
 

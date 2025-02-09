@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}My Sales{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Your Sales</h2>
+    <div class="row">
+        {% for sale in sales %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if sale.image %}
+                        <img src="{{ sale.image.url }}" class="card-img-top" alt="{{ sale.title }}" width="" height="">
+                    {% else %}
+                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="No Image" width="" height="">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ sale.title }}</h5>
+                        <p class="card-text">${{ sale.price }}</p>
+                        <a href="{% url 'sale_detail' sale.id %}" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">You have no sales listed.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
