@@ -1,10 +1,10 @@
 from django.urls import path
-from . import views
+from .views import sales_list, sale_detail, sale_create, sale_update, sale_delete
 
 urlpatterns = [
-    path("", views.sales_list, name="sales_list"),  # This handles the sales list page
-    path("create/", views.sale_create, name="sale_create"),  # Handle product creation
-    path(
-        "<int:id>/", views.sale_detail, name="sale_detail"
-    ),  # Detail view for each product
+    path("", sales_list, name="sales_list"),
+    path("<int:sale_id>/", sale_detail, name="sale_detail"),
+    path("create/", sale_create, name="sale_create"),
+    path("<int:sale_id>/edit/", sale_update, name="sale_update"),
+    path("<int:sale_id>/delete/", sale_delete, name="sale_delete"),
 ]

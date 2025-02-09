@@ -1,12 +1,11 @@
 {% extends "base.html" %}
-
 {% block title %}Marketplace{% endblock title %}
 
 {% block content %}
 <div class="container">
     <h2 class="text-center">Marketplace</h2>
     <div class="row">
-        {% comment %} {% for product in products %}
+        {% for product in products %}
             <div class="col-md-4 mb-4">
                 <div class="card">
                     {% if product.image %}
@@ -23,7 +22,7 @@
             </div>
         {% empty %}
             <p class="text-center">No items available in the marketplace.</p>
-        {% endfor %} {% endcomment %}
+        {% endfor %}
     </div>
 </div>
 {% endblock content %}
