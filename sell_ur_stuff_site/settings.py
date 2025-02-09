@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-2%ek4)y646i#h=0#u63&ygwlq#^093z3kw08=*c*+=&=7(go!@"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     ".herokuapp.com",
@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",  # If using social authentication
     "allauth.socialaccount.providers.google",  # Google provider
+    # Custom apps
+    "home",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -79,7 +81,7 @@ WSGI_APPLICATION = "sell_ur_stuff_site.wsgi.application"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

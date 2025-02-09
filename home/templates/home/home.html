@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Sell Your Stuff{% endblock title %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Welcome to Sell Your Stuff!</h1>
+        <p>Buy and sell anything easily.</p>
+        {% if user.is_authenticated %}
+            <p>Hello, {{ user.username }}!</p>
+        {% else %}
+            <p><a href="{% url 'account_login' %}">Login</a> or <a href="">Sign Up</a> to start selling.</p>
+        {% endif %}
+    </div>
+{% endblock content %}
