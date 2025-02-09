@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-2%ek4)y646i#h=0#u63&ygwlq#^093z3kw08=*c*+=&=7(go!@"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["sell_ur_stuff.herokuapp.com", "localhost", "127.0.0.1"]
 
@@ -54,6 +54,8 @@ MIDDLEWARE = [
 
 
 ROOT_URLCONF = "sell_ur_stuff_site.urls"
+WSGI_APPLICATION = "sell_ur_stuff_site.wsgi.application"
+
 
 TEMPLATES = [
     {
@@ -70,8 +72,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = "sell_ur_stuff_site.wsgi.application"
 
 
 # Database
