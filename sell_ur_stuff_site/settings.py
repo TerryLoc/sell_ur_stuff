@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # Custom apps
     "home",
     "sales",
+    "market",
 ]
 
 AUTHENTICATION_BACKENDS = [

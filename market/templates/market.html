@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Marketplace{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Marketplace</h2>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}" width="" height=""> 
+                    {% else %}
+                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="No Image"  width="" height="">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.title }}</h5>
+                        <p class="card-text">${{ product.price }}</p>
+                        <a href="{% url 'sale_detail' product.id %}" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">No items available in the marketplace.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

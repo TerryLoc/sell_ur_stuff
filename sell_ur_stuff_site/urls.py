@@ -7,6 +7,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("home.urls")),  # home app URL
     path("sales/", include("sales.urls")),  # sales app URL
+    path("market/", include("market.urls")),  # market app URL
     path("accounts/", include("allauth.urls")),  # Django Allauth URLs
 ]
 if settings.DEBUG:
