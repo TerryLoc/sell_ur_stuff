@@ -11,10 +11,14 @@ class Sale(models.Model):
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Seller
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=205)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to="product_images/", blank=True, null=True)
+    image = models.ImageField(
+        upload_to="product_images/", blank=True, null=True
+    )  # main image of the product
+    image_2 = models.ImageField(upload_to="product_images/", blank=True, null=True)
+    image_3 = models.ImageField(upload_to="product_images/", blank=True, null=True)
     video = models.FileField(
         upload_to="product_videos/", blank=True, null=True
     )  # Video upload field

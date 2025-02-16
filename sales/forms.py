@@ -14,5 +14,7 @@ class SaleForm(forms.ModelForm):
             "description",
             "price",
             "image",
+            "image_2",
+            "image_3",
             "video",
-        ]  # Include video field
+        ]  # fields to be displayed in the form

@@ -1,12 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>{{ sale.title }}</h2>
-    {% if sale.image %}
-        <img src="{{ sale.image.url }}"
-             alt="{{ sale.title }}"
-             class="img-responsive"
-             width=""
-             height="">
+    {% if sale.image or sale.image_1 or sale.image_2 or sale.image_3 %}
+        <div id="saleCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                {% if sale.image %}
+                    <div class="carousel-item active">
+                        <img src="{{ sale.image.url }}" alt="{{ sale.title }}" class="d-block w-100" width="" height="">
+                    </div>
+                {% endif %}
+                {% if sale.image_1 %}
+                    <div class="carousel-item {% if not sale.image %}active{% endif %}">
+                        <img src="{{ sale.image_1.url }}" alt="{{ sale.title }} - Image 1" class="d-block w-100" width="" height="">
+                    </div>
+                {% endif %}
+                {% if sale.image_2 %}
+                    <div class="carousel-item {% if not sale.image and not sale.image_1 %}active{% endif %}">
+                        <img src="{{ sale.image_2.url }}" alt="{{ sale.title }} - Image 2" class="d-block w-100" width="" height="">
+                    </div>
+                {% endif %}
+                {% if sale.image_3 %}
+                    <div class="carousel-item {% if not sale.image and not sale.image_1 and not sale.image_2 %}active{% endif %}">
+                        <img src="{{ sale.image_3.url }}" alt="{{ sale.title }} - Image 3" class="d-block w-100" width="" height="">
+                    </div>
+                {% endif %}
+            </div>
+            <a class="carousel-control-prev" href="#saleCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#saleCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
     {% endif %}
     {% if sale.video %}
         <video controls class="video-responsive">
@@ -18,9 +45,7 @@
     <p>Price: ${{ sale.price }}</p>
     {% if user == sale.user %}
         <a href="{% url 'sale_update' sale.id %}" class="btn btn-warning">Edit</a>
-        <form method="post"
-              action="{% url 'sale_delete' sale.id %}"
-              class="inline-form">
+        <form method="post" action="{% url 'sale_delete' sale.id %}" class="inline-form">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
