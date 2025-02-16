@@ -1,9 +1,13 @@
 {% extends "base.html" %}
+{% block title %}{{ user.username }}'s Profile{% endblock title %}
 
 {% block content %}
 <h2>{{ user.username }}'s Profile</h2>
-<img src="{{ profile.profile_picture.url }}" alt="Profile Picture" width="150" height="150">
-
+{% if profile.profile_picture %}
+    <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture" height="" width="">
+{% else %}
+    <img src="/media/profile_pics/default.jpg" alt="Default Profile Picture" class="default-profile-picture" height="" width="">
+{% endif %}
 <h3>Your Sales</h3>
 <ul>
     {% for sale in sales %}
