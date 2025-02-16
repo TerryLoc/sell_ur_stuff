@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "home",
     "sales",
     "market",
+    "profiles",
 ]
 
 # Allauth settings for email verification
