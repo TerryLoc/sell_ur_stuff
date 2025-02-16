@@ -4,10 +4,13 @@ from .models import Sale
 from .forms import SaleForm
 
 
-# List all sales
+# This is so the user can only see their own sales listings
+@login_required
 def sales_list(request):
-    # Show all available products
-    sales = Sale.objects.filter(status="available")  # Filter by status if needed
+    """
+    List all sales for the logged-in user
+    """
+    sales = Sale.objects.filter(user=request.user)  # Filter by the logged-in user
     return render(request, "sales/sales_list.html", {"sales": sales})
 
 
