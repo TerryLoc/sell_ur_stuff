@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ user.username }}'s Profile</h2>
+<img src="{{ profile.profile_picture.url }}" alt="Profile Picture" width="150" height="150">
+
+<h3>Your Sales</h3>
+<ul>
+    {% for sale in sales %}
+        <li>{{ sale.title }} - ${{ sale.price }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Your Purchases</h3>
+<ul>
+    {% for purchase in purchases %}
+        <li>{{ purchase.sale.title }} - ${{ purchase.sale.price }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Notifications</h3>
+<ul>
+    {% for notification in notifications %}
+        <li>{{ notification.message }}</li>
+    {% endfor %}
+</ul>
+{% endblock content %}
