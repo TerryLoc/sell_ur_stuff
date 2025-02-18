@@ -1,5 +1,6 @@
 :root {
   --main-bg-color: #233844;
+  --secondary-bg-color: #3e4f5e5c;
   --main-font-color: #ff7b00;
 }
 
@@ -12,7 +13,7 @@
 body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--main-bg-color);
-  height: 100vh;
+  min-height: 300vh;
   color: var(--main-font-color);
 }
 
@@ -30,4 +31,17 @@ body {
   height: 150px;
   border-radius: 10%;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user_info {
+  color: whitesmoke;
+  background-color: var(--secondary-bg-color);
+  padding: 20px 15px;
+  margin: 20px 10px;
+
+  border-radius: 10%;
+}
+.user_info strong {
+  font-size: 1.2rem;
+  color: var(--main-font-color);
 }

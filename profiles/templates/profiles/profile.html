@@ -11,21 +11,23 @@
 {% endif %}
 <br>
 {% if user == request.user %}
-    <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+    <a href="" class="btn btn-primary">Edit Profile</a>
 {% endif %}
-<p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-<p><strong>Username:</strong> {{ user.username }}</p>
-<p><strong>Email:</strong> {{ user.email }}</p>
-<p><strong>Location:</strong> {{ profile.location }}</p>
-<p><strong>Joined:</strong> {{ user.date_joined }}</p>
-<p><strong>Bio:</strong> {{ profile.bio }}</p>
-<p><strong>Phone:</strong> {{ profile.phone }}</p>
-<p><strong>Facebook:</strong> {{ profile.facebook }}</p>
 
-<h3>Your Sales</h3>
+<div class="user_info">
+    <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Location:</strong> {{ profile.location }}</p>
+    <p><strong>Joined:</strong> {{ user.date_joined }}</p>
+    <p><strong>Bio:</strong> {{ profile.bio }}</p>
+    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+    <p><strong>Facebook:</strong> {{ profile.facebook }}</p>
+</div>
+
+<h3>Your Sale Items</h3>
 <Ol>
     {% for sale in sales %}
-    <li class="text-white"><p><strong>UPLOADED: </strong> <a href="{% url 'sale_detail' sale.id %}">{{ sale.title }}</a> --- {{ sale.created_at }} </p>
+    <li class="text-white"><a href="{% url 'sale_detail' sale.id %}">{{ sale.title }}</a> --- {{ sale.created_at }}
         
     </li>
 {% endfor %}
