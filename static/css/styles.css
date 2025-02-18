@@ -1,5 +1,6 @@
 :root {
-  --main-bg-color: ##71c7f6;
+  --main-bg-color: #233844;
+  --main-font-color: #ff7b00;
 }
 
 * {
@@ -11,11 +12,22 @@
 body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--main-bg-color);
+  height: 100vh;
+  color: var(--main-font-color);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
 }
 
 .default-profile-picture,
 .profile-picture {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
+  border-radius: 10%;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }
