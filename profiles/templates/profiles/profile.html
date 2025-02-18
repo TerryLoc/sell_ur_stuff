@@ -10,16 +10,18 @@
     <img src="/media/profile_pics/default.jpg" alt="Default Profile Picture" class="default-profile-picture" height="" width="">
 {% endif %}
 <h3>Your Sales</h3>
-<ul>
+<Ol>
     {% for sale in sales %}
-        <li>{{ sale.title }} - ${{ sale.price }}</li>
-    {% endfor %}
-</ul>
+    <li class="text-white"><p><strong>UPLOADED:</strong> <a href="{% url 'sale_detail' sale.id %}">{{ sale.title }}</a> -- {{ sale.created_at }} </p>
+        
+    </li>
+{% endfor %}
+</Ol>
 
 <h3>Your Purchases</h3>
 <ul>
     {% for purchase in purchases %}
-        <li>{{ purchase.sale.title }} - ${{ purchase.sale.price }}</li>
+        <li><a href="{% url 'sale_detail' purchase.sale.id %}">{{ purchase.sale.title }}</a> --- ${{ purchase.sale.price }}</li>
     {% endfor %}
 </ul>
 
