@@ -45,3 +45,13 @@ body {
   font-size: 1.2rem;
   color: var(--main-font-color);
 }
+
+.sale-image,
+.sale-video {
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.sale-video {
+  max-width: 100%;
+}
