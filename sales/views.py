@@ -7,7 +7,7 @@ from .models import Sale
 from .forms import SaleForm
 from profiles.models import Notification, Purchase
 
-# Set the secret key for the Stripe API to the one in settings.py
+# The secret key for the Stripe API
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 

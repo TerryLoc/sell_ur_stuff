@@ -24,6 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-2%ek4)y646i#h=0#u63&ygwlq#^093z3kw08=*c*+=&=7(go!@"
 
+# The secret key for the Stripe API
+STRIPE_PUBLIC_KEY = "pk_test_51Qtnl5DERQoBzVjp8o5H5SPSzY9gXDAJenmkBPhQgMtjSoaZaH8ZbzID26KvLxy86Z8v6ZA3CzOW5gZ0nYFQEFeK00WPY4JvNb"
+STRIPE_SECRET_KEY = "sk_test_51Qtnl5DERQoBzVjp2VYWSJ2XG992uLxL0zlktXt1MD3g6TMheTwJ5ZDVUrKGb33wzpohU6YUHkBIJX3ZVo6TuLXQ00t4e9pzCG"
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -106,7 +110,7 @@ SITE_ID = 1  # Required by allauth
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_USERNAME_MIN_LENGTH = 5
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # Options: 'none', 'optional', 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = "none"  # Options: 'none', 'optional', 'mandatory' (default) CHANGE TO 'mandatory' AFTER TESTING
 ACCOUNT_SIGNUP_REDIRECT_URL = "/"  # Redirect after signup
 LOGIN_REDIRECT_URL = "/"  # Redirect after login
 LOGOUT_REDIRECT_URL = "/"  # Redirect after logout
@@ -157,6 +161,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+# Media files (user-uploaded files)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
