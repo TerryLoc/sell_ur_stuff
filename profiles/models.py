@@ -11,6 +11,7 @@ class UserProfile(models.Model):
         null=True,
         default="profile_pics/default.jpg",
     )
+    location = models.CharField(max_length=50, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
