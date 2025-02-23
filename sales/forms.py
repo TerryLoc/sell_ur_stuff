@@ -1,5 +1,6 @@
 from django import forms
 from .models import Sale, Offer
+from decimal import Decimal  # Import Decimal for currency handling
 
 
 class SaleForm(forms.ModelForm):
@@ -22,12 +23,7 @@ class SaleForm(forms.ModelForm):
 
 
 class OfferForm(forms.ModelForm):
-    """
-    Form for creating an offer on a sale item listing by a user (buyer) on a sale item
-    """
-
     def __init__(self, *args, **kwargs):
-        # Still need sale for validation, but we won’t touch the widget
         self.sale = kwargs.pop("sale", None)
         super().__init__(*args, **kwargs)
 
@@ -38,17 +34,19 @@ class OfferForm(forms.ModelForm):
             "amount": forms.NumberInput(
                 attrs={
                     "step": "0.01",
-                    "min": "0.01",  # Keep this as a basic positive check
+                    "min": "0.01",
                     "placeholder": "Enter your offer in euros",
                 }
             )
         }
 
     def clean_amount(self):
-        """Custom validation for the amount field so that it is at least 50% of the asking price"""
         amount = self.cleaned_data["amount"]
-        if self.sale and amount < self.sale.price * 0.5:
+        if self.sale and amount < self.sale.price * Decimal(
+            "0.5"
+        ):  # Convert 0.5 to Decimal
+            min_amount = self.sale.price * Decimal("0.5")
             raise forms.ValidationError(
-                f"Offer must be at least €{self.sale.price * 0.5:.2f} (50% of asking price)."
+                f"Offer must be at least €{min_amount:.2f} (50% of asking price)."
             )
         return amount
