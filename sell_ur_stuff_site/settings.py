@@ -99,6 +99,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "sell_ur_stuff_site.context_processors.unread_notifications",  # Custom context processor for notifications
             ],
         },
     },

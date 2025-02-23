@@ -13,15 +13,24 @@
 body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--main-bg-color);
-  min-height: 300vh;
   color: var(--main-font-color);
+}
+
+.main-content {
+  padding: 70px 0;
+  height: auto;
+  flex: 1 0 auto;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
+  text-transform: uppercase;
+}
+
+.profile-header {
   text-transform: uppercase;
 }
 
@@ -29,9 +38,10 @@ body {
 .profile-picture {
   width: 150px;
   height: 150px;
-  border-radius: 10%;
+  border-radius: 50%;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   margin-bottom: 30px;
+  border: 2px solid var(--main-font-color);
 }
 
 .user_info {
@@ -54,4 +64,8 @@ body {
 
 .sale-video {
   max-width: 100%;
+}
+
+footer {
+  margin-top: auto; /* Pushes footer to bottom if content is short */
 }

@@ -8,9 +8,7 @@
               content="Sell Your Stuff - The best place to sell your items online.">
         <meta name="keywords"
               content="sell, buy, online marketplace, second-hand, used items">
-        
         <link rel="icon" href="{% static 'images/favicon.ico' %}">
-
         <title>
             {% block title %}
                 Sell Your Stuff
@@ -24,7 +22,7 @@
     </head>
     <body>
         <!-- Navigation Bar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'home' %}">SELL YOUR STUFF</a>
                 <button class="navbar-toggler"
@@ -48,9 +46,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'profile' %}">
                                     Profile
-                                    {% with request.user.notifications.all|length as unread_notifications %}
-                                        {% if unread_notifications > 0 %}<span class="badge bg-danger">{{ unread_notifications }}</span>{% endif %}
-                                    {% endwith %}
+                                    {% if unread_notifications > 0 %}<span class="badge bg-danger">{{ unread_notifications }}</span>{% endif %}
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -69,13 +65,13 @@
             </div>
         </nav>
         <!-- Main Content -->
-        <div class="container mt-4">
+        <div class="container mt-4 min-vh-100 main-content d-flex flex-column">
             {% block content %}
                 <!-- Child templates will insert content here -->
             {% endblock content %}
         </div>
         <!-- Footer -->
-        <footer class="text-center mt-auto py-3 bg-dark text-light fixed-bottom footer">
+        <footer class="text-center py-3 bg-dark text-light">
             <p>© 2025 Sell Your Stuff | All Rights Reserved</p>
         </footer>
         <!-- Bootstrap JS -->

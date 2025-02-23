@@ -15,5 +15,5 @@ def notify_seller_purchase(sender, instance, created, **kwargs):
     if created:
         Notification.objects.create(
             user=instance.sale.user,
-            message=f"Your item '{instance.sale.title}' was sold to {instance.buyer.username}!",
+            message=f"Your item '{instance.sale.title}' was sold to {instance.buyer.username} for €{instance.sale.price}!",
         )

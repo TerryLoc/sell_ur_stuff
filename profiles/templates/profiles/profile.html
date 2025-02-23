@@ -4,7 +4,7 @@
     {{ user.username }}'s Profile
 {% endblock title %}
 {% block content %}
-    <h2>{{ user.username }}'s Profile</h2>
+    <h2 class="profile-header">{{ user.username }}'s Profile</h2>
     {% if profile.profile_picture %}
         <img src="{{ profile.profile_picture.url }}"
              alt="Profile Picture"
@@ -59,7 +59,7 @@
     <ol>
         {% for purchase in sold_sales %}
             <li class="text-white">
-                <a href="{% url 'sale_detail' purchase.sale.id %}">{{ purchase.sale.title }}</a> --- Sold to {{ purchase.buyer.username }} on {{ purchase.purchased_at }} for €{{ purchase.sale.price }}
+                <a href="{% url 'sale_detail' purchase.sale.id %}">{{ purchase.sale.title }}</a> --- Sold on {{ purchase.purchased_at }} for €{{ purchase.sale.price }}
             </li>
         {% empty %}
             <li>No items sold yet.</li>
@@ -76,7 +76,14 @@
         {% endfor %}
     </ol>
     <h3>Notifications</h3>
-    <ul>
-        {% for notification in notifications %}<li>{{ notification.message }}</li>{% endfor %}
-    </ul>
+<ul>
+    {% for notification in all_notifications %}
+        <li>
+            {{ notification.message }}
+            {% if not notification.is_read %} (Unread) {% endif %}
+        </li>
+    {% empty %}
+        <li>No notifications yet.</li>
+    {% endfor %}
+</ul>
 {% endblock content %}
