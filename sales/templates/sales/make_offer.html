@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Make an Offer for {{ sale.title }}</h2>
+    <p>Asking Price: €{{ sale.price }}</p>
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            {% for field, errors in form.errors.items %}
+                {{ errors|join:", " }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <form method="post" class="form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.amount.label_tag }}
+            {{ form.amount }}
+            <small class="form-text text-muted">Enter your offer in euros.</small>
+        </div>
+        <button type="submit" class="btn btn-success">Submit Offer</button>
+        <a href="{% url 'sale_detail' sale.id %}" class="btn btn-secondary">Back to Listing</a>
+    </form>
+</div>
+{% endblock content %}
