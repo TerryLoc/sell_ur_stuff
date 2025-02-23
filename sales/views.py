@@ -15,9 +15,11 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 @login_required
 def sales_list(request):
     """
-    List all sales for the logged-in user
+    List all sales for the logged-in user that are available
     """
-    sales = Sale.objects.filter(user=request.user)  # Filter by the logged-in user
+    sales = Sale.objects.filter(
+        user=request.user, status="available"
+    )  # Only available items
     return render(request, "sales/sales_list.html", {"sales": sales})
 
 
@@ -55,6 +57,8 @@ def sale_update(request, sale_id):
     Update an existing sale listing ie. change the details of a sale
     """
     sale = get_object_or_404(Sale, id=sale_id, user=request.user)
+    if sale.status == "sold":
+        return redirect("sales_list")  # Or render an error page
     if request.method == "POST":
         form = SaleForm(request.POST, request.FILES, instance=sale)
         if form.is_valid():
@@ -72,6 +76,8 @@ def sale_delete(request, sale_id):
     Delete a sale listing from the database and redirect to the sales list of the user
     """
     sale = get_object_or_404(Sale, id=sale_id, user=request.user)
+    if sale.status == "sold":
+        return redirect("sales_list")  # Or render an error page
     if request.method == "POST":
         sale.delete()
         return redirect("sales_list")

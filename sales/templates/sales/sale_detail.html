@@ -65,7 +65,7 @@
   {% endif %}
   <p>{{ sale.description }}</p>
   <p>Price: €{{ sale.price }}</p>
-  {% if user == sale.user %}
+  {% if user == sale.user and sale.status == "available" %}
     <a href="{% url 'sale_update' sale.id %}" class="btn btn-warning">Edit</a>
     <form method="post" action="{% url 'sale_delete' sale.id %}" class="inline-form">
         {% csrf_token %}
@@ -73,8 +73,8 @@
     </form>
 {% elif sale.status == "available" %}
     <a href="{% url 'buy_product' sale.id %}" class="btn btn-success">Buy</a>
-    
+    <!-- <a href="{% url 'make_offer' sale.id %}" class="btn btn-warning">Make Offer</a> -->
 {% else %}
-    <p class="text-muted">This item has been sold.</p>
+    <p class="text-muted">Great News! This item has been sold.</p>
 {% endif %}
 {% endblock content %}
