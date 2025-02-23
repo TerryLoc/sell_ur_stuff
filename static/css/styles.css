@@ -30,7 +30,8 @@ body {
   width: 150px;
   height: 150px;
   border-radius: 10%;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
 }
 
 .user_info {
@@ -38,7 +39,6 @@ body {
   background-color: var(--secondary-bg-color);
   padding: 20px 15px;
   margin: 20px 10px;
-
   border-radius: 30px;
 }
 .user_info strong {
