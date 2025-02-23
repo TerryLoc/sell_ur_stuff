@@ -75,6 +75,35 @@
             <li>No purchases yet.</li>
         {% endfor %}
     </ol>
+
+    <h3 class="mt-4">Offers Received</h3>
+    {% if offers %}
+        <ul class="list-group">
+            {% for offer in offers %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}">{{ offer.sale.title }}</a>" from {{ offer.buyer.username }} 
+                        (Made: {{ offer.created_at|date:"M d, Y H:i" }})
+                        {% if offer.counter_amount %}
+                            <br><small>Counteroffer: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
+                        {% endif %}
+                    </div>
+                    <div>
+                        {% if offer.status == "pending" %}
+                            <a href="{% url 'accept_offer' offer.id %}" class="btn btn-success btn-sm">Accept</a>
+                            <a href="{% url 'reject_offer' offer.id %}" class="btn btn-danger btn-sm">Reject</a>
+                            <a href="{% url 'counter_offer' offer.id %}" class="btn btn-primary btn-sm">Counter</a>
+                        {% else %}
+                            <span class="text-muted">Status: {{ offer.status }}</span>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">No offers received yet.</p>
+    {% endif %}
+
     <h3>Notifications</h3>
 <ul>
     {% for notification in all_notifications %}

@@ -214,10 +214,10 @@ def reject_offer(request, offer_id):
     """Reject an offer on a sale item listing by a user (buyer) on a sale item"""
     offer = get_object_or_404(Offer, id=offer_id, sale__user=request.user)
     if offer.status != "pending":
-        return redirect("seller_offers")
+        return redirect("profile")
     offer.status = "rejected"
     offer.save()
-    return redirect("seller_offers")
+    return redirect("profile")
 
 
 # Counter offer view for buyers and sellers to make and accept/reject counter offers on sale items

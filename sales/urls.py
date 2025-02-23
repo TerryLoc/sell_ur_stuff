@@ -14,7 +14,6 @@ urlpatterns = [
     path("cancel/", views.payment_cancel, name="payment_cancel"),
     # Offer views for making and managing offers
     path("offer/<int:sale_id>/", views.make_offer, name="make_offer"),
-    path("offers/", views.seller_offers, name="seller_offers"),
     path("offer/<int:offer_id>/accept/", views.accept_offer, name="accept_offer"),
     path("offer/<int:offer_id>/reject/", views.reject_offer, name="reject_offer"),
     path("offer_success/", views.offer_payment_success, name="offer_payment_success"),

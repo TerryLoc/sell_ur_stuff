@@ -1,14 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile, Purchase, Notification
-from sales.models import Sale
+from .models import UserProfile, Purchase, Notification, Sale, Offer
 from .forms import UserProfileForm
 
 
 @login_required
 def profile_view(request):
     """
-    View the user's profile page for the logged-in user with their sales and purchases information.
+    View the user's profile page for the logged-in user with their sales, purchases, offers, and notifications.
     """
     profile = request.user.profile
     active_sales = Sale.objects.filter(user=request.user, status="available")
@@ -18,18 +17,27 @@ def profile_view(request):
     )
     # Get purchases with sale and seller details
     purchases = Purchase.objects.filter(buyer=request.user).select_related("sale__user")
+    # Get offers received on user's sales
+    offers = (
+        Offer.objects.filter(sale__user=request.user)
+        .order_by("-created_at")
+        .select_related("sale", "buyer")
+    )
+    # Notifications handling
     notifications = Notification.objects.filter(user=request.user, is_read=False)
     if notifications.exists():
         notifications.update(is_read=True)
     all_notifications = Notification.objects.filter(user=request.user)
+
     return render(
         request,
         "profiles/profile.html",
         {
             "profile": profile,
-            "active_sales": active_sales,  # Renamed from sales
-            "sold_sales": sold_sales,  # Now includes purchase details
+            "active_sales": active_sales,
+            "sold_sales": sold_sales,
             "purchases": purchases,
+            "offers": offers,  # Added offers context
             "notifications": notifications,
             "all_notifications": all_notifications,
         },
