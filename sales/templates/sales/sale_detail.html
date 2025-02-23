@@ -73,8 +73,14 @@
     </form>
 {% elif sale.status == "available" %}
     <a href="{% url 'buy_product' sale.id %}" class="btn btn-success">Buy</a>
-    <!-- <a href="{% url 'make_offer' sale.id %}" class="btn btn-warning">Make Offer</a> -->
+    
 {% else %}
-    <p class="text-muted">Great News! This item has been sold.</p>
+    {% if purchase %}
+        <p class="text-success">Congrats on your purchase!</p>
+    {% elif user == sale.user %}
+        <p class="text-success">Great News! This item has been sold.</p>
+    {% else %}
+        <p class="text-muted">This item has been sold.</p>
+    {% endif %}
 {% endif %}
 {% endblock content %}
