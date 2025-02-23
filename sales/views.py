@@ -3,9 +3,9 @@ from django.conf import settings
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from profiles.models import Purchase, Notification
 from .models import Sale, Offer
 from .forms import SaleForm, OfferForm
-from profiles.models import Notification, Purchase
 
 # The secret key for the Stripe API
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -202,8 +202,9 @@ def accept_offer(request, offer_id):
         ],
         mode="payment",
         success_url=request.build_absolute_uri("/sales/offer_success/")
-        + "?session_id={CHECKOUT_SESSION_ID}&offer_id={offer_id}",
-        cancel_url=request.build_absolute_uri("/sales/offer_cancel/"),
+        + f"?session_id={{CHECKOUT_SESSION_ID}}&offer_id={offer.id}",
+        cancel_url=request.build_absolute_uri("/sales/offer_cancel/")
+        + f"?offer_id={offer.id}",
         metadata={"offer_id": offer.id, "sale_id": offer.sale.id},
     )
     return redirect(session.url, code=303)
@@ -277,7 +278,8 @@ def respond_counter_offer(request, offer_id):
                 mode="payment",
                 success_url=request.build_absolute_uri("/sales/offer_success/")
                 + f"?session_id={{CHECKOUT_SESSION_ID}}&offer_id={offer.id}",
-                cancel_url=request.build_absolute_uri("/sales/offer_cancel/"),
+                cancel_url=request.build_absolute_uri("/sales/offer_cancel/")
+                + f"?offer_id={offer.id}",
                 metadata={"offer_id": offer.id, "sale_id": offer.sale.id},
             )
             return redirect(session.url, code=303)
@@ -293,7 +295,7 @@ def respond_counter_offer(request, offer_id):
 
 
 def offer_payment_success(request):
-    """Payment success view for accepting an offer"""
+    """Payment success view for accepting an offer and completing the sale"""
     session_id = request.GET.get("session_id")
     offer_id = request.GET.get("offer_id")
     session = stripe.checkout.Session.retrieve(session_id)
@@ -303,13 +305,35 @@ def offer_payment_success(request):
         sale.status = "sold"
         sale.save()
         Purchase.objects.create(buyer=offer.buyer, sale=sale)  # Triggers notification
-        offer.status = "accepted"  # Redundant but harmless
+        offer.status = "accepted"
         offer.save()
+        # Determine the final price: counter_amount if accepted, otherwise amount
+        price = (
+            offer.counter_amount
+            if offer.counter_amount and offer.counter_status == "accepted"
+            else offer.amount
+        )
+        return render(
+            request,
+            "sales/payment_result.html",
+            {"success": True, "sale": sale, "price": price},
+        )
+    # If payment isn't confirmed, treat it as a cancel
     return render(
-        request, "sales/payment_result.html", {"success": True, "sale": offer.sale}
+        request, "sales/payment_result.html", {"success": False, "sale": offer.sale}
     )
 
 
 def offer_payment_cancel(request):
     """Payment cancel view for accepting an offer"""
-    return render(request, "sales/payment_result.html", {"success": False})
+    offer_id = request.GET.get(
+        "offer_id"
+    )  # Optional: pass offer_id to get sale context
+    if offer_id:
+        offer = get_object_or_404(Offer, id=offer_id)
+        sale = offer.sale
+    else:
+        sale = None  # Fallback if no offer_id is provided
+    return render(
+        request, "sales/payment_result.html", {"success": False, "sale": sale}
+    )
