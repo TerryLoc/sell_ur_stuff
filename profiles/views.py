@@ -2,24 +2,36 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile, Purchase, Notification
 from sales.models import Sale
-from .forms import UserProfileForm  # We’ll create this
+from .forms import UserProfileForm
 
 
 @login_required
 def profile_view(request):
+    """
+    View the user's profile page for the logged-in user with their sales and purchases information.
+    """
     profile = request.user.profile
-    sales = Sale.objects.filter(user=request.user)  # Products user is selling
-    purchases = Purchase.objects.filter(buyer=request.user)  # Products user bought
+    active_sales = Sale.objects.filter(user=request.user, status="available")
+    # Get sold items with purchase details
+    sold_sales = Purchase.objects.filter(sale__user=request.user).select_related(
+        "sale", "buyer"
+    )
+    # Get purchases with sale and seller details
+    purchases = Purchase.objects.filter(buyer=request.user).select_related("sale__user")
     notifications = Notification.objects.filter(user=request.user, is_read=False)
-
+    if notifications.exists():
+        notifications.update(is_read=True)
+    all_notifications = Notification.objects.filter(user=request.user)
     return render(
         request,
         "profiles/profile.html",
         {
             "profile": profile,
-            "sales": sales,
+            "active_sales": active_sales,  # Renamed from sales
+            "sold_sales": sold_sales,  # Now includes purchase details
             "purchases": purchases,
             "notifications": notifications,
+            "all_notifications": all_notifications,
         },
     )
 

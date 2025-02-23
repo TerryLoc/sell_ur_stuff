@@ -1,49 +1,82 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}{{ user.username }}'s Profile{% endblock title %}
-
+{% block title %}
+    {{ user.username }}'s Profile
+{% endblock title %}
 {% block content %}
-<h2>{{ user.username }}'s Profile</h2>
-{% if profile.profile_picture %}
-    <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture" height="" width="">
-{% else %}
-    <img src="/media/profile_pics/default.jpg" alt="Default Profile Picture" class="default-profile-picture" height="" width="">
-{% endif %}
-<br>
-{% if user == request.user %}
-    <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
-{% endif %}
-
-<div class="user_info">
-    <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Location:</strong> {{ profile.location }}</p>
-    <p><strong>Joined:</strong> {{ user.date_joined }}</p>
-    <p><strong>Bio:</strong> {{ profile.bio }}</p>
-    <p><strong>Phone:</strong> {{ profile.phone_number }}</p>
-    <p><strong>Facebook:</strong> {{ profile.facebook }}</p>
-</div>
-
-<h3>Your Sale Items</h3>
-<ol>
-    {% for sale in sales %}
-    <li class="text-white"><a href="{% url 'sale_detail' sale.id %}">{{ sale.title }}</a> --- {{ sale.created_at }}
-        
-    </li>
-{% endfor %}
-</ol>
-
-<h3>Your Purchases</h3>
-<ul>
-    {% for purchase in purchases %}
-       <li><a href="{% url 'sale_detail' purchase.sale.id %}">{{ purchase.sale.title }}</a> --- €{{ purchase.sale.price }}</li>
-    {% endfor %}
-</ul>
-
-<h3>Notifications</h3>
-<ul>
-    {% for notification in notifications %}
-        <li>{{ notification.message }}</li>
-    {% endfor %}
-</ul>
+    <h2>{{ user.username }}'s Profile</h2>
+    {% if profile.profile_picture %}
+        <img src="{{ profile.profile_picture.url }}"
+             alt="Profile Picture"
+             class="profile-picture"
+             height=""
+             width="">
+    {% else %}
+        <img src="/media/profile_pics/default.jpg"
+             alt="Default Profile Picture"
+             class="default-profile-picture"
+             height=""
+             width="">
+    {% endif %}
+    <br>
+    {% if user == request.user %}
+        <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
+    {% endif %}
+    <div class="user_info">
+        <p>
+            <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}
+        </p>
+        <p>
+            <strong>Email:</strong> {{ user.email }}
+        </p>
+        <p>
+            <strong>Location:</strong> {{ profile.location }}
+        </p>
+        <p>
+            <strong>Joined:</strong> {{ user.date_joined }}
+        </p>
+        <p>
+            <strong>Bio:</strong> {{ profile.bio }}
+        </p>
+        <p>
+            <strong>Phone:</strong> {{ profile.phone_number }}
+        </p>
+        <p>
+            <strong>Facebook:</strong> {{ profile.facebook }}
+        </p>
+    </div>
+    <h3>Active Sale Items</h3>
+    <ol>
+        {% for sale in active_sales %}
+            <li class="text-white">
+                <a href="{% url 'sale_detail' sale.id %}">{{ sale.title }}</a> --- Listed on {{ sale.created_at }}
+            </li>
+        {% empty %}
+            <li>No active sale items.</li>
+        {% endfor %}
+    </ol>
+    <h3>Sold Items</h3>
+    <ol>
+        {% for purchase in sold_sales %}
+            <li class="text-white">
+                <a href="{% url 'sale_detail' purchase.sale.id %}">{{ purchase.sale.title }}</a> --- Sold to {{ purchase.buyer.username }} on {{ purchase.purchased_at }} for €{{ purchase.sale.price }}
+            </li>
+        {% empty %}
+            <li>No items sold yet.</li>
+        {% endfor %}
+    </ol>
+    <h3>Your Purchases</h3>
+    <ol>
+        {% for purchase in purchases %}
+            <li>
+                <a href="{% url 'sale_detail' purchase.sale.id %}">{{ purchase.sale.title }}</a> --- Bought from {{ purchase.sale.user.username }} on {{ purchase.purchased_at }} for €{{ purchase.sale.price }}
+            </li>
+        {% empty %}
+            <li>No purchases yet.</li>
+        {% endfor %}
+    </ol>
+    <h3>Notifications</h3>
+    <ul>
+        {% for notification in notifications %}<li>{{ notification.message }}</li>{% endfor %}
+    </ul>
 {% endblock content %}
