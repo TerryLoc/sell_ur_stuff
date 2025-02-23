@@ -1,5 +1,7 @@
 :root {
-  --main-bg-color: ##71c7f6;
+  --main-bg-color: #233844;
+  --secondary-bg-color: #3e4f5e5c;
+  --main-font-color: #ff7b00;
 }
 
 * {
@@ -11,11 +13,45 @@
 body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--main-bg-color);
+  min-height: 300vh;
+  color: var(--main-font-color);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
 }
 
 .default-profile-picture,
 .profile-picture {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
+  border-radius: 10%;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user_info {
+  color: whitesmoke;
+  background-color: var(--secondary-bg-color);
+  padding: 20px 15px;
+  margin: 20px 10px;
+
+  border-radius: 30px;
+}
+.user_info strong {
+  font-size: 1.2rem;
+  color: var(--main-font-color);
+}
+
+.sale-image,
+.sale-video {
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.sale-video {
+  max-width: 100%;
 }
