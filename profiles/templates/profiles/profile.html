@@ -25,18 +25,18 @@
 </div>
 
 <h3>Your Sale Items</h3>
-<Ol>
+<ol>
     {% for sale in sales %}
     <li class="text-white"><a href="{% url 'sale_detail' sale.id %}">{{ sale.title }}</a> --- {{ sale.created_at }}
         
     </li>
 {% endfor %}
-</Ol>
+</ol>
 
 <h3>Your Purchases</h3>
 <ul>
     {% for purchase in purchases %}
-        <li><a href="{% url 'sale_detail' purchase.sale.id %}">{{ purchase.sale.title }}</a> --- ${{ purchase.sale.price }}</li>
+       <li><a href="{% url 'sale_detail' purchase.sale.id %}">{{ purchase.sale.title }}</a> --- €{{ purchase.sale.price }}</li>
     {% endfor %}
 </ul>
 
