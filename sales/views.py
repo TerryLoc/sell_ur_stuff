@@ -220,6 +220,78 @@ def reject_offer(request, offer_id):
     return redirect("seller_offers")
 
 
+# Counter offer view for buyers and sellers to make and accept/reject counter offers on sale items
+@login_required
+def counter_offer(request, offer_id):
+    """Make a counter offer on a sale item listing by a user (seller) on a sale item"""
+    offer = get_object_or_404(Offer, id=offer_id, sale__user=request.user)
+    if offer.status != "pending":
+        return redirect("seller_offers")
+    if request.method == "POST":
+        counter_amount = request.POST.get("counter_amount")
+        try:
+            counter_amount = float(counter_amount)
+            if counter_amount <= 0:
+                raise ValueError
+            offer.counter_amount = counter_amount
+            offer.counter_status = "pending"
+            offer.save()
+            Notification.objects.create(
+                user=offer.buyer,
+                message=f"Seller countered your offer of €{offer.amount} on '{offer.sale.title}' with €{counter_amount}.",
+            )
+            return redirect("seller_offers")
+        except ValueError:
+            return render(
+                request,
+                "sales/counter_offer.html",
+                {"offer": offer, "error": "Invalid amount"},
+            )
+    return render(request, "sales/counter_offer.html", {"offer": offer})
+
+
+@login_required
+def respond_counter_offer(request, offer_id):
+    """Respond to a counter offer on a sale item listing by a user (buyer) on a sale item"""
+    offer = get_object_or_404(Offer, id=offer_id, buyer=request.user)
+    if offer.counter_status != "pending":
+        return redirect("profile")  # Assuming a profile view exists
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "accept":
+            offer.counter_status = "accepted"
+            offer.status = "accepted"  # Original offer accepted too
+            offer.save()
+            session = stripe.checkout.Session.create(
+                payment_method_types=["card"],
+                line_items=[
+                    {
+                        "price_data": {
+                            "currency": "eur",
+                            "product_data": {"name": offer.sale.title},
+                            "unit_amount": int(offer.counter_amount * 100),
+                        },
+                        "quantity": 1,
+                    }
+                ],
+                mode="payment",
+                success_url=request.build_absolute_uri("/sales/offer_success/")
+                + f"?session_id={{CHECKOUT_SESSION_ID}}&offer_id={offer.id}",
+                cancel_url=request.build_absolute_uri("/sales/offer_cancel/"),
+                metadata={"offer_id": offer.id, "sale_id": offer.sale.id},
+            )
+            return redirect(session.url, code=303)
+        elif action == "reject":
+            offer.counter_status = "rejected"
+            offer.save()
+            Notification.objects.create(
+                user=offer.sale.user,
+                message=f"Buyer rejected your counteroffer of €{offer.counter_amount} on '{offer.sale.title}'.",
+            )
+            return redirect("profile")
+    return render(request, "sales/respond_counter_offer.html", {"offer": offer})
+
+
 def offer_payment_success(request):
     """Payment success view for accepting an offer"""
     session_id = request.GET.get("session_id")
