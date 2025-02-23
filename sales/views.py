@@ -185,7 +185,7 @@ def accept_offer(request, offer_id):
     """Accept an offer on a sale item listing by a user (buyer) on a sale item"""
     offer = get_object_or_404(Offer, id=offer_id, sale__user=request.user)
     if offer.status != "pending":
-        return redirect("seller_offers")
+        return redirect("profile")
     offer.status = "accepted"
     offer.save()
     session = stripe.checkout.Session.create(
@@ -224,10 +224,9 @@ def reject_offer(request, offer_id):
 # Counter offer view for buyers and sellers to make and accept/reject counter offers on sale items
 @login_required
 def counter_offer(request, offer_id):
-    """Make a counter offer on a sale item listing by a user (seller) on a sale item"""
     offer = get_object_or_404(Offer, id=offer_id, sale__user=request.user)
     if offer.status != "pending":
-        return redirect("seller_offers")
+        return redirect("profile")
     if request.method == "POST":
         counter_amount = request.POST.get("counter_amount")
         try:
@@ -241,7 +240,7 @@ def counter_offer(request, offer_id):
                 user=offer.buyer,
                 message=f"Seller countered your offer of €{offer.amount} on '{offer.sale.title}' with €{counter_amount}.",
             )
-            return redirect("seller_offers")
+            return redirect("profile")  # Already correct
         except ValueError:
             return render(
                 request,

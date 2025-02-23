@@ -85,7 +85,7 @@
                         €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}">{{ offer.sale.title }}</a>" from {{ offer.buyer.username }} 
                         (Made: {{ offer.created_at|date:"M d, Y H:i" }})
                         {% if offer.counter_amount %}
-                            <br><small>Counteroffer: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
+                            <br><small>Counter offer: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
                         {% endif %}
                     </div>
                     <div>
