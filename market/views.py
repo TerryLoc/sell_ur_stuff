@@ -8,15 +8,3 @@ def market_list(request):
     """
     products = Sale.objects.filter(status="available")  # Only show available items
     return render(request, "market/market.html", {"products": products})
-
-
-def buy_product(request, product_id):
-    product = get_object_or_404(Sale, id=product_id)
-    # Implement the logic for buying the product
-    return redirect("market_list")
-
-
-def make_offer(request, product_id):
-    product = get_object_or_404(Sale, id=product_id)
-    # Implement the logic for making an offer on the product
-    return redirect("market_list")
