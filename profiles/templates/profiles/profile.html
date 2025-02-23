@@ -11,7 +11,7 @@
 {% endif %}
 <br>
 {% if user == request.user %}
-    <a href="" class="btn btn-primary">Edit Profile</a>
+    <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
 {% endif %}
 
 <div class="user_info">
