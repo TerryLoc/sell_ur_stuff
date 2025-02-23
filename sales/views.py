@@ -3,8 +3,8 @@ from django.conf import settings
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Sale
-from .forms import SaleForm
+from .models import Sale, Offer
+from .forms import SaleForm, OfferForm
 from profiles.models import Notification, Purchase
 
 # The secret key for the Stripe API
@@ -140,4 +140,104 @@ def payment_cancel(request):
     """
     Payment cancel view that redirects to the payment result page with a failure message
     """
+    return render(request, "sales/payment_result.html", {"success": False})
+
+
+# Offer views for buyers and sellers to make and accept/reject offers on sale items
+
+
+@login_required
+def make_offer(request, sale_id):
+    """
+    Make an offer on a sale item listing by a user (buyer) on a sale item
+    """
+    sale = get_object_or_404(Sale, id=sale_id)
+    if sale.status != "available":
+        return redirect("market_list")
+    if request.method == "POST":
+        form = OfferForm(request.POST, sale=sale)
+        if form.is_valid():
+            offer = form.save(commit=False)
+            offer.sale = sale
+            offer.buyer = request.user
+            offer.save()
+            Notification.objects.create(
+                user=sale.user,
+                message=f"New offer of €{offer.amount} on your item '{sale.title}' from {request.user.username}!",
+            )
+            return redirect("sale_detail", sale_id=sale.id)
+    else:
+        form = OfferForm(sale=sale)
+    return render(request, "sales/make_offer.html", {"sale": sale, "form": form})
+
+
+@login_required
+def seller_offers(request):
+    """
+    List all offers made on the sales listings of the logged-in user
+    """
+    offers = Offer.objects.filter(sale__user=request.user).order_by("-created_at")
+    return render(request, "sales/seller_offers.html", {"offers": offers})
+
+
+@login_required
+def accept_offer(request, offer_id):
+    """Accept an offer on a sale item listing by a user (buyer) on a sale item"""
+    offer = get_object_or_404(Offer, id=offer_id, sale__user=request.user)
+    if offer.status != "pending":
+        return redirect("seller_offers")
+    offer.status = "accepted"
+    offer.save()
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[
+            {
+                "price_data": {
+                    "currency": "eur",
+                    "product_data": {"name": offer.sale.title},
+                    "unit_amount": int(offer.amount * 100),
+                },
+                "quantity": 1,
+            }
+        ],
+        mode="payment",
+        success_url=request.build_absolute_uri("/sales/offer_success/")
+        + "?session_id={CHECKOUT_SESSION_ID}&offer_id={offer_id}",
+        cancel_url=request.build_absolute_uri("/sales/offer_cancel/"),
+        metadata={"offer_id": offer.id, "sale_id": offer.sale.id},
+    )
+    return redirect(session.url, code=303)
+
+
+@login_required
+def reject_offer(request, offer_id):
+    """Reject an offer on a sale item listing by a user (buyer) on a sale item"""
+    offer = get_object_or_404(Offer, id=offer_id, sale__user=request.user)
+    if offer.status != "pending":
+        return redirect("seller_offers")
+    offer.status = "rejected"
+    offer.save()
+    return redirect("seller_offers")
+
+
+def offer_payment_success(request):
+    """Payment success view for accepting an offer"""
+    session_id = request.GET.get("session_id")
+    offer_id = request.GET.get("offer_id")
+    session = stripe.checkout.Session.retrieve(session_id)
+    offer = get_object_or_404(Offer, id=offer_id)
+    if session.payment_status == "paid":
+        sale = offer.sale
+        sale.status = "sold"
+        sale.save()
+        Purchase.objects.create(buyer=offer.buyer, sale=sale)  # Triggers notification
+        offer.status = "accepted"  # Redundant but harmless
+        offer.save()
+    return render(
+        request, "sales/payment_result.html", {"success": True, "sale": offer.sale}
+    )
+
+
+def offer_payment_cancel(request):
+    """Payment cancel view for accepting an offer"""
     return render(request, "sales/payment_result.html", {"success": False})
