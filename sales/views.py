@@ -1,7 +1,14 @@
-from django.shortcuts import render, get_object_or_404, redirect
+import stripe
+from django.conf import settings
+
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Sale
 from .forms import SaleForm
+from profiles.models import Notification, Purchase
+
+# Set the secret key for the Stripe API to the one in settings.py
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 # This is so the user can only see their own sales listings
@@ -69,3 +76,57 @@ def sale_delete(request, sale_id):
         sale.delete()
         return redirect("sales_list")
     return render(request, "sales/sale_confirm_delete.html", {"sale": sale})
+
+
+# Buy a product
+@login_required
+def buy_product(request, sale_id):
+    """
+    Buy a product using the Stripe API and redirect to the payment page on Stripe
+    """
+    sale = get_object_or_404(Sale, id=sale_id)
+    if sale.status != "available":
+        return redirect("market_list")
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[
+            {
+                "price_data": {
+                    "currency": "eur",
+                    "product_data": {"name": sale.title},
+                    "unit_amount": int(sale.price * 100),
+                },
+                "quantity": 1,
+            }
+        ],
+        mode="payment",
+        success_url=request.build_absolute_uri("/sales/success/")
+        + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url=request.build_absolute_uri("/sales/cancel/"),
+        metadata={"sale_id": sale.id},
+    )
+    return redirect(session.url, code=303)
+
+
+# Payment success and cancel views
+def payment_success(request):
+    """
+    Payment success view that triggers a notification to the seller
+    """
+    session_id = request.GET.get("session_id")
+    session = stripe.checkout.Session.retrieve(session_id)
+    sale = get_object_or_404(Sale, id=session.metadata["sale_id"])
+    # If the payment was successful, change the status of the sale to sold
+    if session.payment_status == "paid":
+        sale.status = "sold"
+        sale.save()
+        Purchase.objects.create(buyer=request.user, sale=sale)  # Triggers notification
+    return render(request, "sales/payment_result.html", {"success": True, "sale": sale})
+
+
+# Payment cancel view
+def payment_cancel(request):
+    """
+    Payment cancel view that redirects to the payment result page with a failure message
+    """
+    return render(request, "sales/payment_result.html", {"success": False})

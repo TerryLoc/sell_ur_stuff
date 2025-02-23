@@ -67,7 +67,7 @@
 </video>
 {% endif %}
 <p>{{ sale.description }}</p>
-<p>Price: €{{ sale.price }}</p>
+<p>Price: €{{ sale.price }}</p> 
 {% if user == sale.user %}
 <a href="{% url 'sale_update' sale.id %}" class="btn btn-warning">Edit</a>
 <form
