@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Counter Offer for {{ offer.sale.title }}</h2>
+    <p>Original Offer: €{{ offer.amount }} by {{ offer.buyer.username }}</p>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <form method="post" class="form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="counter_amount">Your Counteroffer</label>
+            <input type="number" name="counter_amount" id="counter_amount" step="0.01" min="0.01" class="form-control" placeholder="Enter counter amount" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Counteroffer</button>
+        <a href="{% url 'seller_offers' %}" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+{% endblock content %}

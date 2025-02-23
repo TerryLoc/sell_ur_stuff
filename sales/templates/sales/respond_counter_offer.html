@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Respond to Counteroffer</h2>
+    <p>Seller countered your €{{ offer.amount }} offer with €{{ offer.counter_amount }} for '{{ offer.sale.title }}'.</p>
+    <form method="post" class="form">
+        {% csrf_token %}
+        <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+        <a href="{% url 'profile' %}" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+{% endblock content %}

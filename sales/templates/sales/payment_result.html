@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="container text-center">
-        {% if success %}
-            <h2>Payment Successful!</h2>
-            <p>You bought "{{ sale.title }}" for €{{ sale.price }}.</p>
-        {% else %}
-            <h2>Payment Cancelled</h2>
-            <p>You cancelled the payment.</p>
-        {% endif %}
-        <a href="{% url 'market_list' %}" class="btn btn-primary">Back to Marketplace</a>
-    </div>
+<div class="container text-center mt-4">
+    {% if success %}
+        <h2>Payment Successful!</h2>
+        <p>You bought "{{ sale.title }}" for €{{ price|default:sale.price }}.</p>
+    {% else %}
+        <h2>Payment Cancelled</h2>
+        <p>You cancelled the payment for "{{ sale.title }}".</p>
+    {% endif %}
+    <a href="{% url 'market_list' %}" class="btn btn-primary">Back to Marketplace</a>
+</div>
 {% endblock content %}
