@@ -16,7 +16,7 @@
 body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--main-bg-color);
-  color: var(--main-font-color);
+  color: var(--secondary-font-color);
 }
 
 .main-content {
@@ -80,7 +80,7 @@ body {
 }
 
 .home-background h1 {
-  text-shadow: 1px 1px 3px var(--hover-color);
+  text-shadow: 1px 2px 4px var(--main-bg-color);
   font-size: 3rem;
   font-weight: 600;
   letter-spacing: 2px;
@@ -96,9 +96,10 @@ body {
 
 .home-background p {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   letter-spacing: 1px;
   margin-bottom: 0;
+  color: var(--main-font-color);
 }
 
 .home-background a {
@@ -109,6 +110,7 @@ body {
 
 .home-background a:hover {
   color: var(--hover-color);
+  text-shadow: 0 0 2px var(--main-bg-shadow);
 }
 
 /* Profile page styles */
