@@ -1,18 +1,26 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %}Home - Sell Your Stuff{% endblock title %}
-
+{% block title %}
+    Home - Sell Your Stuff
+{% endblock title %}
 {% block content %}
-
-    <div class="text-center home-background" style="background-image: url('{% static 'images/home_page.jpg' %}'); border-radius: 20px;">
+    <div class="text-center home-background"
+         style="background-image: url('{% static 'images/home_page.jpg' %}');
+                border-radius: 20px">
         <div class="main-text">
             <h1>Buy Smart, Sell Fast</h1>
             <h2>Where Unwanted, Becomes loved!</h2>
             {% if user.is_authenticated %}
-                <p>Hello, {{ user.username }}. Great to see you.</p>
+                <p>
+                    Hello, <strong>{{ user.username }}</strong>. Great to see you.
+                </p>
+                <p>
+                    <a class="btn" href="{% url 'market_list' %}">Head to the Marketplace</a>
+                </p>
             {% else %}
-                <p><a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Sign Up</a> to Buy & Sell.</p>
+                <p>
+                    <a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Sign Up</a> to Buy & Sell.
+                </p>
             {% endif %}
         </div>
     </div>
