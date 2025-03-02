@@ -7,29 +7,22 @@ from .forms import UserProfileForm
 
 @login_required
 def profile_view(request):
-    """
-    View the user's profile page for the logged-in user with their sales, purchases, offers, and notifications.
-    """
     profile = request.user.profile
     active_sales = Sale.objects.filter(user=request.user, status="available")
-    # Get sold items with purchase details
     sold_sales = Purchase.objects.filter(sale__user=request.user).select_related(
         "sale", "buyer"
     )
-    # Get purchases with sale and seller details
     purchases = Purchase.objects.filter(buyer=request.user).select_related("sale__user")
-    # Get offers received on user's sales
-    offers = (
-        Offer.objects.filter(sale__user=request.user)
-        .order_by("-created_at")
-        .select_related("sale", "buyer")
-    )
-    # Notifications handling
+    received_offers = Offer.objects.filter(sale__user=request.user).order_by(
+        "-created_at"
+    )  # Offers as seller
+    buyer_offers = Offer.objects.filter(buyer=request.user).order_by(
+        "-created_at"
+    )  # Offers as buyer
     notifications = Notification.objects.filter(user=request.user, is_read=False)
     if notifications.exists():
         notifications.update(is_read=True)
     all_notifications = Notification.objects.filter(user=request.user)
-
     return render(
         request,
         "profiles/profile.html",
@@ -38,7 +31,8 @@ def profile_view(request):
             "active_sales": active_sales,
             "sold_sales": sold_sales,
             "purchases": purchases,
-            "offers": offers,  # Added offers context
+            "received_offers": received_offers,
+            "buyer_offers": buyer_offers,
             "notifications": notifications,
             "all_notifications": all_notifications,
         },

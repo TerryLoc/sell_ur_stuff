@@ -24,6 +24,9 @@ class Purchase(models.Model):
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="purchases")
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
     purchased_at = models.DateTimeField(auto_now_add=True)
+    price_paid = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00
+    )  # Add this
 
     def __str__(self):
         return f"{self.buyer.username} bought {self.sale.title}"

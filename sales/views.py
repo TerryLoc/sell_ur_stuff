@@ -1,6 +1,5 @@
 import stripe
 from django.conf import settings
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from profiles.models import Purchase, Notification
@@ -122,20 +121,22 @@ def buy_product(request, sale_id):
 # Payment success and cancel views
 def payment_success(request):
     """
-    Payment success view that triggers a notification to the seller
+    Payment success view that triggers a notification to the seller and marks the sale as sold
     """
     session_id = request.GET.get("session_id")
     session = stripe.checkout.Session.retrieve(session_id)
     sale = get_object_or_404(Sale, id=session.metadata["sale_id"])
-    # If the payment was successful, change the status of the sale to sold
     if session.payment_status == "paid":
         sale.status = "sold"
         sale.save()
-        Purchase.objects.create(buyer=request.user, sale=sale)  # Triggers notification
+        Purchase.objects.create(
+            buyer=request.user,
+            sale=sale,
+            price_paid=sale.price,  # Set to listed price for direct buys
+        )  # Triggers notification
     return render(request, "sales/payment_result.html", {"success": True, "sale": sale})
 
 
-# Payment cancel view
 def payment_cancel(request):
     """
     Payment cancel view that redirects to the payment result page with a failure message
@@ -144,8 +145,6 @@ def payment_cancel(request):
 
 
 # Offer views for buyers and sellers to make and accept/reject offers on sale items
-
-
 @login_required
 def make_offer(request, sale_id):
     """
@@ -255,13 +254,16 @@ def respond_counter_offer(request, offer_id):
     """Respond to a counter offer on a sale item listing by a user (buyer) on a sale item"""
     offer = get_object_or_404(Offer, id=offer_id, buyer=request.user)
     if offer.counter_status != "pending":
-        return redirect("profile")  # Assuming a profile view exists
+        return redirect("profile")
     if request.method == "POST":
         action = request.POST.get("action")
         if action == "accept":
             offer.counter_status = "accepted"
             offer.status = "accepted"  # Original offer accepted too
             offer.save()
+            sale = offer.sale
+            sale.status = "sold"
+            sale.save()
             session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
                 line_items=[
@@ -279,7 +281,7 @@ def respond_counter_offer(request, offer_id):
                 + f"?session_id={{CHECKOUT_SESSION_ID}}&offer_id={offer.id}",
                 cancel_url=request.build_absolute_uri("/sales/offer_cancel/")
                 + f"?offer_id={offer.id}",
-                metadata={"offer_id": offer.id, "sale_id": offer.sale.id},
+                metadata={"offer_id": offer.id, "sale_id": sale.id},
             )
             return redirect(session.url, code=303)
         elif action == "reject":
@@ -303,21 +305,24 @@ def offer_payment_success(request):
         sale = offer.sale
         sale.status = "sold"
         sale.save()
-        Purchase.objects.create(buyer=offer.buyer, sale=sale)  # Triggers notification
-        offer.status = "accepted"
-        offer.save()
         # Determine the final price: counter_amount if accepted, otherwise amount
         price = (
             offer.counter_amount
             if offer.counter_amount and offer.counter_status == "accepted"
             else offer.amount
         )
+        Purchase.objects.create(
+            buyer=offer.buyer,
+            sale=sale,
+            price_paid=price,  # Set to final offer or counteroffer price
+        )  # Triggers notification
+        offer.status = "accepted"
+        offer.save()
         return render(
             request,
             "sales/payment_result.html",
             {"success": True, "sale": sale, "price": price},
         )
-    # If payment isn't confirmed, treat it as a cancel
     return render(
         request, "sales/payment_result.html", {"success": False, "sale": offer.sale}
     )

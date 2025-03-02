@@ -2,11 +2,11 @@
 {% block content %}
 <div class="container mt-4">
     <h2>Respond to Counteroffer</h2>
-    <p>Seller countered your €{{ offer.amount }} offer with €{{ offer.counter_amount }} for '{{ offer.sale.title }}'.</p>
+    <p>Seller countered your €{{ offer.amount }} offer with €{{ offer.counter_amount }} for '{{ offer.sale.title }}' (Made: {{ offer.created_at|date:"M d, Y H:i" }}).</p>
     <form method="post" class="form">
         {% csrf_token %}
-        <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
-        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+        <button type="submit" name="action" value="accept" class="btn btn-success">Accept Counter</button>
+        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject Counter</button>
         <a href="{% url 'profile' %}" class="btn btn-secondary">Back</a>
     </form>
 </div>

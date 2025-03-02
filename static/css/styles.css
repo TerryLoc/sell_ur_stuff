@@ -147,6 +147,23 @@ body {
 }
 
 /* Profile page styles */
+
+.text-orange {
+  color: #ff8c00; /* Or your specific orange shade from the theme */
+}
+
+.profile-picture,
+.default-profile-picture {
+  object-fit: cover;
+}
+
+.card {
+  border: 1px solid #333; /* Dark border for contrast */
+}
+
+.list-group-item.bg-dark.text-white:hover {
+  background-color: #222; /* Subtle hover effect */
+}
 .profile-header {
   text-transform: uppercase;
 }
