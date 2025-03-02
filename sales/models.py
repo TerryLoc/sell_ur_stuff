@@ -8,6 +8,7 @@ class Sale(models.Model):
     STATUS_CHOICES = [
         ("available", "Available"),
         ("sold", "Sold"),
+        ("pending", "Pending"),  # Add this
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Seller
@@ -16,7 +17,7 @@ class Sale(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(
         upload_to="product_images/", blank=True, null=True
-    )  # main image of the product
+    )  # Main image
     image_1 = models.ImageField(upload_to="product_images/", blank=True, null=True)
     image_2 = models.ImageField(upload_to="product_images/", blank=True, null=True)
     image_3 = models.ImageField(upload_to="product_images/", blank=True, null=True)

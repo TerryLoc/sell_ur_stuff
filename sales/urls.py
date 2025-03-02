@@ -25,4 +25,5 @@ urlpatterns = [
         views.respond_counter_offer,
         name="respond_counter_offer",
     ),
+    path("offer/<int:offer_id>/pay/", views.pay_offer, name="pay_offer"),
 ]

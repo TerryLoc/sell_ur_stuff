@@ -1,6 +1,6 @@
 import stripe
 from django.conf import settings
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.decorators import login_required
 from profiles.models import Purchase, Notification
 from .models import Sale, Offer
@@ -187,26 +187,15 @@ def accept_offer(request, offer_id):
         return redirect("profile")
     offer.status = "accepted"
     offer.save()
-    session = stripe.checkout.Session.create(
-        payment_method_types=["card"],
-        line_items=[
-            {
-                "price_data": {
-                    "currency": "eur",
-                    "product_data": {"name": offer.sale.title},
-                    "unit_amount": int(offer.amount * 100),
-                },
-                "quantity": 1,
-            }
-        ],
-        mode="payment",
-        success_url=request.build_absolute_uri("/sales/offer_success/")
-        + f"?session_id={{CHECKOUT_SESSION_ID}}&offer_id={offer.id}",
-        cancel_url=request.build_absolute_uri("/sales/offer_cancel/")
-        + f"?offer_id={offer.id}",
-        metadata={"offer_id": offer.id, "sale_id": offer.sale.id},
+    sale = offer.sale
+    sale.status = "pending"  # Mark as pending until payment is completed
+    sale.save()
+    # Notify buyer that their offer was accepted with a pay link
+    Notification.objects.create(
+        user=offer.buyer,
+        message=f"Your offer of €{offer.amount} on '{sale.title}' has been accepted! Click <a href='{reverse('pay_offer', args=[offer.id])}'>here</a> to pay now.",
     )
-    return redirect(session.url, code=303)
+    return redirect("profile")
 
 
 @login_required
@@ -215,9 +204,44 @@ def reject_offer(request, offer_id):
     offer = get_object_or_404(Offer, id=offer_id, sale__user=request.user)
     if offer.status != "pending":
         return redirect("profile")
+    # Add logic to handle rejection
     offer.status = "rejected"
     offer.save()
+    # Notify buyer that their offer was rejected
+    Notification.objects.create(
+        user=offer.buyer,
+        message=f"Your offer of €{offer.amount} on '{offer.sale.title}' has been rejected.",
+    )
     return redirect("profile")
+
+
+@login_required
+def pay_offer(request, offer_id):
+    """Allow buyer to pay for an accepted offer using Stripe"""
+    offer = get_object_or_404(Offer, id=offer_id, buyer=request.user, status="accepted")
+    sale = offer.sale
+    if sale.status != "pending":
+        return redirect("profile")
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[
+            {
+                "price_data": {
+                    "currency": "eur",
+                    "product_data": {"name": sale.title},
+                    "unit_amount": int(offer.amount * 100),  # Use original offer amount
+                },
+                "quantity": 1,
+            }
+        ],
+        mode="payment",
+        success_url=request.build_absolute_uri("/sales/offer_payment_success/")
+        + f"?session_id={{CHECKOUT_SESSION_ID}}&offer_id={offer.id}",
+        cancel_url=request.build_absolute_uri("/sales/offer_payment_cancel/")
+        + f"?offer_id={offer.id}",
+        metadata={"offer_id": offer.id, "sale_id": sale.id},
+    )
+    return redirect(session.url, code=303)
 
 
 # Counter offer view for buyers and sellers to make and accept/reject counter offers on sale items
@@ -303,7 +327,7 @@ def offer_payment_success(request):
     offer = get_object_or_404(Offer, id=offer_id)
     if session.payment_status == "paid":
         sale = offer.sale
-        sale.status = "sold"
+        sale.status = "sold"  # Update to sold after payment
         sale.save()
         # Determine the final price: counter_amount if accepted, otherwise amount
         price = (

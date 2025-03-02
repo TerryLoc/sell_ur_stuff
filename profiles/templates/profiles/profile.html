@@ -4,211 +4,229 @@
     {{ user.username }}'s Profile
 {% endblock title %}
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-        <!-- Profile Header and Image -->
-        <div class="col-12 mb-4">
-            <h2 class="profile-header text-orange">{{ user.username }}'s Profile</h2>
-            <div class="text-center mb-3">
-                {% if profile.profile_picture %}
-                    <img src="{{ profile.profile_picture.url }}"
-                         alt="Profile Picture"
-                         class="profile-picture rounded-circle"
-                         width="" height="">
-                {% else %}
-                    <img src="/media/profile_pics/default.jpg"
-                         alt="Default Profile Picture"
-                         class="default-profile-picture rounded-circle"
-                         width="" height="">
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Profile Header and Image -->
+            <div class="col-12 mb-4">
+                <h2 class="profile-header text-orange">{{ user.username }}'s Profile</h2>
+                <div class="text-center mb-3">
+                    {% if profile.profile_picture %}
+                        <img src="{{ profile.profile_picture.url }}"
+                             alt="Profile Picture"
+                             class="profile-picture rounded-circle"
+                             width=""
+                             height="">
+                    {% else %}
+                        <img src="/media/profile_pics/default.jpg"
+                             alt="Default Profile Picture"
+                             class="default-profile-picture rounded-circle"
+                             width=""
+                             height="">
+                    {% endif %}
+                </div>
+                {% if user == request.user %}
+                    <div class="text-center mb-3">
+                        <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
+                    </div>
                 {% endif %}
             </div>
-            {% if user == request.user %}
-                <div class="text-center mb-3">
-                    <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
-                </div>
-            {% endif %}
-        </div>
-
-        <!-- User Info Card -->
-        <div class="col-md-4 mb-4">
-            <div class="card bg-dark text-white h-100">
-                <div class="card-body">
-                    <h5 class="card-title">User Info</h5>
-                    <div class="user_info">
-                        <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-                        <p><strong>Email:</strong> {{ user.email }}</p>
-                        <p><strong>Location:</strong> {{ profile.location }}</p>
-                        <p><strong>Joined:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
-                        <p><strong>Bio:</strong> {{ profile.bio }}</p>
-                        <p><strong>Phone:</strong> {{ profile.phone_number }}</p>
-                        <p><strong>Facebook:</strong> {{ profile.facebook }}</p>
+            <!-- User Info Card -->
+            <div class="col-md-4 mb-4">
+                <div class="card bg-dark text-white h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">User Info</h5>
+                        <div class="user_info">
+                            <p>
+                                <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}
+                            </p>
+                            <p>
+                                <strong>Email:</strong> {{ user.email }}
+                            </p>
+                            <p>
+                                <strong>Location:</strong> {{ profile.location }}
+                            </p>
+                            <p>
+                                <strong>Joined:</strong> {{ user.date_joined|date:"M d, Y" }}
+                            </p>
+                            <p>
+                                <strong>Bio:</strong> {{ profile.bio }}
+                            </p>
+                            <p>
+                                <strong>Phone:</strong> {{ profile.phone_number }}
+                            </p>
+                            <p>
+                                <strong>Facebook:</strong> {{ profile.facebook }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Activity Cards (Sales, Purchases, Offers, Notifications) -->
-        <div class="col-md-8">
-            <div class="row">
-                <!-- Active Sale Items -->
-                <div class="col-12 mb-4">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body">
-                            <h5 class="card-title text-orange">Active Sale Items</h5>
-                            {% if active_sales %}
-                                <ol class="list-group list-group-flush">
-                                    {% for sale in active_sales %}
-                                        <li class="list-group-item bg-dark text-white">
-                                            <a href="{% url 'sale_detail' sale.id %}" class="text-white">{{ sale.title }}</a> --- Listed on {{ sale.created_at|date:"M d, Y H:i" }}
-                                        </li>
-                                    {% empty %}
-                                        <p class="text-muted">No active sale items.</p>
-                                    {% endfor %}
-                                </ol>
-                            {% else %}
-                                <p class="text-muted">No active sale items.</p>
-                            {% endif %}
+            <!-- Activity Cards (Sales, Purchases, Offers, Notifications) -->
+            <div class="col-md-8">
+                <div class="row">
+                    <!-- Active Sale Items -->
+                    <div class="col-12 mb-4">
+                        <div class="card bg-dark text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-orange">Active Sale Items</h5>
+                                {% if active_sales %}
+                                    <ol class="list-group list-group-flush">
+                                        {% for sale in active_sales %}
+                                            <li class="list-group-item bg-dark text-white">
+                                                <a href="{% url 'sale_detail' sale.id %}" class="text-white">{{ sale.title }}</a> --- Listed on {{ sale.created_at|date:"M d, Y H:i" }}
+                                            </li>
+                                        {% empty %}
+                                            <p class="text-muted">No active sale items.</p>
+                                        {% endfor %}
+                                    </ol>
+                                {% else %}
+                                    <p class="text-muted">No active sale items.</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Sold Items -->
-                <div class="col-12 mb-4">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body">
-                            <h5 class="card-title text-orange">Sold Items</h5>
-                            {% if sold_sales %}
-                                <ol class="list-group list-group-flush">
-                                    {% for purchase in sold_sales %}
-                                        <li class="list-group-item bg-dark text-white">
-                                            <a href="{% url 'sale_detail' purchase.sale.id %}" class="text-white">{{ purchase.sale.title }}</a> --- Sold on {{ purchase.purchased_at|date:"M d, Y H:i" }} for €{{ purchase.sale.price }}
-                                        </li>
-                                    {% empty %}
-                                        <p class="text-muted">No items sold yet.</p>
-                                    {% endfor %}
-                                </ol>
-                            {% else %}
-                                <p class="text-muted">No items sold yet.</p>
-                            {% endif %}
+                    <!-- Sold Items -->
+                    <div class="col-12 mb-4">
+                        <div class="card bg-dark text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-orange">Sold Items</h5>
+                                {% if sold_sales %}
+                                    <ol class="list-group list-group-flush">
+                                        {% for purchase in sold_sales %}
+                                            <li class="list-group-item bg-dark text-white">
+                                                <a href="{% url 'sale_detail' purchase.sale.id %}" class="text-white">{{ purchase.sale.title }}</a> --- Sold on {{ purchase.purchased_at|date:"M d, Y H:i" }} for €{{ purchase.sale.price }}
+                                            </li>
+                                        {% empty %}
+                                            <p class="text-muted">No items sold yet.</p>
+                                        {% endfor %}
+                                    </ol>
+                                {% else %}
+                                    <p class="text-muted">No items sold yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Your Purchases -->
-                <div class="col-12 mb-4">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body">
-                            <h5 class="card-title text-orange">Your Purchases</h5>
-                            {% if purchases %}
-                                <ol class="list-group list-group-flush">
-                                    {% for purchase in purchases %}
-                                        <li class="list-group-item bg-dark text-white">
-                                            <a href="{% url 'sale_detail' purchase.sale.id %}" class="text-white">{{ purchase.sale.title }}</a> --- Bought from {{ purchase.sale.user.username }} on {{ purchase.purchased_at|date:"M d, Y H:i" }} for €{{ purchase.price_paid }}
-                                        </li>
-                                    {% empty %}
-                                        <p class="text-muted">No purchases yet.</p>
-                                    {% endfor %}
-                                </ol>
-                            {% else %}
-                                <p class="text-muted">No purchases yet.</p>
-                            {% endif %}
+                    <!-- Your Purchases -->
+                    <div class="col-12 mb-4">
+                        <div class="card bg-dark text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-orange">Your Purchases</h5>
+                                {% if purchases %}
+                                    <ol class="list-group list-group-flush">
+                                        {% for purchase in purchases %}
+                                            <li class="list-group-item bg-dark text-white">
+                                                <a href="{% url 'sale_detail' purchase.sale.id %}" class="text-white">{{ purchase.sale.title }}</a> --- Bought from {{ purchase.sale.user.username }} on {{ purchase.purchased_at|date:"M d, Y H:i" }} for €{{ purchase.price_paid }}
+                                            </li>
+                                        {% empty %}
+                                            <p class="text-muted">No purchases yet.</p>
+                                        {% endfor %}
+                                    </ol>
+                                {% else %}
+                                    <p class="text-muted">No purchases yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Offers Received -->
-                <div class="col-12 mb-4">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body">
-                            <h5 class="card-title text-orange">Offers Received</h5>
-                            {% if received_offers %}
-                                <ul class="list-group list-group-flush">
-                                    {% for offer in received_offers %}
-                                        <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
-                                            <div>
-                                                €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}" class="text-white">{{ offer.sale.title }}</a>" from {{ offer.buyer.username }} 
-                                                (Made: {{ offer.created_at|date:"M d, Y H:i" }})
-                                                {% if offer.counter_amount %}
-                                                    <br><small class="text-muted">Counter offer: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
-                                                {% endif %}
-                                            </div>
-                                            <div>
-                                                {% if offer.status == "pending" %}
-                                                    <a href="{% url 'accept_offer' offer.id %}" class="btn btn-success btn-sm">Accept</a>
-                                                    <a href="{% url 'reject_offer' offer.id %}" class="btn btn-danger btn-sm">Reject</a>
-                                                    <a href="{% url 'counter_offer' offer.id %}" class="btn btn-primary btn-sm">Counter</a>
-                                                {% else %}
-                                                    <span class="text-muted">Status: {{ offer.status }}</span>
-                                                {% endif %}
-                                            </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">No offers received yet.</p>
-                            {% endif %}
+                    <!-- Offers Received -->
+                    <div class="col-12 mb-4">
+                        <div class="card bg-dark text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-orange">Offers Received</h5>
+                                {% if received_offers %}
+                                    <ul class="list-group list-group-flush">
+                                        {% for offer in received_offers %}
+                                            <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}" class="text-white">{{ offer.sale.title }}</a>" from {{ offer.buyer.username }}
+                                                    (Made: {{ offer.created_at|date:"M d, Y H:i" }})
+                                                    {% if offer.counter_amount %}
+                                                        <br>
+                                                        <small class="text-muted">Counter offer: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
+                                                    {% endif %}
+                                                </div>
+                                                <div>
+                                                    {% if offer.status == "pending" %}
+                                                        <a href="{% url 'accept_offer' offer.id %}"
+                                                           class="btn btn-success btn-sm">Accept</a>
+                                                        <a href="{% url 'reject_offer' offer.id %}"
+                                                           class="btn btn-danger btn-sm">Reject</a>
+                                                        <a href="{% url 'counter_offer' offer.id %}"
+                                                           class="btn btn-primary btn-sm">Counter</a>
+                                                    {% else %}
+                                                        <span class="text-muted">Status: {{ offer.status }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted">No offers received yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Your Offers -->
-                <div class="col-12 mb-4">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body">
-                            <h5 class="card-title text-orange">Your Offers</h5>
-                            {% if buyer_offers %}
-                                <ul class="list-group list-group-flush">
-                                    {% for offer in buyer_offers %}
-                                        <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
-                                            <div>
-                                                €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}" class="text-white">{{ offer.sale.title }}</a>" 
-                                                (Made: {{ offer.created_at|date:"M d, Y H:i" }})
-                                                {% if offer.counter_amount %}
-                                                    <br><small class="text-muted">Counter offer: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
-                                                {% endif %}
-                                            </div>
-                                            <div>
-                                                {% if offer.counter_status == "pending" %}
-                                                    <a href="{% url 'respond_counter_offer' offer.id %}" class="btn btn-success btn-sm">Accept Counter</a>
-                                                    <a href="{% url 'respond_counter_offer' offer.id %}" class="btn btn-danger btn-sm">Reject Counter</a>
-                                                {% else %}
-                                                    <span class="text-muted">Status: {{ offer.status }}</span>
-                                                {% endif %}
-                                            </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">No offers made yet.</p>
-                            {% endif %}
+                    <!-- Your Offers -->
+                    <div class="col-12 mb-4">
+                        <div class="card bg-dark text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-orange">Your Offers</h5>
+                                {% if buyer_offers %}
+                                    <ul class="list-group list-group-flush">
+                                        {% for offer in buyer_offers %}
+                                            <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}" class="text-white">{{ offer.sale.title }}</a>"
+                                                    (Made: {{ offer.created_at|date:"M d, Y H:i" }})
+                                                    {% if offer.counter_amount %}
+                                                        <br>
+                                                        <small class="text-muted">Counter offer: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
+                                                    {% endif %}
+                                                </div>
+                                                <div>
+                                                    {% if offer.status == "accepted" and offer.sale.status == "pending" %}
+                                                        <a href="{% url 'pay_offer' offer.id %}" class="btn btn-success btn-sm">Pay Now</a>
+                                                    {% elif offer.counter_status == "pending" %}
+                                                        <a href="{% url 'respond_counter_offer' offer.id %}"
+                                                           class="btn btn-success btn-sm">Accept Counter</a>
+                                                        <a href="{% url 'respond_counter_offer' offer.id %}"
+                                                           class="btn btn-danger btn-sm">Reject Counter</a>
+                                                    {% else %}
+                                                        <span class="text-muted">Status: {{ offer.status }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted">No offers made yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Notifications -->
-                <div class="col-12 mb-4">
-                    <div class="card bg-dark text-white">
-                        <div class="card-body">
-                            <h5 class="card-title text-orange">Notifications</h5>
-                            {% if all_notifications %}
-                                <ul class="list-group list-group-flush">
-                                    {% for notification in all_notifications %}
-                                        <li class="list-group-item bg-dark text-white">
-                                            {{ notification.message }}
-                                            {% if not notification.is_read %} <span class="badge bg-danger">Unread</span> {% endif %}
-                                        </li>
-                                    {% empty %}
-                                        <p class="text-muted">No notifications yet.</p>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">No notifications yet.</p>
-                            {% endif %}
+                    <!-- Notifications -->
+                    <div class="col-12 mb-4">
+                        <div class="card bg-dark text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-orange">Notifications</h5>
+                                {% if all_notifications %}
+                                    <ul class="list-group list-group-flush">
+                                        {% for notification in all_notifications %}
+                                            <li class="list-group-item bg-dark text-white">
+                                                {{ notification.message }}
+                                                {% if not notification.is_read %}<span class="badge bg-danger">Unread</span>{% endif %}
+                                            </li>
+                                        {% empty %}
+                                            <p class="text-muted">No notifications yet.</p>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted">No notifications yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock content %}
