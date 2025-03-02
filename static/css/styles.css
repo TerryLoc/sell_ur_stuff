@@ -25,6 +25,14 @@ body {
   flex: 1 0 auto;
 }
 
+/* Navbar styles */
+.navbar-brand {
+  color: var(--secondary-font-color);
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
