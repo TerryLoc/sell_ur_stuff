@@ -1,7 +1,10 @@
 :root {
   --main-bg-color: #233844;
+  --main-bg-shadow: #233844b7;
   --secondary-bg-color: #3e4f5e5c;
-  --main-font-color: #ff7b00;
+  --main-font-color: #0d75b5;
+  --secondary-font-color: #d5d7d8;
+  --hover-color: #e39116;
 }
 
 * {
@@ -28,15 +31,84 @@ body {
   align-items: center;
   padding: 1rem 1rem;
   text-transform: uppercase;
+  color: var(--secondary-font-color);
+}
+
+.nav-link {
+  color: var(--secondary-font-color);
+  margin: 0 5px;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--main-font-color);
 }
 
 /* Home page styles */
+.home-background {
+  position: relative;
+  padding-top: 80px;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.home-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(
+    --main-bg-shadow
+  ); /* Adjust the color and opacity as needed */
+  z-index: 1;
+  border-radius: 20px;
+}
+
+.main-text {
+  background-color: var(--secondary-font-color);
+  border-top: 10px solid var(--main-bg-color);
+  border-bottom: 10px solid var(--main-bg-color);
+  padding: 20px 0;
+}
+
+.home-background > * {
+  position: relative;
+  z-index: 2;
+}
+
 .home-background h1 {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Optional: Adds shadow for readability */
+  text-shadow: 1px 1px 3px var(--hover-color);
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.home-background h2 {
+  text-transform: uppercase;
+  color: var(--main-bg-color);
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  margin: 20px 0;
 }
 
 .home-background p {
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+}
+
+.home-background a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--main-bg-color);
+}
+
+.home-background a:hover {
+  color: var(--hover-color);
 }
 
 /* Profile page styles */
@@ -79,4 +151,5 @@ body {
 /* Footer styles */
 footer {
   margin-top: auto; /* Pushes footer to bottom if content is short */
+  color: var(--secondary-font-color);
 }

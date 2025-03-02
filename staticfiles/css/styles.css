@@ -13,15 +13,41 @@
 body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--main-bg-color);
-  min-height: 300vh;
   color: var(--main-font-color);
+}
+
+.main-content {
+  padding: 70px 0;
+  height: auto;
+  flex: 1 0 auto;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
+  text-transform: uppercase;
+}
+
+/* Home page styles */
+.home-background {
+  background-image: url('/sell_ur_stuff/static/images/home_page.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 50px 0;
+}
+
+.home-background h1 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Optional: Adds shadow for readability */
+}
+
+.home-background p {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Profile page styles */
+.profile-header {
   text-transform: uppercase;
 }
 
@@ -29,8 +55,10 @@ body {
 .profile-picture {
   width: 150px;
   height: 150px;
-  border-radius: 10%;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+  border: 2px solid var(--main-font-color);
 }
 
 .user_info {
@@ -38,7 +66,6 @@ body {
   background-color: var(--secondary-bg-color);
   padding: 20px 15px;
   margin: 20px 10px;
-
   border-radius: 30px;
 }
 .user_info strong {
@@ -54,4 +81,9 @@ body {
 
 .sale-video {
   max-width: 100%;
+}
+
+/* Footer styles */
+footer {
+  margin-top: auto; /* Pushes footer to bottom if content is short */
 }
