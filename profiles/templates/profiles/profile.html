@@ -32,7 +32,7 @@
             </div>
             <!-- User Info Card -->
             <div class="col-md-4 mb-4">
-                <div class="card bg-dark text-white h-100">
+                <div class="card bg-dark h-100">
                     <div class="card-body">
                         <h5 class="card-title">User Info</h5>
                         <div class="user_info">
@@ -66,7 +66,7 @@
                 <div class="row">
                     <!-- Active Sale Items -->
                     <div class="col-12 mb-4">
-                        <div class="card bg-dark text-white">
+                        <div class="card bg-dark">
                             <div class="card-body">
                                 <h5 class="card-title text-orange">Active Sale Items</h5>
                                 {% if active_sales %}
@@ -87,7 +87,7 @@
                     </div>
                     <!-- Sold Items -->
                     <div class="col-12 mb-4">
-                        <div class="card bg-dark text-white">
+                        <div class="card bg-dark ">
                             <div class="card-body">
                                 <h5 class="card-title text-orange">Sold Items</h5>
                                 {% if sold_sales %}
@@ -108,7 +108,7 @@
                     </div>
                     <!-- Your Purchases -->
                     <div class="col-12 mb-4">
-                        <div class="card bg-dark text-white">
+                        <div class="card bg-dark ">
                             <div class="card-body">
                                 <h5 class="card-title text-orange">Your Purchases</h5>
                                 {% if purchases %}
@@ -129,7 +129,7 @@
                     </div>
                     <!-- Offers Received -->
                     <div class="col-12 mb-4">
-                        <div class="card bg-dark text-white">
+                        <div class="card bg-dark ">
                             <div class="card-body">
                                 <h5 class="card-title text-orange">Offers Received</h5>
                                 {% if received_offers %}
@@ -160,14 +160,14 @@
                                         {% endfor %}
                                     </ul>
                                 {% else %}
-                                    <p class="text-muted">No offers received yet.</p>
+                                    <p>No offers received yet. 🤞</p>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
                     <!-- Your Offers -->
                     <div class="col-12 mb-4">
-                        <div class="card bg-dark text-white">
+                        <div class="card bg-dark ">
                             <div class="card-body">
                                 <h5 class="card-title text-orange">Your Offers</h5>
                                 {% if buyer_offers %}
@@ -205,7 +205,7 @@
                     </div>
                     <!-- Notifications -->
                     <div class="col-12 mb-4">
-                        <div class="card bg-dark text-white">
+                        <div class="card bg-dark">
                             <div class="card-body">
                                 <h5 class="card-title text-orange">Notifications</h5>
                                 {% if all_notifications %}

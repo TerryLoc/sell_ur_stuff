@@ -149,7 +149,7 @@ body {
 /* Profile page styles */
 
 .text-orange {
-  color: #ff8c00; /* Or your specific orange shade from the theme */
+  color: var(--hover-color);
 }
 
 .profile-picture,
@@ -159,6 +159,8 @@ body {
 
 .card {
   border: 1px solid #333; /* Dark border for contrast */
+  color: var(--secondary-font-color);
+  border-radius: 20px;
 }
 
 .list-group-item.bg-dark.text-white:hover {
@@ -175,7 +177,7 @@ body {
   border-radius: 50%;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   margin-bottom: 30px;
-  border: 2px solid var(--main-font-color);
+  border: 2px solid var(--hover-color);
 }
 
 .user_info {
