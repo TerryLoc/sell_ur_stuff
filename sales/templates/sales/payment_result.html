@@ -6,7 +6,7 @@
         <p>You bought "{{ sale.title }}" for €{{ price|default:sale.price }}.</p>
     {% else %}
         <h2>Payment Cancelled</h2>
-        <p>You cancelled the payment for "{{ sale.title }}".</p>
+        <p>You cancelled the payment for "{% if sale %}{{ sale.title }}{% else %}an item{% endif %}"{% if sale %} "{{ sale.title }}"{% endif %}.</p>
     {% endif %}
     <a href="{% url 'market_list' %}" class="btn btn-primary">Back to Marketplace</a>
 </div>

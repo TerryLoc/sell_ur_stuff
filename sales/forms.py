@@ -35,7 +35,7 @@ class OfferForm(forms.ModelForm):
                 attrs={
                     "step": "0.01",
                     "min": "0.01",
-                    "placeholder": "Enter your offer in euros",
+                    "placeholder": "",
                 }
             )
         }

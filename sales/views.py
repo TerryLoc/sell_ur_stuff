@@ -354,14 +354,14 @@ def offer_payment_success(request):
 
 def offer_payment_cancel(request):
     """Payment cancel view for accepting an offer"""
-    offer_id = request.GET.get(
-        "offer_id"
-    )  # Optional: pass offer_id to get sale context
+    offer_id = request.GET.get("offer_id")
+    sale = None
     if offer_id:
-        offer = get_object_or_404(Offer, id=offer_id)
-        sale = offer.sale
-    else:
-        sale = None  # Fallback if no offer_id is provided
+        try:
+            offer = get_object_or_404(Offer, id=offer_id)
+            sale = offer.sale  # Get the sale associated with the offer
+        except Offer.DoesNotExist:
+            pass  # Fallback to None if offer doesn’t exist
     return render(
         request, "sales/payment_result.html", {"success": False, "sale": sale}
     )

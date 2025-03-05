@@ -17,13 +17,16 @@ urlpatterns = [
     path("offer/<int:offer_id>/accept/", views.accept_offer, name="accept_offer"),
     path("offer/<int:offer_id>/reject/", views.reject_offer, name="reject_offer"),
     path("offer_success/", views.offer_payment_success, name="offer_payment_success"),
-    path("offer_cancel/", views.offer_payment_cancel, name="offer_payment_cancel"),
+    path(
+        "offer_payment_cancel/", views.offer_payment_cancel, name="offer_payment_cancel"
+    ),  # Ensuring this matches the URL in the payment gateway
     # Counteroffer views
     path("offer/<int:offer_id>/counter/", views.counter_offer, name="counter_offer"),
     path(
         "offer/<int:offer_id>/respond/",
         views.respond_counter_offer,
         name="respond_counter_offer",
-    ),
+    ),  # Match this path with the URL in the payment gateway
+    # Payment views for accepting an
     path("offer/<int:offer_id>/pay/", views.pay_offer, name="pay_offer"),
 ]
