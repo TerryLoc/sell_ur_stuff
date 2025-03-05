@@ -38,6 +38,7 @@ class OfferForm(forms.ModelForm):
                     "placeholder": placeholder_text,
                 }
             )
+        self.sale = sale  # Store sale as an instance attribute for validation
 
     class Meta:
         model = Offer

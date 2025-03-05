@@ -154,7 +154,7 @@ def make_offer(request, sale_id):
     if sale.status != "available":
         return redirect("market_list")
     if request.method == "POST":
-        form = OfferForm(request.POST, sale=sale)
+        form = OfferForm(request.POST, sale=sale)  # Pass sale here
         if form.is_valid():
             offer = form.save(commit=False)
             offer.sale = sale
@@ -166,7 +166,7 @@ def make_offer(request, sale_id):
             )
             return redirect("sale_detail", sale_id=sale.id)
     else:
-        form = OfferForm(sale=sale)
+        form = OfferForm(sale=sale)  # Pass sale here
     return render(request, "sales/make_offer.html", {"sale": sale, "form": form})
 
 
