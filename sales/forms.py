@@ -23,24 +23,30 @@ class SaleForm(forms.ModelForm):
 
 
 class OfferForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        self.sale = kwargs.pop("sale", None)
-        super().__init__(*args, **kwargs)
+    """
+    Form for making an offer on a sale listing with a custom amount field
+    """
+
+    def __init__(self, *args, sale=None, **kwargs):
+        super(OfferForm, self).__init__(*args, **kwargs)
+        if sale:
+            placeholder_text = f"€{sale.price}"
+            self.fields["amount"].widget = forms.NumberInput(
+                attrs={
+                    "step": "0.01",
+                    "min": "0.01",
+                    "placeholder": placeholder_text,
+                }
+            )
 
     class Meta:
         model = Offer
         fields = ["amount"]
-        widgets = {
-            "amount": forms.NumberInput(
-                attrs={
-                    "step": "0.01",
-                    "min": "0.01",
-                    "placeholder": "",
-                }
-            )
-        }
 
     def clean_amount(self):
+        """
+        Ensure that the offer is at least 50% of the asking price of the sale
+        """
         amount = self.cleaned_data["amount"]
         if self.sale and amount < self.sale.price * Decimal(
             "0.5"
