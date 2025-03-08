@@ -75,7 +75,7 @@ def sale_create(request):
 @login_required
 def sale_update(request, sale_id):
     """
-    Update an existing sale listing ie. change the details of a sale
+    Update an existing sale listing ie. change the details of a sale listing
     """
     sale = get_object_or_404(Sale, id=sale_id, user=request.user)
     if sale.status == "sold":
@@ -84,7 +84,22 @@ def sale_update(request, sale_id):
         form = SaleForm(request.POST, request.FILES, instance=sale)
         if form.is_valid():
             form.save()
-            return redirect("sales_list")
+            return JsonResponse(
+                # Return a JSON response with a successful update message
+                {
+                    "status": "success",
+                    "message": f"Sale '{sale.title}' updated successfully!",
+                }
+            )
+        else:
+            return JsonResponse(
+                # Return a JSON response with an error message if update fails
+                {
+                    "status": "error",
+                    "message": "Failed to update sale. Please check the form.",
+                },
+                status=400,
+            )
     else:
         form = SaleForm(instance=sale)
     return render(request, "sales/sale_form.html", {"form": form})
