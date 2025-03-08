@@ -145,6 +145,7 @@ def buy_product(request, sale_id):
             status=400,
         )
     session = stripe.checkout.Session.create(
+        # Create a Stripe session for the sale item with the user's details
         payment_method_types=["card"],
         line_items=[
             {
@@ -187,8 +188,30 @@ def payment_success(request):
             buyer=request.user,
             sale=sale,
             price_paid=sale.price,  # Set to listed price for direct buys
-        )  # Triggers notification
-    return render(request, "sales/payment_result.html", {"success": True, "sale": sale})
+        )
+        return render(
+            # Render the payment result page with a success message if payment is successful
+            request,
+            "sales/payment_result.html",
+            {
+                "success": True,
+                "sale": sale,
+                "message": f"Payment successful! Congrats... you bought '{sale.title}' for €{sale.price}.",
+                "message_type": "success",
+            },
+        )
+
+    return render(
+        # Render the payment result page with a failure message if payment fails
+        request,
+        "sales/payment_result.html",
+        {
+            "success": False,
+            "sale": sale,
+            "message": "Payment failed. Please try again.",
+            "message_type": "error",
+        },
+    )
 
 
 def payment_cancel(request):
