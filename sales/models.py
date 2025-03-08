@@ -8,7 +8,7 @@ class Sale(models.Model):
     STATUS_CHOICES = [
         ("available", "Available"),
         ("sold", "Sold"),
-        ("pending", "Pending"),  # Add this
+        ("pending", "Pending"),  # Pending approval by seller
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Seller
@@ -31,13 +31,6 @@ class Sale(models.Model):
 
     def __str__(self):
         return self.title
-
-
-from django.db import models
-from django.contrib.auth import get_user_model
-from .models import Sale  # Assuming Sale is in the same file or imported
-
-User = get_user_model()
 
 
 class Offer(models.Model):
