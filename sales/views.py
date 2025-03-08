@@ -409,7 +409,7 @@ def counter_offer(request, offer_id):
 
 @login_required
 def respond_counter_offer(request, offer_id):
-    """Respond to a counter offer on a sale item listing by a user (buyer) on a sale item"""
+    """Respond to a counter offer on a sale item listing by a user (buyer) on a sale item with the option to accept or reject"""
     offer = get_object_or_404(Offer, id=offer_id, buyer=request.user)
     if offer.counter_status != "pending":
         return redirect("profile")
@@ -441,15 +441,29 @@ def respond_counter_offer(request, offer_id):
                 + f"?offer_id={offer.id}",
                 metadata={"offer_id": offer.id, "sale_id": sale.id},
             )
-            return redirect(session.url, code=303)
+            return JsonResponse(
+                # JSON message if the counter offer is accepted
+                {
+                    "status": "info",
+                    "message": f" Your counter offer was accepted! Proceeding to payment for '{offer.sale.title}'...",
+                    "redirect": session.url,
+                }
+            )
         elif action == "reject":
             offer.counter_status = "rejected"
             offer.save()
             Notification.objects.create(
+                # Notify the seller that the counter offer was rejected
                 user=offer.sale.user,
-                message=f"Buyer rejected your counteroffer of €{offer.counter_amount} on '{offer.sale.title}'.",
+                message=f"Buyer rejected your counter offer of €{offer.counter_amount} on '{offer.sale.title}'.",
             )
-            return redirect("profile")
+            return JsonResponse(
+                # JSON message if the counter offer is rejected
+                {
+                    "status": "success",
+                    "message": f"Your counter offer of €{offer.counter_amount} on '{offer.sale.title}'was rejected.",
+                }
+            )
     return render(request, "sales/respond_counter_offer.html", {"offer": offer})
 
 
