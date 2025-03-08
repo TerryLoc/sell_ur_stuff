@@ -139,7 +139,11 @@ def buy_product(request, sale_id):
     """
     sale = get_object_or_404(Sale, id=sale_id)
     if sale.status != "available":
-        return redirect("market_list")
+        return JsonResponse(
+            # JSON response with a warning message if the sale is not available
+            {"status": "warning", "message": "This item is no longer available."},
+            status=400,
+        )
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],
         line_items=[
@@ -158,7 +162,14 @@ def buy_product(request, sale_id):
         cancel_url=request.build_absolute_uri("/sales/cancel/"),
         metadata={"sale_id": sale.id},
     )
-    return redirect(session.url, code=303)
+    return JsonResponse(
+        # JSON response with a success message and the Stripe session
+        {
+            "status": "info",
+            "message": f"Proceeding to payment section for '{sale.title}'...",
+            "redirect": session.url,
+        }
+    )
 
 
 # Payment success and cancel views
