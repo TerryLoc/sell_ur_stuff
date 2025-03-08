@@ -316,12 +316,19 @@ def reject_offer(request, offer_id):
     # Add logic to handle rejection
     offer.status = "rejected"
     offer.save()
-    # Notify buyer that their offer was rejected
+
     Notification.objects.create(
+        # Notify buyer that their offer was rejected
         user=offer.buyer,
         message=f"Your offer of €{offer.amount} on '{offer.sale.title}' has been rejected.",
     )
-    return redirect("profile")
+    return JsonResponse(
+        # JSON message that the offer is rejected
+        {
+            "status": "success",
+            "message": f"The offer of €{offer.amount} on '{offer.sale.title}' was rejected.",
+        }
+    )
 
 
 @login_required
