@@ -292,12 +292,19 @@ def accept_offer(request, offer_id):
     sale = offer.sale
     sale.status = "pending"  # Mark as pending until payment is completed
     sale.save()
-    # Notify buyer that their offer was accepted with a pay link
+
     Notification.objects.create(
+        # Notify the buyer that their offer was accepted with a payment link
         user=offer.buyer,
         message=f"Your offer of €{offer.amount} on '{sale.title}' has been accepted! Click <a href='{reverse('pay_offer', args=[offer.id])}'>here</a> to pay now.",
     )
-    return redirect("profile")
+    return JsonResponse(
+        # JSON success message if the offer is accepted
+        {
+            "status": "success",
+            "message": f"Offer of €{offer.amount} on '{sale.title}' accepted. WOOOO!",
+        }
+    )
 
 
 @login_required
