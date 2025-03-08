@@ -468,7 +468,7 @@ def respond_counter_offer(request, offer_id):
 
 
 def offer_payment_success(request):
-    """Payment success view for accepting an offer and completing the sale"""
+    """Payment success view for accepting an offer and completing the sale transaction"""
     session_id = request.GET.get("session_id")
     offer_id = request.GET.get("offer_id")
     session = stripe.checkout.Session.retrieve(session_id)
@@ -477,7 +477,7 @@ def offer_payment_success(request):
         sale = offer.sale
         sale.status = "sold"  # Update to sold after payment
         sale.save()
-        # Determine the final price: counter_amount if accepted, otherwise amount
+        # Determine the final price: counter_amount if accepted, otherwise amount from the original offer
         price = (
             offer.counter_amount
             if offer.counter_amount and offer.counter_status == "accepted"
@@ -486,30 +486,57 @@ def offer_payment_success(request):
         Purchase.objects.create(
             buyer=offer.buyer,
             sale=sale,
-            price_paid=price,  # Set to final offer or counteroffer price
-        )  # Triggers notification
+            price_paid=price,
+        )
         offer.status = "accepted"
         offer.save()
         return render(
+            # Render the payment result page with a success message if payment is successful
             request,
             "sales/payment_result.html",
-            {"success": True, "sale": sale, "price": price},
+            {
+                "success": True,
+                "sale": sale,
+                "price": price,
+                "message": f"Payment successful! You have bought '{sale.title}' for €{price}. Niecely done!",
+                "message_type": "success",
+            },
         )
     return render(
-        request, "sales/payment_result.html", {"success": False, "sale": offer.sale}
+        # Render the payment result page with a failure message if payment fails
+        request,
+        "sales/payment_result.html",
+        {
+            "success": False,
+            "sale": offer.sale,
+            "message": "Payment failed. Please try again.",
+            "message_type": "error",
+        },
     )
 
 
 def offer_payment_cancel(request):
-    """Payment cancel view for accepting an offer"""
+    """Payment cancel view when the payment is cancelled by the buyer"""
     offer_id = request.GET.get("offer_id")
     sale = None
     if offer_id:
         try:
             offer = get_object_or_404(Offer, id=offer_id)
-            sale = offer.sale  # Get the sale associated with the offer
+            sale = offer.sale
         except Offer.DoesNotExist:
-            pass  # Fallback to None if offer doesn’t exist
+            pass
     return render(
-        request, "sales/payment_result.html", {"success": False, "sale": sale}
+        # Render the payment result page with a cancellation message if payment is cancelled
+        request,
+        "sales/payment_result.html",
+        {
+            "success": False,
+            "sale": sale,
+            "message": (
+                f"Payment cancelled for '{sale.title}'."
+                if sale
+                else "Payment cancelled."
+            ),
+            "message_type": "info",
+        },
     )
