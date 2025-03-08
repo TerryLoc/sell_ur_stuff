@@ -226,7 +226,7 @@ def payment_cancel(request):
     )
 
 
-# Offer views for buyers and sellers to make and accept/reject offers on sale items
+# Offer views for buyers and sellers to make and accept/reject offers on sale items. Also, counter offers are included.
 @login_required
 def make_offer(request, sale_id):
     """
@@ -234,21 +234,41 @@ def make_offer(request, sale_id):
     """
     sale = get_object_or_404(Sale, id=sale_id)
     if sale.status != "available":
-        return redirect("market_list")
+        return JsonResponse(
+            # JSON warning message if the item is not available
+            {"status": "warning", "message": "This item is no longer available."},
+            status=400,
+        )
     if request.method == "POST":
-        form = OfferForm(request.POST, sale=sale)  # Pass sale here
+        form = OfferForm(request.POST, sale=sale)
         if form.is_valid():
             offer = form.save(commit=False)
             offer.sale = sale
             offer.buyer = request.user
             offer.save()
             Notification.objects.create(
+                # Notify the seller of the offer made on their item
                 user=sale.user,
-                message=f"New offer of €{offer.amount} on your item '{sale.title}' from {request.user.username}!",
+                message=f"You have a new offer of €{offer.amount} on your item '{sale.title}' from {request.user.username}!",
             )
-            return redirect("sale_detail", sale_id=sale.id)
+            return JsonResponse(
+                # JSON success message if the offer is successfully submitted
+                {
+                    "status": "success",
+                    "message": f"Your offer of €{offer.amount} was submitted for '{sale.title}'!",
+                }
+            )
+        else:
+            return JsonResponse(
+                # JSON error message if the offer submission fails
+                {
+                    "status": "error",
+                    "message": "You failed to submit an offer. Please check your input.",
+                },
+                status=400,
+            )
     else:
-        form = OfferForm(sale=sale)  # Pass sale here
+        form = OfferForm(sale=sale)
     return render(request, "sales/make_offer.html", {"sale": sale, "form": form})
 
 
