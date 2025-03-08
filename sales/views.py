@@ -218,7 +218,12 @@ def payment_cancel(request):
     """
     Payment cancel view that redirects to the payment result page with a failure message
     """
-    return render(request, "sales/payment_result.html", {"success": False})
+    return render(
+        # Render the payment result page with a cancellation message if payment is cancelled
+        request,
+        "sales/payment_result.html",
+        {"success": False, "message": "Payment cancelled.", "message_type": "info"},
+    )
 
 
 # Offer views for buyers and sellers to make and accept/reject offers on sale items
