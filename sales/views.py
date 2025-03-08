@@ -373,7 +373,11 @@ def pay_offer(request, offer_id):
 def counter_offer(request, offer_id):
     offer = get_object_or_404(Offer, id=offer_id, sale__user=request.user)
     if offer.status != "pending":
-        return redirect("profile")
+        return JsonResponse(
+            # JSON warning message if the offer is not pending
+            {"status": "warning", "message": "You cannot counter this offer."},
+            status=400,
+        )
     if request.method == "POST":
         counter_amount = request.POST.get("counter_amount")
         try:
@@ -387,12 +391,18 @@ def counter_offer(request, offer_id):
                 user=offer.buyer,
                 message=f"Seller countered your offer of €{offer.amount} on '{offer.sale.title}' with €{counter_amount}.",
             )
-            return redirect("profile")  # Already correct
+            return JsonResponse(
+                # JSON success message if the counter offer is submitted
+                {
+                    "status": "success",
+                    "message": f"Your counter offer of €{counter_amount} has been submitted for '{offer.sale.title}'! Best of Luck!",
+                }
+            )
         except ValueError:
-            return render(
-                request,
-                "sales/counter_offer.html",
-                {"offer": offer, "error": "Invalid amount"},
+            return JsonResponse(
+                # JSON error message if the counter offer is invalid
+                {"status": "error", "message": "Invalid counteroffer amount."},
+                status=400,
             )
     return render(request, "sales/counter_offer.html", {"offer": offer})
 
