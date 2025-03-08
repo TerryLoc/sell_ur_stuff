@@ -113,10 +113,21 @@ def sale_delete(request, sale_id):
     """
     sale = get_object_or_404(Sale, id=sale_id, user=request.user)
     if sale.status == "sold":
-        return redirect("sales_list")  # Or render an error page
+        return JsonResponse(
+            # JSON response with a warning message if the sale is sold
+            {"status": "warning", "message": "Cannot delete a sold item."},
+            status=400,
+        )
     if request.method == "POST":
+        sale_title = sale.title
         sale.delete()
-        return redirect("sales_list")
+        return JsonResponse(
+            # JSON response with a success message if the sale item is deleted
+            {
+                "status": "success",
+                "message": f"Sale '{sale_title}' is deleted successfully!",
+            }
+        )
     return render(request, "sales/sale_confirm_delete.html", {"sale": sale})
 
 
