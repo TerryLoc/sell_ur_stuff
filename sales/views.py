@@ -1,4 +1,6 @@
 import stripe
+import json
+from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.decorators import login_required
@@ -48,7 +50,22 @@ def sale_create(request):
             sale = form.save(commit=False)
             sale.user = request.user
             sale.save()
-            return redirect("sales_list")
+            return JsonResponse(
+                # Return a JSON response with a success message if the form is valid
+                {
+                    "status": "success",
+                    "message": f"Sale of'{sale.title}' created successfully!",
+                }
+            )
+        else:
+            return JsonResponse(
+                # Return a JSON response with an error message if the form is invalid
+                {
+                    "status": "error",
+                    "message": "Failed to create the sale. Please check the form and images.",
+                },
+                status=400,
+            )
     else:
         form = SaleForm()
     return render(request, "sales/sale_form.html", {"form": form})
