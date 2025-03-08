@@ -333,7 +333,7 @@ def reject_offer(request, offer_id):
 
 @login_required
 def pay_offer(request, offer_id):
-    """Allow buyer to pay for an accepted offer using Stripe"""
+    """Allow buyer to pay for an accepted offer using Stripe API and redirect to the payment page"""
     offer = get_object_or_404(Offer, id=offer_id, buyer=request.user, status="accepted")
     sale = offer.sale
     if sale.status != "pending":
@@ -343,9 +343,10 @@ def pay_offer(request, offer_id):
         line_items=[
             {
                 "price_data": {
+                    # Use the original amount for the sale item
                     "currency": "eur",
                     "product_data": {"name": sale.title},
-                    "unit_amount": int(offer.amount * 100),  # Use original offer amount
+                    "unit_amount": int(offer.amount * 100),  # Original amount
                 },
                 "quantity": 1,
             }
@@ -357,7 +358,14 @@ def pay_offer(request, offer_id):
         + f"?offer_id={offer.id}",
         metadata={"offer_id": offer.id, "sale_id": sale.id},
     )
-    return redirect(session.url, code=303)
+    return JsonResponse(
+        # JSON message to proceed to payment of the accepted offer
+        {
+            "status": "info",
+            "message": f"Proceeding to payment for '{sale.title}'...",
+            "redirect": session.url,
+        }
+    )
 
 
 # Counter offer view for buyers and sellers to make and accept/reject counter offers on sale items
