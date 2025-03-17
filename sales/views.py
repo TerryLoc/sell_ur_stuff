@@ -14,12 +14,31 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 @login_required
 def sales_list(request):
     """
-    List all sales for the logged-in user that are available
+    List all sales for the logged-in user, categorized by status: available, sold, or pending.
     """
-    sales = Sale.objects.filter(
-        user=request.user, status="available"
-    )  # Only available items
-    return render(request, "sales/sales_list.html", {"sales": sales})
+    # Active sales are sales that are available for purchase
+    active_sales = Sale.objects.filter(user=request.user, status="available").order_by(
+        "-created_at"
+    )
+    # Sold purchases are sales that have been marked as sold
+    sold_purchases = (
+        Purchase.objects.filter(sale__user=request.user)
+        .select_related("sale")
+        .order_by("-purchased_at")
+    )
+    # Pending sales are offers that have been accepted but not yet paid for
+    pending_sales = Sale.objects.filter(user=request.user, status="pending").order_by(
+        "-created_at"
+    )
+    return render(
+        request,
+        "sales/sales_list.html",
+        {
+            "active_sales": active_sales,
+            "sold_purchases": sold_purchases,
+            "pending_sales": pending_sales,
+        },
+    )
 
 
 # View details of a single sale

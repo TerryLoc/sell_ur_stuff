@@ -1,29 +1,138 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}My Sales{% endblock title %}
+{% block title %}My Sales - Sell Your Stuff{% endblock title %}
 
 {% block content %}
-<div class="container">
-    <h2 class="text-center">Your Sales</h2>
-    <div class="row">
-        {% for sale in sales %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    {% if sale.main_image %}
-                        <img src="{{ sale.main_image.url }}" class="card-img-top sale-image" alt="{{ sale.title }}" width="" height="">
-                    {% else %}
-                        <img src="https://via.placeholder.com/300" class="card-img-top sale-image" alt="No Image" width="" height="">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ sale.title }}</h5>
-                        <p class="card-text">€{{ sale.price }}</p>
-                        <a href="{% url 'sale_detail' sale.id %}" class="btn btn-primary">View</a>
+<div class="container mt-5">
+    <!-- Header -->
+    <div class="row justify-content-center mb-4 animate__animated animate__fadeIn">
+        <div class="col-lg-10">
+            <div class="card bg-dark text-light shadow-lg border-0">
+                <div class="card-body text-center p-4">
+                    <h1 class="display-5 fw-bold text-uppercase sales-dashboard-title">
+                        Your Sales Dashboard
+                    </h1>
+                    <p class="lead lead-secondary">Manage your listings like a pro</p>
+                    <a href="{% url 'sale_create' %}" class="btn btn-success btn-lg px-5 mt-3 btn-custom">
+                        Add New Listing
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabbed Sections -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <ul class="nav nav-tabs mb-4" id="salesTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active tab-link" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab" aria-controls="active" aria-selected="true">
+                        Active
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link tab-link" id="sold-tab" data-bs-toggle="tab" data-bs-target="#sold" type="button" role="tab" aria-controls="sold" aria-selected="false">
+                        Sold
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link tab-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="false">
+                        Pending
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="salesTabContent">
+                <!-- Active Sales -->
+                <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
+                    <div class="row g-4">
+                        {% for sale in active_sales %}
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-dark text-light shadow-lg border-0 h-100 animate__animated animate__fadeInUp card-animate">
+                                    {% if sale.main_image %}
+                                        <img src="{{ sale.main_image.url }}" class="card-img-top sale-image" alt="{{ sale.title }}" height="180" width="300">
+                                    {% else %}
+                                        <img src="https://via.placeholder.com/300" class="card-img-top sale-image" alt="No Image" height="180" width="300">
+                                    {% endif %}
+                                    <div class="card-body d-flex flex-column p-4">
+                                        <h5 class="card-title fw-bold card-title-custom">{{ sale.title|truncatechars:20 }}</h5>
+                                        <p class="card-text card-text-hover-color">€{{ sale.price }}</p>
+                                        <p class="text-muted small">Listed: {{ sale.created_at|date:"M d, Y" }}</p>
+                                        <div class="mt-auto">
+                                            <a href="{% url 'sale_detail' sale.id %}" class="btn btn-primary btn-sm me-2 btn-custom">View</a>
+                                            <a href="{% url 'sale_update' sale.id %}" class="btn btn-outline-secondary btn-sm btn-custom-outline">Edit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-12 text-center py-4">
+                                <p class="text-muted empty-text">No active sales yet. Start selling!</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Sold Sales -->
+                <div class="tab-pane fade" id="sold" role="tabpanel" aria-labelledby="sold-tab">
+                    <div class="row g-4">
+                        {% for purchase in sold_purchases %}
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-dark text-light shadow-lg border-0 h-100 animate__animated animate__fadeInUp card-animate">
+                                    {% if purchase.sale.main_image %}
+                                        <img src="{{ purchase.sale.main_image.url }}" class="card-img-top sale-image" alt="{{ purchase.sale.title }}" height="180" width="300">
+                                    {% else %}
+                                        <img src="https://via.placeholder.com/300" class="card-img-top sale-image no-image" alt="No Image" height="180" width="300">
+                                    {% endif %}
+                                    <div class="card-body d-flex flex-column p-4">
+                                        <h5 class="card-title fw-bold card-title-secondary">{{ purchase.sale.title|truncatechars:20 }}</h5>
+                                        <p class="card-text card-text-hover-color">Sold for €{{ purchase.price_paid }}</p>
+                                        <p class="text-muted small">Sold: {{ purchase.purchased_at|date:"M d, Y" }}</p>
+                                        <div class="mt-auto">
+                                            <a href="{% url 'sale_detail' purchase.sale.id %}" class="btn btn-primary btn-sm btn-custom">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-12 text-center py-4">
+                                <p class="text-muted empty-text">No sold items yet.</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Pending Sales -->
+                <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                    <div class="row g-4">
+                        {% for sale in pending_sales %}
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-dark text-light shadow-lg border-0 h-100 animate__animated animate__fadeInUp card-animate">
+                                    {% if sale.main_image %}
+                                        <img src="{{ sale.main_image.url }}" class="card-img-top sale-image" alt="{{ sale.title }}" height="180" width="300">
+                                    {% else %}
+                                        <img src="https://via.placeholder.com/300" class="card-img-top sale-image" alt="No Image" height="180" width="300">
+                                    {% endif %}
+                                    <div class="card-body d-flex flex-column p-4">
+                                        <h5 class="card-title fw-bold card-title-secondary">{{ sale.title|truncatechars:20 }}</h5>
+                                        <p class="card-text card-text-hover-color">€{{ sale.price }}</p>
+                                        <p class="text-muted small">Pending since: {{ sale.created_at|date:"M d, Y" }}</p>
+                                        <div class="mt-auto">
+                                            <a href="{% url 'sale_detail' sale.id %}" class="btn btn-primary btn-sm btn-custom">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-12 text-center py-4">
+                                <p class="text-muted empty-text">No pending sales yet.</p>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-        {% empty %}
-            <p class="text-center">You have no sales listed.</p>
-        {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock content %}
