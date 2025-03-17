@@ -333,6 +333,10 @@ h5 {
   object-fit: contain;
 }
 
+.small_text {
+  color: var(--secondary-font-color);
+}
+
 .no-image {
   opacity: 0.7;
 }
