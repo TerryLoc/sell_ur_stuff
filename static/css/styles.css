@@ -1,3 +1,4 @@
+/* Root Variables */
 :root {
   --main-bg-color: #233844;
   --main-bg-shadow: #233844b7;
@@ -5,8 +6,10 @@
   --main-font-color: #0d75b5;
   --secondary-font-color: #d5d7d8;
   --hover-color: #ffcc81;
+  --shadow-color: rgba(0, 0, 0, 0.5);
 }
 
+/* Reset & Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -24,34 +27,89 @@ body {
   flex: 1 0 auto;
 }
 
-/* Navbar styles */
-.navbar-brand {
-  color: var(--secondary-font-color);
-  font-size: 1.4rem;
-  font-weight: 500;
+/* Typography */
+h1,
+h2,
+h5 {
   text-transform: uppercase;
 }
 
+.display-5 {
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.lead {
+  font-weight: 400;
+}
+
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1rem;
+  padding: 1rem;
   text-transform: uppercase;
   color: var(--secondary-font-color);
+}
+
+.navbar-brand {
+  color: var(--secondary-font-color);
+  font-size: 1.4rem;
+  font-weight: 500;
 }
 
 .nav-link {
   color: var(--secondary-font-color);
   margin: 0 5px;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover {
   color: var(--hover-color);
 }
 
-/* Home page styles */
+/* Buttons */
+.btn-custom {
+  background: linear-gradient(135deg, var(--main-font-color), #095d8f);
+  color: var(--secondary-font-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-transform: uppercase;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.btn-custom:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+  color: var(--hover-color);
+}
+
+.btn-custom-outline {
+  background: transparent;
+  border: 2px solid var(--secondary-font-color);
+  color: var(--secondary-font-color);
+  padding: 8px 18px;
+  border-radius: 25px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn-custom-outline:hover {
+  background: var(--secondary-font-color);
+  color: var(--main-bg-color);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.button_profile {
+  background: var(--main-font-color);
+  border: none;
+  color: var(--secondary-font-color);
+}
+
+/* Home Page */
 .home-background {
   position: relative;
   padding-top: 80px;
@@ -67,18 +125,9 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(
-    --main-bg-shadow
-  ); /* Adjust the color and opacity as needed */
+  background: var(--main-bg-shadow);
   z-index: 1;
   border-radius: 20px;
-}
-
-.main-text {
-  background-color: var(--secondary-font-color);
-  border-top: 10px solid var(--main-bg-color);
-  border-bottom: 10px solid var(--main-bg-color);
-  padding: 20px 0;
 }
 
 .home-background > * {
@@ -94,7 +143,6 @@ body {
 }
 
 .home-background h2 {
-  text-transform: uppercase;
   color: var(--main-bg-color);
   font-weight: 500;
   letter-spacing: 1.5px;
@@ -111,7 +159,6 @@ body {
 
 .home-background a {
   text-decoration: none;
-  text-transform: uppercase;
   color: var(--main-bg-color);
 }
 
@@ -127,10 +174,9 @@ body {
   background-color: var(--main-bg-color);
   color: var(--secondary-font-color);
   border-radius: 20px;
-  text-transform: uppercase;
   font-weight: 500;
   letter-spacing: 1px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .home-background a.btn:hover {
@@ -140,65 +186,49 @@ body {
   box-shadow: 1px 2px 3px var(--main-bg-shadow);
 }
 
-.home-background strong {
-  color: var(--main-bg-color);
-  text-transform: uppercase;
+.main-text {
+  background-color: var(--secondary-font-color);
+  border-top: 10px solid var(--main-bg-color);
+  border-bottom: 10px solid var(--main-bg-color);
+  padding: 20px 0;
 }
 
-/* Profile page styles */
-
-.text-orange {
-  color: var(--hover-color);
-}
-
-.profile-picture,
-.default-profile-picture {
-  object-fit: cover;
-}
-
+/* Cards */
 .card {
-  border: 1px solid #333; /* Dark border for contrast */
+  border: 1px solid #333;
   color: var(--secondary-font-color);
   border-radius: 20px;
 }
 
-.list-group-item.bg-dark.text-white:hover {
-  background-color: #222; /* Subtle hover effect */
-}
-.profile-header {
-  text-transform: uppercase;
+.card-animate {
+  transition: transform 0.3s ease;
 }
 
-.default-profile-picture,
-.profile-picture {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 30px;
-  border: 2px solid var(--hover-color);
+.card-animate:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px var(--shadow-color);
 }
 
-.user_info {
-  color: whitesmoke;
-  background-color: var(--secondary-bg-color);
-  padding: 20px 15px;
-  margin: 20px 10px;
-  border-radius: 30px;
-}
-.user_info strong {
+.card-title-custom {
+  color: var(--secondary-font-color);
   font-size: 1.2rem;
-  color: var(--main-font-color);
 }
 
-/* Sale page styles */
+.card-title-secondary {
+  color: var(--secondary-font-color);
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.card-text-hover-color {
+  color: var(--hover-color);
+  font-weight: 600;
+}
+
+/* Marketplace */
 .marketplace-hero {
   background-color: var(--main-bg-color);
   min-height: 100vh;
-}
-
-.hero-title {
-  color: var(--hover-color);
 }
 
 .market-card:hover {
@@ -214,6 +244,8 @@ body {
 .market-card:hover .overlay {
   opacity: 1;
 }
+
+/* Profile Page */
 .profile-header,
 .card-title-hover-color,
 .sold-items-title,
@@ -221,23 +253,97 @@ body {
   color: var(--hover-color);
 }
 
-.button_profile {
-  background: var(--main-font-color);
-  border: none;
+.text-orange {
+  color: var(--hover-color);
+}
+
+.profile-picture,
+.default-profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+  border: 2px solid var(--hover-color);
+}
+
+.user_info {
+  color: whitesmoke;
+  background-color: var(--secondary-bg-color);
+  padding: 20px 15px;
+  margin: 20px 10px;
+  border-radius: 30px;
+}
+
+.user_info strong {
+  font-size: 1.2rem;
+  color: var(--main-font-color);
+}
+
+.list-group-item.bg-dark.text-white:hover {
+  background-color: #222;
+}
+
+/* Sales Listings */
+.sales-dashboard-title {
+  color: var(--main-font-color);
+  text-shadow: 2px 2px 8px var(--shadow-color);
+  transition: color 0.3s ease;
+}
+
+.sales-dashboard-title:hover {
+  color: var(--hover-color);
+}
+
+.lead-secondary {
   color: var(--secondary-font-color);
 }
 
-.sale-image,
+.tab-link {
+  background-color: var(--main-bg-color);
+  color: var(--secondary-font-color);
+  border: none;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.tab-link:hover {
+  color: var(--hover-color);
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #1a2b34;
+  color: var(--hover-color);
+  border-bottom: 3px solid var(--main-font-color);
+}
+
+.sale-image {
+  object-fit: cover;
+  height: 180px;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
 .sale-video {
   max-height: 300px;
+  max-width: 100%;
   object-fit: contain;
 }
 
-.sale-video {
-  max-width: 100%;
+.no-image {
+  opacity: 0.7;
 }
 
-/* Footer styles */
+.empty-text {
+  color: var(--secondary-font-color);
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+/* Footer */
 footer {
-  margin-top: auto; /* Pushes footer to bottom if content is short */
+  margin-top: auto;
 }
