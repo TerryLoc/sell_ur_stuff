@@ -28,6 +28,7 @@ class Sale(models.Model):
         max_length=10, choices=STATUS_CHOICES, default="available"
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)  # Updates on save
 
     def __str__(self):
         return self.title
