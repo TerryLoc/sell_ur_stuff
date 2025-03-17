@@ -13,10 +13,10 @@ def profile_view(request):
         "sale", "buyer"
     )
     purchases = Purchase.objects.filter(buyer=request.user).select_related("sale__user")
-    received_offers = Offer.objects.filter(sale__user=request.user).order_by(
+    offers = Offer.objects.filter(sale__user=request.user).order_by(
         "-created_at"
     )  # Offers as seller
-    buyer_offers = Offer.objects.filter(buyer=request.user).order_by(
+    offers_made = Offer.objects.filter(buyer=request.user).order_by(
         "-created_at"
     )  # Offers as buyer
     notifications = Notification.objects.filter(user=request.user, is_read=False)
@@ -31,8 +31,8 @@ def profile_view(request):
             "active_sales": active_sales,
             "sold_sales": sold_sales,
             "purchases": purchases,
-            "received_offers": received_offers,
-            "buyer_offers": buyer_offers,
+            "offers": offers,
+            "offers_made": offers_made,
             "notifications": notifications,
             "all_notifications": all_notifications,
         },
