@@ -28,22 +28,22 @@
                             <div class="carousel-inner">
                                 {% if sale.main_image %}
                                     <div class="carousel-item active">
-                                        <img src="{{ sale.main_image.url }}" alt="{{ sale.title }}" class="d-block w-100 sale-image-listing">
+                                        <img src="{{ sale.main_image.url }}" alt="{{ sale.title }}" class="d-block w-100 sale-image-listing" height="" width="">
                                     </div>
                                 {% endif %}
                                 {% if sale.image_1 %}
                                     <div class="carousel-item {% if not sale.main_image %}active{% endif %}">
-                                        <img src="{{ sale.image_1.url }}" alt="{{ sale.title }} - Image 1" class="d-block w-100 sale-image-listing">
+                                        <img src="{{ sale.image_1.url }}" alt="{{ sale.title }} - Image 1" class="d-block w-100 sale-image-listing" height="" width="">
                                     </div>
                                 {% endif %}
                                 {% if sale.image_2 %}
                                     <div class="carousel-item {% if not sale.main_image and not sale.image_1 %}active{% endif %}">
-                                        <img src="{{ sale.image_2.url }}" alt="{{ sale.title }} - Image 2" class="d-block w-100 sale-image-listing">
+                                        <img src="{{ sale.image_2.url }}" alt="{{ sale.title }} - Image 2" class="d-block w-100 sale-image-listing" height="" width="">
                                     </div>
                                 {% endif %}
                                 {% if sale.image_3 %}
                                     <div class="carousel-item {% if not sale.main_image and not sale.image_1 and not sale.image_2 %}active{% endif %}">
-                                        <img src="{{ sale.image_3.url }}" alt="{{ sale.title }} - Image 3" class="d-block w-100 sale-image-listing">
+                                        <img src="{{ sale.image_3.url }}" alt="{{ sale.title }} - Image 3" class="d-block w-100 sale-image-listing" height="" width="">
                                     </div>
                                 {% endif %}
                             </div>
