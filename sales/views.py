@@ -44,14 +44,19 @@ def sales_list(request):
 # View details of a single sale
 def sale_detail(request, sale_id):
     """
-    View details of a single sale listing with the option to buy the product
+    View details of a single sale listing with the option to buy the product or make an offer
     """
     sale = get_object_or_404(Sale, id=sale_id)
     purchase = None
+    highest_offer = (
+        Offer.objects.filter(sale=sale, status="pending").order_by("-amount").first()
+    )
     if sale.status == "sold" and request.user.is_authenticated:
         purchase = Purchase.objects.filter(sale=sale, buyer=request.user).first()
     return render(
-        request, "sales/sale_detail.html", {"sale": sale, "purchase": purchase}
+        request,
+        "sales/sale_detail.html",
+        {"sale": sale, "purchase": purchase, "highest_offer": highest_offer},
     )
 
 
