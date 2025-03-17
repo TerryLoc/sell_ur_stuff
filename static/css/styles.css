@@ -20,7 +20,6 @@ body {
 }
 
 .main-content {
-  padding: 70px 0;
   height: auto;
   flex: 1 0 auto;
 }
@@ -192,6 +191,26 @@ body {
   color: var(--main-font-color);
 }
 
+/* Sale page styles */
+.marketplace-hero {
+  background-color: var(--main-bg-color);
+  min-height: 100vh;
+}
+
+.market-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+.card-img-top .overlay {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.market-card:hover .overlay {
+  opacity: 1;
+}
+
 .sale-image,
 .sale-video {
   max-height: 300px;
@@ -205,5 +224,4 @@ body {
 /* Footer styles */
 footer {
   margin-top: auto; /* Pushes footer to bottom if content is short */
-  color: var(--secondary-font-color);
 }
