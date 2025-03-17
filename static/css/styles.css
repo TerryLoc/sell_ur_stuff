@@ -197,6 +197,10 @@ body {
   min-height: 100vh;
 }
 
+.hero-title {
+  color: var(--hover-color);
+}
+
 .market-card:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px var(--shadow-color);
