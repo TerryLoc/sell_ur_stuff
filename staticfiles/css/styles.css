@@ -204,7 +204,5 @@ body {
 
 /* Footer styles */
 footer {
-  background-color: green;
   margin-top: auto; /* Pushes footer to bottom if content is short */
-  color: var(--secondary-font-color);
 }
