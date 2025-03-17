@@ -19,7 +19,7 @@
                         {% endif %}
                     </div>
                     {% if user == request.user %}
-                        <a href="{% url 'profile_edit' %}" class="btn btn-primary mt-3 px-4 btn-edit-profile">Edit Profile</a>
+                        <a href="{% url 'profile_edit' %}" class="btn btn-primary mt-3 px-4 button_profile">Edit Profile</a>
                     {% endif %}
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div class="col-md-4">
                     <div class="card bg-dark text-light shadow-lg border-0 h-100 animate__animated animate__fadeInLeft">
                         <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-main">User Info</h5>
+                            <h5 class="card-title text-uppercase user-info-title">User Info</h5>
                             <div class="user_info">
                                 <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
                                 <p><strong>Email:</strong> {{ user.email }}</p>
@@ -51,7 +51,7 @@
                     <!-- Active Sale Items -->
                     <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
                         <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover">Active Sale Items</h5>
+                            <h5 class="card-title text-uppercase card-title-hover-color">Active Sale Items</h5>
                             {% if active_sales %}
                                 <ul class="list-group list-group-flush">
                                     {% for sale in active_sales %}
@@ -72,7 +72,7 @@
                     <!-- Sold Items -->
                     <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
                         <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover">Sold Items</h5>
+                            <h5 class="card-title text-uppercase sold-items-title">Sold Items</h5>
                             {% if sold_sales %}
                                 <ul class="list-group list-group-flush">
                                     {% for purchase in sold_sales %}
@@ -93,7 +93,7 @@
                     <!-- Your Purchases -->
                     <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
                         <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover">Your Purchases</h5>
+                            <h5 class="card-title text-uppercase card-title-hover-color">Your Purchases</h5>
                             {% if purchases %}
                                 <ul class="list-group list-group-flush">
                                     {% for purchase in purchases %}
@@ -114,7 +114,7 @@
                     <!-- Offers Received -->
                     <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
                         <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover">Offers Received</h5>
+                            <h5 class="card-title text-uppercase card-title-hover-color">Offers Received</h5>
                             {% if offers %}
                                 <ul class="list-group list-group-flush">
                                     {% for offer in offers %}
@@ -147,7 +147,7 @@
                     <!-- Your Offers -->
                     <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
                         <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover">Your Offers</h5>
+                            <h5 class="card-title text-uppercase card-title-hover-color">Your Offers</h5>
                             {% if offers_made %}
                                 <ul class="list-group list-group-flush">
                                     {% for offer in offers_made %}
@@ -181,7 +181,7 @@
                     <!-- Notifications -->
                     <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
                         <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover">Notifications</h5>
+                            <h5 class="card-title text-uppercase notification-title">Notifications</h5>
                             {% if all_notifications %}
                                 <ul class="list-group list-group-flush">
                                     {% for notification in all_notifications %}

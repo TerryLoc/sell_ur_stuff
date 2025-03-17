@@ -210,6 +210,18 @@ body {
 .market-card:hover .overlay {
   opacity: 1;
 }
+.profile-header,
+.card-title-hover-color,
+.sold-items-title,
+.card-title {
+  color: var(--hover-color);
+}
+
+.button_profile {
+  background: var(--main-font-color);
+  border: none;
+  color: var(--secondary-font-color);
+}
 
 .sale-image,
 .sale-video {
