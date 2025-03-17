@@ -9,8 +9,8 @@
         {% for sale in sales %}
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    {% if sale.image %}
-                        <img src="{{ sale.image.url }}" class="card-img-top sale-image" alt="{{ sale.title }}" width="" height="">
+                    {% if sale.main_image %}
+                        <img src="{{ sale.main_image.url }}" class="card-img-top sale-image" alt="{{ sale.title }}" width="" height="">
                     {% else %}
                         <img src="https://via.placeholder.com/300" class="card-img-top sale-image" alt="No Image" width="" height="">
                     {% endif %}
