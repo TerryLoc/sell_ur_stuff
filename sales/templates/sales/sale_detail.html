@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
   <h2>{{ sale.title }}</h2>
-  {% if sale.image or sale.image_1 or sale.image_2 or sale.image_3 %}
+  {% if sale.main_image or sale.image_1 or sale.image_2 or sale.image_3 %}
     <div id="saleCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
-        {% if sale.image %}
+        {% if sale.main_image %}
           <div class="carousel-item active">
-            <img src="{{ sale.image.url }}"
+            <img src="{{ sale.main_image.url }}"
                  alt="{{ sale.title }}"
                  class="d-block w-100 sale-image"
                  width=""

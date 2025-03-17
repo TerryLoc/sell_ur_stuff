@@ -14,7 +14,7 @@ class SaleForm(forms.ModelForm):
             "title",
             "description",
             "price",
-            "image",
+            "main_image",
             "image_1",
             "image_2",
             "image_3",
