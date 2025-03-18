@@ -1,24 +1,31 @@
 {% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}  <!-- Load widget_tweaks to use add_class -->
+
 {% block content %}
-<div class="container mt-4">
-    <h2>Make an Offer for {{ sale.title }}</h2>
-    <p>Asking Price: €{{ sale.price }}</p>
-    {% if form.errors %}
-        <div class="alert alert-danger">
-            {% for field, errors in form.errors.items %}
-                {{ errors|join:", " }}
-            {% endfor %}
+<div class="container mt-5 auth-container animate__animated animate__fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <h2 class="auth-title">Make an Offer for {{ sale.title }}</h2>
+            <p class="auth-prompt">Asking Price: €{{ sale.price }}</p>
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {% for field, errors in form.errors.items %}
+                        {{ errors|join:", " }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                <div class="auth-field">
+                    {{ form.amount.label_tag }}
+                    {{ form.amount|add_class:"auth-field-input" }}  <!-- This works with widget_tweaks -->
+                    <small class="form-text text-white">Your offer is in euros</small>
+                </div>
+                <button type="submit" class="btn-custom">SEND IT!</button>
+                <a href="{% url 'sale_detail' sale.id %}" class="btn-custom cancel">Back to Listing</a>
+            </form>
         </div>
-    {% endif %}
-    <form method="post" class="form">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ form.amount.label_tag }}
-            {{ form.amount }}
-            <small class="form-text text-white">Your offer is in euros</small>
-        </div>
-        <button type="submit" class="btn btn-success">SEND IT!</button>
-        <a href="{% url 'sale_detail' sale.id %}" class="btn btn-secondary">Back to Listing</a>
-    </form>
+    </div>
 </div>
 {% endblock content %}
