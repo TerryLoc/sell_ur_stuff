@@ -323,9 +323,9 @@ a {
 .user_info {
   color: whitesmoke;
   background-color: var(--secondary-bg-color);
-  padding: 20px 15px;
+  padding: 15px;
   margin: 20px 10px;
-  border-radius: 30px;
+  border-radius: 20px;
 }
 
 .user_info strong {
