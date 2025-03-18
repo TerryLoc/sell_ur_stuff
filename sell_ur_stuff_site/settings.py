@@ -17,9 +17,9 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-2%ek4)y646i#h=0#u63&ygwlq#^093z3kw08=*c*+=&=7(go!@"
@@ -44,6 +44,13 @@ CSRF_TRUSTED_ORIGINS = ["https://sell-ur-stuff-19632c616966.herokuapp.com"]
 # Application definition
 
 INSTALLED_APPS = [
+    # Custom apps
+    "home",
+    "sales",
+    "market",
+    "profiles",
+    "contact",
+    # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -53,14 +60,8 @@ INSTALLED_APPS = [
     # Allauth apps
     "allauth",
     "allauth.account",
-    "allauth.socialaccount",  # If using social authentication
-    "allauth.socialaccount.providers.google",  # Google provider
-    # Custom apps
-    "home",
-    "sales",
-    "market",
-    "profiles",
-    "contact",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers",
 ]
 
 # Allauth settings for email verification
