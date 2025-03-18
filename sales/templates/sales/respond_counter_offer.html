@@ -1,13 +1,29 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
-<div class="container mt-4">
-    <h2>Respond to Counteroffer</h2>
-    <p>Seller countered your €{{ offer.amount }} offer with €{{ offer.counter_amount }} for '{{ offer.sale.title }}' (Made: {{ offer.created_at|date:"M d, Y H:i" }}).</p>
-    <form method="post" class="form">
-        {% csrf_token %}
-        <button type="submit" name="action" value="accept" class="btn btn-success">Accept Counter</button>
-        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject Counter</button>
-        <a href="{% url 'profile' %}" class="btn btn-secondary">Back</a>
-    </form>
+<div class="container mt-5 auth-container animate__animated animate__fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <h2 class="auth-title">Respond to Counter Offer</h2>
+            <p class="auth-prompt">
+                Seller countered your €{{ offer.amount }} offer with <strong>€{{ offer.counter_amount }}</strong> for 
+                '<a href="{% url 'sale_detail' offer.sale.id %}" class="text-accent">{{ offer.sale.title }}</a>' 
+                (Made: {{ offer.created_at|date:"M d, Y H:i" }}).
+            </p>
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                <div class="button-group">
+                    <button type="submit" name="action" value="accept" class="btn-custom accept">
+                        Accept Counter
+                    </button>
+                    <button type="submit" name="action" value="reject" class="btn-custom reject">
+                        Reject Counter
+                    </button>
+                    <a href="{% url 'profile' %}" class="btn-custom cancel">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock content %}
