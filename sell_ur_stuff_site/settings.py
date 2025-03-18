@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "market",
     "profiles",
     "contact",
+    "widget_tweaks",
     # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
