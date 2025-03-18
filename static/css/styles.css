@@ -264,7 +264,7 @@ a {
 /* Marketplace hero section */
 .hero-title {
   color: var(--main-font-color);
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 600;
   letter-spacing: 2px;
   text-shadow: var(--shadow-color) 1px 2px 4px;
