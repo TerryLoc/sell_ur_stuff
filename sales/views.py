@@ -230,7 +230,8 @@ def accept_offer(request, offer_id):
     # Notify buyer that their offer was accepted with a pay link
     Notification.objects.create(
         user=offer.buyer,
-        message=f"Your offer of €{offer.amount} on '{sale.title}' has been accepted! Click <a href='{reverse('pay_offer', args=[offer.id])}'>here</a> to pay now.",
+        message=f"Your offer of €{offer.amount} on '{sale.title}' has been accepted!"
+        f"Click <a href='{reverse('pay_offer', args=[offer.id])}'>here</a> to pay now.",
     )
     return redirect("profile")
 
@@ -299,7 +300,8 @@ def counter_offer(request, offer_id):
             offer.save()
             # Notify the buyer with corrected message
             profile_url = reverse("profile")
-            message = f"The seller countered your offer of €{offer.amount} on '{offer.sale.title}' with €{counter_amount}. <a href='{profile_url}'>View</a>"
+            message = f"The seller countered your offer of €{offer.amount} on"
+            f"'{offer.sale.title}' with €{counter_amount}."
             Notification.objects.create(
                 user=offer.buyer,
                 message=message,
@@ -354,7 +356,8 @@ def respond_counter_offer(request, offer_id):
             offer.save()
             Notification.objects.create(
                 user=offer.sale.user,
-                message=f"Buyer rejected your counteroffer of €{offer.counter_amount} on '{offer.sale.title}'.",
+                message=f"Buyer rejected your counteroffer of"
+                f" €{offer.counter_amount} on '{offer.sale.title}'.",
             )
             return redirect("profile")
     return render(request, "sales/respond_counter_offer.html", {"offer": offer})
