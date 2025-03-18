@@ -1,0 +1,105 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n allauth account %}
+
+{% block head_title %}
+    {% trans "Sign In" %}
+{% endblock head_title %}
+
+{% block entrance_content %}
+<div class="container mt-5 auth-container animate__animated animate__fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card bg-dark text-light shadow-lg border-0">
+                <div class="card-body p-5">
+                    <!-- Header -->
+                    <h1 class="auth-title">
+                        {% trans "Sign In" %}
+                    </h1>
+
+                    <!-- Sign Up Prompt -->
+                    {% if not SOCIALACCOUNT_ONLY %}
+                        <p class="auth-prompt">
+                            {% url 'account_signup' as signup_url %}
+                            {% blocktranslate %}If you have not created an account yet, then please <a href="{{ signup_url }}" class="auth-link">sign up</a> first.{% endblocktranslate %}
+                        </p>
+
+                        <!-- Login Form -->
+                        {% url 'account_login' as login_url %}
+                        <form method="post" action="{{ login_url }}" class="auth-form">
+                            {% csrf_token %}
+                            
+                            <!-- Email/Username Field -->
+                            <div class="auth-field mb-3">
+                                <label for="id_login" class="form-label text-light mb-1">
+                                    {% trans "Username or Email" %}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" 
+                                      name="login" 
+                                      id="id_login"
+                                      class="form-control custom-input"
+                                      placeholder="Enter your username or email"
+                                      required
+                                >
+                                {% if form.login.errors %}
+                                    <div class="text-danger mt-1">
+                                        {{ form.login.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Password Field with Toggle -->
+                            <div class="auth-field mb-3">
+                                <label for="id_password" class="form-label text-light mb-1">
+                                    {% trans "Password" %}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="password" 
+                                          name="password" 
+                                          id="id_password"
+                                          class="form-control custom-input"
+                                          placeholder="Enter your password"
+                                          required
+                                    >
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                {% if form.password.errors %}
+                                    <div class="text-danger mt-1">
+                                        {{ form.password.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                
+                            <!-- Sign in button-->
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-custom btn-success-custom">
+                                    {% trans "Sign In" %}
+                                </button>
+                            </div>
+                            
+                            <!-- Forgot Password Link -->
+                            <div class="text-center mt-3">
+                                <a href="{% url 'account_reset_password' %}" class="auth-link small">
+                                    {% trans "Forgot Password?" %}
+                                </a>
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock entrance_content %}
+
+{% block extra_body %}
+    {{ block.super }}
+    {% if PASSKEY_LOGIN_ENABLED %}
+        {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
+    {% endif %}
+
+{% endblock extra_body %}
