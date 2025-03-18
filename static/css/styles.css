@@ -34,6 +34,10 @@ h5 {
   text-transform: uppercase;
 }
 
+a {
+  text-decoration: none;
+}
+
 .display-5 {
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -462,7 +466,8 @@ h5 {
   box-shadow: 0 5px 15px var(--shadow-color);
 }
 
-.btn-danger-custom {
+.btn-danger-custom,
+.cancel {
   background: linear-gradient(135deg, #dc3545, #b02a37);
   color: var(--secondary-font-color);
 }
