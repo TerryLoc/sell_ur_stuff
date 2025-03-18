@@ -1,87 +1,86 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description"
-              content="Sell Your Stuff - The best place to sell your items online.">
-        <meta name="keywords"
-              content="sell, buy, online marketplace, second-hand, used items">
-        <link rel="icon" href="{% static 'images/favicon.ico' %}">
-        <title>
-            {% block title %}
-                Sell Your Stuff
-            {% endblock title %}
-        </title>
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-              rel="stylesheet">
-        <!-- Custom CSS -->
-       <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <!-- Animate CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-       
-    </head>
-    <body>
-        <!-- Navigation Bar -->
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container">
-                <a class="navbar-brand" href="{% url 'home' %}">SELL YOUR STUFF</a>
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sell Your Stuff - The best place to sell your items online.">
+    <meta name="keywords" content="sell, buy, online marketplace, second-hand, used items">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <title>
+        {% block title %}
+            Sell Your Stuff
+        {% endblock title %}
+    </title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_head %}{% endblock extra_head %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">SELL YOUR STUFF</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'market_list' %}">Marketplace</a>
+                    </li>
+                    {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'market_list' %}">Marketplace</a>
+                            <a class="nav-link" href="{% url 'sale_create' %}">Sell</a>
                         </li>
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'sale_create' %}">Sell</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'sales_list' %}">Your Items</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'profile' %}">
-                                    Profile
-                                    {% if unread_notifications > 0 %}<span class="badge bg-danger">{{ unread_notifications }}</span>{% endif %}
-                                </a>
-                            </li>
-                        
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'account_login' %}">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'sales_list' %}">Your Items</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profile' %}">
+                                Profile
+                                {% if unread_notifications > 0 %}
+                                    <span class="badge bg-danger">{{ unread_notifications }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_login' %}">Sign In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
-        </nav>
-        <!-- Main Content -->
-        <div class="container min-vh-100 main-content d-flex flex-column">
-            {% block content %}
-                <!-- Child templates will insert content here -->
-            {% endblock content %}
         </div>
-        <!-- Footer -->
-        <footer class="text-center py-3 text-light">
-            <p>© 2025 Sell Your Stuff | Made with love for the bargain</p>
-        </footer>
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content flex-grow-1">
+        {% block content %}
+            <!-- Child templates will insert content here -->
+        {% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-3 text-light">
+        <p>© 2025 Sell Your Stuff | Made with love for the bargain</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    {% block extra_body %}{% endblock extra_body %}
+</body>
 </html>
