@@ -1,19 +1,31 @@
 {% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}  <!-- Load widget_tweaks -->
+
 {% block content %}
-<div class="container mt-4">
-    <h2>Counter Offer for {{ offer.sale.title }}</h2>
-    <p>Original Offer: €{{ offer.amount }} by {{ offer.buyer.username }}</p>
-    {% if error %}
-        <div class="alert alert-danger">{{ error }}</div>
-    {% endif %}
-    <form method="post" class="form">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="counter_amount">Your Counter Offer</label>
-            <input type="number" name="counter_amount" id="counter_amount" step="0.01" min="0.01" class="form-control" placeholder="Enter counter amount" required>
+<div class="container mt-5 auth-container animate__animated animate__fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <h2 class="auth-title">Counter Offer for {{ offer.sale.title }}</h2>
+            <p class="auth-prompt">Original Offer: €{{ offer.amount }} by {{ offer.buyer.username }}</p>
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {% for field, errors in form.errors.items %}
+                        {{ errors|join:", " }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                <div class="auth-field">
+                    {{ form.counter_amount.label_tag }}
+                    {{ form.counter_amount|add_class:"auth-field-input" }}  <!-- This works with widget_tweaks-->
+                    <small class="form-text text-white">Your counter offer is in euros</small>
+                </div>
+                <button type="submit" class="btn-custom">Submit Counteroffer</button>
+                <a href="{% url 'profile' %}" class="btn-custom cancel">Back</a>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary">Submit Counteroffer</button>
-        <a href="{% url 'profile' %}" class="btn btn-secondary">Back</a>
-    </form>
+    </div>
 </div>
 {% endblock content %}
