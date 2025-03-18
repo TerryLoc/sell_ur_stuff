@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.decorators import login_required
 from profiles.models import Purchase, Notification
 from .models import Sale, Offer
-from .forms import SaleForm, OfferForm
+from .forms import SaleForm, OfferForm, CounterOfferForm
 from django.contrib import messages
 
 # The secret key for the Stripe API
@@ -287,6 +287,7 @@ def counter_offer(request, offer_id):
     offer = get_object_or_404(Offer, id=offer_id, sale__user=request.user)
     if offer.status != "pending":
         return redirect("profile")
+
     if request.method == "POST":
         counter_amount = request.POST.get("counter_amount")
         try:
@@ -296,11 +297,14 @@ def counter_offer(request, offer_id):
             offer.counter_amount = counter_amount
             offer.counter_status = "pending"
             offer.save()
+            # Notify the buyer with corrected message
+            profile_url = reverse("profile")
+            message = f"The seller countered your offer of €{offer.amount} on '{offer.sale.title}' with €{counter_amount}. <a href='{profile_url}'>View</a>"
             Notification.objects.create(
                 user=offer.buyer,
-                message=f"Seller countered your offer of €{offer.amount} on '{offer.sale.title}' with €{counter_amount}.",
+                message=message,
             )
-            return redirect("profile")  # Already correct
+            return redirect("profile")
         except ValueError:
             return render(
                 request,
@@ -382,24 +386,14 @@ def offer_payment_success(request):
     sale.status = "sold"
     sale.save()
 
-    # Create Purchase with debugging
-    try:
-        purchase = Purchase.objects.create(
-            buyer=request.user,
-            sale=sale,
-            price_paid=offer.amount,
-        )
-        print(
-            f"Purchase created: ID={purchase.id}, buyer={purchase.buyer.username}, price_paid=€{purchase.price_paid}, sale={purchase.sale.title}"
-        )
-    except Exception as e:
-        print(f"Error creating purchase: {e}")
-        messages.error(request, f"Failed to record purchase: {e}")
-        return redirect("profile")
-
-    # Update offer status
+    # Update the offer and create Purchase with price_paid
     offer.status = "paid"
     offer.save()
+    purchase = Purchase.objects.create(
+        buyer=request.user,
+        sale=sale,
+        price_paid=offer.amount,  # Use the offer amount as the price paid
+    )
 
     # Notify the seller
     Notification.objects.create(
