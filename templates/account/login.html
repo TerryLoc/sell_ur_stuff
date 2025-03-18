@@ -29,8 +29,8 @@
                             {% csrf_token %}
                             
                             <!-- Email/Username Field -->
-                            <div class="auth-field mb-3">
-                                <label for="id_login" class="form-label text-light mb-1">
+                            <div class="auth-field mb-4">
+                                <label for="id_login" class="form-label text-secondary mb-1">
                                     {% trans "Username or Email" %}
                                     <span class="text-danger">*</span>
                                 </label>
@@ -49,8 +49,8 @@
                             </div>
                             
                             <!-- Password Field with Toggle -->
-                            <div class="auth-field mb-3">
-                                <label for="id_password" class="form-label text-light mb-1">
+                            <div class="auth-field mb-4">
+                                <label for="id_password" class="form-label text-secondary mb-1">
                                     {% trans "Password" %}
                                     <span class="text-danger">*</span>
                                 </label>
@@ -62,10 +62,11 @@
                                           placeholder="Enter your password"
                                           required
                                     >
-                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    
+                                </div>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                         <i class="bi bi-eye"></i>
                                     </button>
-                                </div>
                                 {% if form.password.errors %}
                                     <div class="text-danger mt-1">
                                         {{ form.password.errors }}
@@ -73,8 +74,7 @@
                                 {% endif %}
                             </div>
                             
-                
-                            <!-- Sign in button-->
+                            <!-- Sign In Button -->
                             <div class="d-grid gap-2 mt-4">
                                 <button type="submit" class="btn btn-custom btn-success-custom">
                                     {% trans "Sign In" %}
@@ -101,5 +101,5 @@
     {% if PASSKEY_LOGIN_ENABLED %}
         {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
     {% endif %}
-
+    
 {% endblock extra_body %}
