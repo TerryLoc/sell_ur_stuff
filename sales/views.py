@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from profiles.models import Purchase, Notification
 from .models import Sale, Offer
 from .forms import SaleForm, OfferForm
+from django.contrib import messages
 
 # The secret key for the Stripe API
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -51,12 +52,24 @@ def sale_detail(request, sale_id):
     highest_offer = (
         Offer.objects.filter(sale=sale, status="pending").order_by("-amount").first()
     )
+    accepted_offer = None
+
     if sale.status == "sold" and request.user.is_authenticated:
         purchase = Purchase.objects.filter(sale=sale, buyer=request.user).first()
+        # Get the accepted/paid offer if the item is sold
+        accepted_offer = Offer.objects.filter(
+            sale=sale, status__in=["accepted", "paid"]
+        ).first()
+
     return render(
         request,
         "sales/sale_detail.html",
-        {"sale": sale, "purchase": purchase, "highest_offer": highest_offer},
+        {
+            "sale": sale,
+            "purchase": purchase,
+            "highest_offer": highest_offer,
+            "offer": accepted_offer,  # To pass the accepted offer to the template
+        },
     )
 
 
@@ -344,35 +357,52 @@ def respond_counter_offer(request, offer_id):
 
 
 def offer_payment_success(request):
-    """Payment success view for accepting an offer and completing the sale"""
     session_id = request.GET.get("session_id")
     offer_id = request.GET.get("offer_id")
-    session = stripe.checkout.Session.retrieve(session_id)
-    offer = get_object_or_404(Offer, id=offer_id)
-    if session.payment_status == "paid":
-        sale = offer.sale
-        sale.status = "sold"  # Update to sold after payment
-        sale.save()
-        # Determine the final price: counter_amount if accepted, otherwise amount
-        price = (
-            offer.counter_amount
-            if offer.counter_amount and offer.counter_status == "accepted"
-            else offer.amount
-        )
-        Purchase.objects.create(
-            buyer=offer.buyer,
-            sale=sale,
-            price_paid=price,  # Set to final offer or counteroffer price
-        )  # Triggers notification
-        offer.status = "accepted"
-        offer.save()
-        return render(
-            request,
-            "sales/payment_result.html",
-            {"success": True, "sale": sale, "price": price},
-        )
+
+    if not session_id or not offer_id:
+        messages.error(request, "Invalid payment session.")
+        return redirect("profile")
+
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+        if session.payment_status != "paid":
+            messages.error(request, "Payment was not successful.")
+            return redirect("profile")
+    except stripe.error.StripeError as e:
+        messages.error(request, "Error verifying payment. Please contact support.")
+        return redirect("profile")
+
+    offer = get_object_or_404(Offer, id=offer_id, buyer=request.user)
+    if offer.status != "accepted":
+        messages.error(request, "Offer is not in a valid state for payment.")
+        return redirect("profile")
+
+    sale = offer.sale
+    sale.status = "sold"
+    sale.save()
+
+    # Update the offer and create Purchase with price_paid
+    offer.status = "paid"
+    offer.save()
+    purchase = Purchase.objects.create(
+        buyer=request.user,
+        sale=sale,
+        price_paid=offer.amount,  # Use the offer amount as the price paid
+    )
+
+    # Notify the seller
+    Notification.objects.create(
+        user=sale.user,
+        message=f"Your item '{sale.title}' has been sold for €{offer.amount} to {request.user.username}.",
+    )
+
+    messages.success(
+        request,
+        f"Payment successful! You have purchased '{sale.title}' for €{offer.amount}.",
+    )
     return render(
-        request, "sales/payment_result.html", {"success": False, "sale": offer.sale}
+        request, "sales/offer_payment_success.html", {"offer": offer, "sale": sale}
     )
 
 

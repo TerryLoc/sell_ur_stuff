@@ -92,7 +92,7 @@
                             {% if purchase %}
                                 <p class="status-message text-success">Congrats on your purchase!</p>
                             {% elif user == sale.user %}
-                                <p class="status-message text-success">Great News! This item has been sold.</p>
+                                <p class="status-message text-success">Great News! This item has sold for €{{ offer.amount }}.</p>
                             {% else %}
                                 <p class="status-message text-muted">This item has been sold.</p>
                             {% endif %}
