@@ -382,14 +382,24 @@ def offer_payment_success(request):
     sale.status = "sold"
     sale.save()
 
-    # Update the offer and create Purchase with price_paid
+    # Create Purchase with debugging
+    try:
+        purchase = Purchase.objects.create(
+            buyer=request.user,
+            sale=sale,
+            price_paid=offer.amount,
+        )
+        print(
+            f"Purchase created: ID={purchase.id}, buyer={purchase.buyer.username}, price_paid=€{purchase.price_paid}, sale={purchase.sale.title}"
+        )
+    except Exception as e:
+        print(f"Error creating purchase: {e}")
+        messages.error(request, f"Failed to record purchase: {e}")
+        return redirect("profile")
+
+    # Update offer status
     offer.status = "paid"
     offer.save()
-    purchase = Purchase.objects.create(
-        buyer=request.user,
-        sale=sale,
-        price_paid=offer.amount,  # Use the offer amount as the price paid
-    )
 
     # Notify the seller
     Notification.objects.create(

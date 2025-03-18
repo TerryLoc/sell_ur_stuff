@@ -25,7 +25,9 @@ class Sale(models.Model):
         upload_to="product_videos/", blank=True, null=True
     )  # Video upload field
     status = models.CharField(
-        max_length=10, choices=STATUS_CHOICES, default="available"
+        max_length=20,
+        choices=[("available", "Available"), ("pending", "Pending"), ("sold", "Sold")],
+        default="available",
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # Updates on save
