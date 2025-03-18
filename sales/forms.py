@@ -57,3 +57,13 @@ class OfferForm(forms.ModelForm):
                 f"Offer must be at least €{min_amount:.2f} (50% of asking price)."
             )
         return amount
+
+
+class CounterOfferForm(forms.Form):
+    counter_amount = forms.DecimalField(
+        label="Your Counter Offer",
+        min_value=0.01,
+        decimal_places=2,
+        max_digits=10,
+        widget=forms.NumberInput(attrs={"step": "0.01", "class": "form-control"}),
+    )
