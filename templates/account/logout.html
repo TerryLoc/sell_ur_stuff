@@ -1,0 +1,48 @@
+{% extends "account/base_manage.html" %}
+{% load allauth i18n %}
+
+{% block head_title %}
+    {% trans "Sign Out" %}
+{% endblock head_title %}
+
+{% block base_manage %}
+<div class="container mt-5 auth-container animate__animated animate__fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card bg-dark text-light shadow-lg border-0">
+                <div class="card-body p-5">
+                    <!-- Header -->
+                    <h1 class="auth-title">
+                        {% trans "Sign Out" %}
+                    </h1>
+
+                    <!-- Confirmation Message -->
+                    <p class="auth-prompt">
+                        {% trans "Are you sure you want to sign out?" %}
+                    </p>
+
+                    <!-- Logout Form -->
+                    {% url 'account_logout' as action_url %}
+                    <form method="post" action="{{ action_url }}" class="auth-form">
+                        {% csrf_token %}
+                        {{ redirect_field }}
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-custom btn-success-custom">
+                                {% trans "Sign Out" %}
+                            </button>
+                        </div>
+                        
+                        <!-- Cancel Link -->
+                        <div class="text-center mt-3">
+                            <a href="{% url 'home' %}" class="auth-link">
+                                {% trans "Cancel" %}
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock base_manage %}
