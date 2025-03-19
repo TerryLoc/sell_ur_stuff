@@ -273,9 +273,9 @@ def pay_offer(request, offer_id):
             }
         ],
         mode="payment",
-        success_url=request.build_absolute_uri("/sales/offer_payment_success/")
+        success_url=request.build_absolute_uri("/sales/payment_result/")
         + f"?session_id={{CHECKOUT_SESSION_ID}}&offer_id={offer.id}",
-        cancel_url=request.build_absolute_uri("/sales/offer_payment_cancel/")
+        cancel_url=request.build_absolute_uri("/sales/payment_result/")
         + f"?offer_id={offer.id}",
         metadata={"offer_id": offer.id, "sale_id": sale.id},
     )

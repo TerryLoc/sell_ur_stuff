@@ -159,8 +159,8 @@
                                                 {% if offer.status == "accepted" and offer.sale.status == "pending" %}
                                                     <a href="{% url 'pay_offer' offer.id %}" class="btn btn-success btn-sm mx-1">Pay Now</a>
                                                 {% elif offer.counter_status == "pending" %}
-                                                    <a href="{% url 'respond_counter_offer' offer.id %}" class="btn btn-success btn-sm mx-1">Accept</a>
-                                                    <a href="{% url 'respond_counter_offer' offer.id %}" class="btn btn-danger btn-sm mx-1">Reject</a>
+                                                    <a href="{% url 'respond_counter_offer' offer.id %}" class="btn btn-success btn-sm mx-1">Respond</a>
+                        
                                                 {% else %}
                                                     <span class="badge bg-secondary">{{ offer.status }}</span>
                                                 {% endif %}

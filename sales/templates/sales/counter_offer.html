@@ -6,23 +6,42 @@
 <div class="container mt-5 auth-container animate__animated animate__fadeIn">
     <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8">
-            <h2 class="auth-title">Counter Offer for {{ offer.sale.title }}</h2>
-            <p class="auth-prompt">Original Offer: €{{ offer.amount }} by {{ offer.buyer.username }}</p>
+            <h2 class="auth-title">Counter Offer</h2>
+            <p class="auth-prompt">
+                Original Offer: €{{ offer.amount }} by {{ offer.buyer.username }} for 
+                '<a href="{% url 'sale_detail' offer.sale.id %}" class="text-accent"> {{ offer.sale.title }}</a>'
+                ({{ offer.created_at|date:"M d, Y H:i" }}).
+            </p>
             {% if messages %}
                 {% for message in messages %}
-                    <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
+                    <div class="status-message {% if message.tags == 'error' %}text-danger{% else %}text-success{% endif %}">
                         {{ message }}
                     </div>
                 {% endfor %}
             {% endif %}
             <form method="post" class="auth-form">
                 {% csrf_token %}
-                <div class="auth-field">
-                    {{ form.counter_amount.label_tag }}
-                    {{ form.counter_amount|add_class:"auth-field-input" }}
+                <div class="auth-field mb-4">
+                    <label for="id_counter_amount" class="form-label text-secondary mb-1">
+                        Your Counter Offer (€) *
+                    </label>
+                    <input type="number" 
+                           name="counter_amount" 
+                           id="id_counter_amount"
+                           class="form-control custom-input"
+                           placeholder="Enter your counter offer amount"
+                           step="0.01"
+                           min="{{ offer.amount|add:0.01 }}"
+                           required
+                    >
+                    {% if error %}
+                        <div class="text-danger mt-1">{{ error }}</div>
+                    {% endif %}
                 </div>
-                <button type="submit" class="btn-custom">Submit Counter</button>
-                <a href="{% url 'profile' %}" class="btn-custom cancel">Back</a>
+                <div class="button-group">
+                    <button type="submit" class="btn-custom btn-success-custom">Submit Counter</button>
+                    <a href="{% url 'profile' %}" class="btn-custom cancel">Back</a>
+                </div>
             </form>
         </div>
     </div>

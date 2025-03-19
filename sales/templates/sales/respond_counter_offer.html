@@ -8,8 +8,8 @@
             <h2 class="auth-title">Respond to Counter Offer</h2>
             <p class="auth-prompt">
                 Seller countered your €{{ offer.amount }} offer with <strong>€{{ offer.counter_amount }}</strong> for 
-                '<a href="{% url 'sale_detail' offer.sale.id %}" class="text-accent">{{ offer.sale.title }}</a>' 
-                (Made: {{ offer.created_at|date:"M d, Y H:i" }}).
+                '<a href="{% url 'sale_detail' offer.sale.id %}" class="text-accent"> {{ offer.sale.title }}</a>' 
+                ({{ offer.created_at|date:"M d, Y H:i" }}).
             </p>
             <form method="post" class="auth-form">
                 {% csrf_token %}
