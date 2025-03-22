@@ -17,6 +17,7 @@ urlpatterns = [
     path("offer/<int:offer_id>/accept/", views.accept_offer, name="accept_offer"),
     path("offer/<int:offer_id>/reject/", views.reject_offer, name="reject_offer"),
     path(
+        # URL where Stripe redirects users after a successful payment through the direct checkout flow
         "offer_payment_success/",
         views.offer_payment_success,
         name="offer_payment_success",
@@ -33,4 +34,6 @@ urlpatterns = [
     ),
     # Payment views for accepting an
     path("offer/<int:offer_id>/pay/", views.pay_offer, name="pay_offer"),
+    # Payment views for buying a product through an offer
+    path("payment_result/", views.payment_result, name="payment_result"),
 ]

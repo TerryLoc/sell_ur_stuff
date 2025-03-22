@@ -413,6 +413,60 @@ def offer_payment_success(request):
     )
 
 
+# Add this view function at the end of the file
+def payment_result(request):
+    """Handle the redirect from Stripe after payment"""
+    session_id = request.GET.get("session_id")
+    offer_id = request.GET.get("offer_id")
+
+    if not session_id or not offer_id:
+        messages.error(request, "Invalid payment session.")
+        return redirect("profile")
+
+    try:
+        # Verify the payment was successful
+        session = stripe.checkout.Session.retrieve(session_id)
+
+        if session.payment_status == "paid":
+            # Get the offer and mark it as paid
+            offer = get_object_or_404(Offer, id=offer_id)
+            offer.status = "paid"
+            offer.save()
+
+            # Update the sale status
+            sale = offer.sale
+            sale.status = "sold"
+            sale.save()
+
+            # Create a purchase record
+            Purchase.objects.create(
+                buyer=request.user,
+                sale=sale,
+                price_paid=offer.amount,  # Use the offer amount
+            )
+
+            # Notify the seller
+            Notification.objects.create(
+                user=sale.user,
+                message=f"Your item '{sale.title}' has been sold for €{offer.amount} to {request.user.username}.",
+            )
+
+            messages.success(
+                request, "Payment successful! The seller has been notified."
+            )
+            return render(
+                request,
+                "sales/payment_result.html",
+                {"success": True, "sale": sale, "price": offer.amount},
+            )
+        else:
+            messages.error(request, "Payment not completed. Please try again.")
+            return render(request, "sales/payment_result.html", {"success": False})
+    except Exception as e:
+        messages.error(request, f"An error occurred: {str(e)}")
+        return render(request, "sales/payment_result.html", {"success": False})
+
+
 def offer_payment_cancel(request):
     """Payment cancel view for accepting an offer"""
     offer_id = request.GET.get("offer_id")
