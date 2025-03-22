@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /sales/offer_payment_success/
+Allow: /
+
+Sitemap: https://sell-ur-stuff-19632c616966.herokuapp.com/sitemap.xml

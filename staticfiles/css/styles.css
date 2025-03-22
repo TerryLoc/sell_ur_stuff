@@ -1,49 +1,71 @@
-/* Root Variables */
+/* ==========================================================================
+   Root Variables
+   ========================================================================== */
+/* Define global color and style variables for consistency across the app */
 :root {
-  --main-bg-color: #233844;
-  --main-bg-shadow: #233844b7;
-  --secondary-bg-color: #3e4f5e5c;
-  --main-font-color: #0d75b5;
-  --secondary-font-color: #d5d7d8;
-  --hover-color: #ffcc81;
-  --shadow-color: rgba(0, 0, 0, 0.5);
+  --main-bg-color: #233844; /* Primary background color */
+  --main-bg-shadow: #233844b7; /* Semi-transparent shadow for backgrounds */
+  --secondary-bg-color: #3e4f5e5c; /* Secondary background for cards/info boxes */
+  --main-font-color: #0d75b5; /* Primary text/accent color (blue) */
+  --secondary-font-color: #d5d7d8; /* Secondary text color (light gray) */
+  --hover-color: #ffcc81; /* Hover/accent color (orange) */
+  --shadow-color: rgba(0, 0, 0, 0.5); /* Shadow effect color */
 }
 
-/* Reset & Base Styles */
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+/* Reset default margins, paddings, and set box-sizing for all elements */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Set base font and background for the body */
 body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--main-bg-color);
   color: var(--secondary-font-color);
 }
 
+/* Ensure main content area is flexible and auto-adjusts height */
 .main-content {
   height: auto;
   flex: 1 0 auto;
 }
 
-/* Typography */
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/* Style headings with uppercase transformation */
 h1,
 h2,
 h5 {
   text-transform: uppercase;
 }
 
+/* Remove default underline from links and inherit color */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Enhance display headings with weight and spacing */
 .display-5 {
   font-weight: 700;
   letter-spacing: 1.5px;
 }
 
+/* Set a clean, readable lead text style */
 .lead {
   font-weight: 400;
 }
 
-/* Navbar */
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+/* Style the navbar with flexbox for layout */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -53,12 +75,14 @@ h5 {
   color: var(--secondary-font-color);
 }
 
+/* Brand styling for navbar */
 .navbar-brand {
   color: var(--secondary-font-color);
   font-size: 1.4rem;
   font-weight: 500;
 }
 
+/* Nav link styling with hover effect */
 .nav-link {
   color: var(--secondary-font-color);
   margin: 0 5px;
@@ -69,14 +93,17 @@ h5 {
   color: var(--hover-color);
 }
 
-/* Buttons */
+/* ==========================================================================
+   Buttons (Updated)
+   ========================================================================== */
+/* Base custom button style with gradient and hover effects */
 .btn-custom {
   background: linear-gradient(135deg, var(--main-font-color), #095d8f);
   color: var(--secondary-font-color);
   border: none;
   padding: 10px 20px;
   border-radius: 25px;
-  margin: 10px;
+  margin: 5px;
   text-transform: uppercase;
   transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
@@ -87,30 +114,75 @@ h5 {
   color: var(--hover-color);
 }
 
-.btn-custom-outline {
-  background: transparent;
-  border: 2px solid var(--secondary-font-color);
+/* Smaller button variant for inline actions */
+.btn-custom.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+/* Specific button variants */
+.btn-custom.accept {
+  background: linear-gradient(135deg, #28a745, #1d7d38);
+}
+
+.btn-custom.accept:hover {
+  background: linear-gradient(135deg, #34c759, #28a745);
+}
+
+.btn-custom.reject {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
+}
+
+.btn-custom.reject:hover {
+  background: linear-gradient(135deg, #ff4957, #dc3545);
+}
+
+.btn-custom.counter {
+  background: linear-gradient(135deg, var(--main-font-color), #095d8f);
+}
+
+.btn-custom.counter:hover {
+  background: linear-gradient(135deg, #0d75b5, #095d8f);
+}
+
+.btn-custom.cancel {
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+}
+
+.btn-custom.cancel:hover {
+  background: linear-gradient(135deg, #5a6268, #495057);
+}
+
+/* Success button variant (used elsewhere, e.g., counter offer form) */
+.btn-success-custom {
+  background: linear-gradient(135deg, #28a745, #1d7d38);
   color: var(--secondary-font-color);
-  padding: 8px 18px;
-  border-radius: 25px;
-  text-transform: uppercase;
   transition: all 0.3s ease;
 }
 
-.btn-custom-outline:hover {
-  background: var(--secondary-font-color);
-  color: var(--main-bg-color);
+.btn-success-custom:hover {
+  background: linear-gradient(135deg, #34c759, #28a745);
   transform: translateY(-3px);
   box-shadow: 0 5px 15px var(--shadow-color);
 }
 
-.button_profile {
-  background: var(--main-font-color);
-  border: none;
+/* Danger button variant (used elsewhere) */
+.btn-danger-custom {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
   color: var(--secondary-font-color);
+  transition: all 0.3s ease;
 }
 
-/* Home Page */
+.btn-danger-custom:hover {
+  background: linear-gradient(135deg, #ff4957, #dc3545);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+/* ==========================================================================
+   Home Page
+   ========================================================================== */
+/* Hero section with background overlay */
 .home-background {
   position: relative;
   padding-top: 80px;
@@ -135,6 +207,7 @@ h5 {
   z-index: 2;
 }
 
+/* Hero text styling */
 .home-background h1 {
   text-shadow: 1px 2px 4px var(--main-bg-color);
   font-size: 3rem;
@@ -155,11 +228,6 @@ h5 {
   letter-spacing: 1px;
   margin-bottom: 0;
   color: var(--main-font-color);
-}
-
-.home-background a {
-  text-decoration: none;
-  color: var(--main-bg-color);
 }
 
 .home-background a:hover {
@@ -186,6 +254,7 @@ h5 {
   box-shadow: 1px 2px 3px var(--main-bg-shadow);
 }
 
+/* Main text section styling */
 .main-text {
   background-color: var(--secondary-font-color);
   border-top: 10px solid var(--main-bg-color);
@@ -193,13 +262,17 @@ h5 {
   padding: 20px 0;
 }
 
-/* Cards */
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+/* Base card styling */
 .card {
   border: 1px solid #333;
   color: var(--secondary-font-color);
   border-radius: 20px;
 }
 
+/* Card hover animation */
 .card-animate {
   transition: transform 0.3s ease;
 }
@@ -209,14 +282,14 @@ h5 {
   box-shadow: 0 8px 16px var(--shadow-color);
 }
 
-.card-title-custom {
+/* Custom card title styles */
+.card-title-custom,
+.card-title-secondary {
   color: var(--secondary-font-color);
   font-size: 1.2rem;
 }
 
 .card-title-secondary {
-  color: var(--secondary-font-color);
-  font-size: 1.2rem;
   opacity: 0.9;
 }
 
@@ -225,17 +298,30 @@ h5 {
   font-weight: 600;
 }
 
-/* Marketplace */
+/* ==========================================================================
+   Marketplace
+   ========================================================================== */
+/* Marketplace hero section */
+.hero-title {
+  color: var(--main-font-color);
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-shadow: var(--shadow-color) 1px 2px 4px;
+}
+
 .marketplace-hero {
   background-color: var(--main-bg-color);
   min-height: 100vh;
 }
 
+/* Marketplace card hover effect */
 .market-card:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px var(--shadow-color);
 }
 
+/* Overlay for card images */
 .card-img-top .overlay {
   opacity: 0.8;
   transition: opacity 0.3s ease;
@@ -245,7 +331,10 @@ h5 {
   opacity: 1;
 }
 
-/* Profile Page */
+/* ==========================================================================
+   Profile Page
+   ========================================================================== */
+/* Profile section titles */
 .profile-header,
 .card-title-hover-color,
 .sold-items-title,
@@ -253,10 +342,12 @@ h5 {
   color: var(--hover-color);
 }
 
+/* Orange text accent */
 .text-orange {
   color: var(--hover-color);
 }
 
+/* Profile picture styling */
 .profile-picture,
 .default-profile-picture {
   width: 150px;
@@ -268,12 +359,13 @@ h5 {
   border: 2px solid var(--hover-color);
 }
 
+/* User info box */
 .user_info {
   color: whitesmoke;
   background-color: var(--secondary-bg-color);
-  padding: 20px 15px;
+  padding: 15px;
   margin: 20px 10px;
-  border-radius: 30px;
+  border-radius: 20px;
 }
 
 .user_info strong {
@@ -281,11 +373,48 @@ h5 {
   color: var(--main-font-color);
 }
 
+/* List item hover effect */
 .list-group-item.bg-dark.text-white:hover {
   background-color: #222;
 }
 
-/* Sales Listings */
+/* Offer actions container */
+.offer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Adjust badge styling for status */
+.offer-actions .badge {
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+/* List group item spacing */
+.list-group-item {
+  padding: 15px 0;
+  border-bottom: 1px solid var(--secondary-font-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+/* Small text for counter offer details */
+.list-group-item .text-muted {
+  color: var(--secondary-font-color);
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Sales Listings
+   ========================================================================== */
+/* Sales dashboard title with hover effect */
 .sales-dashboard-title {
   color: var(--main-font-color);
   text-shadow: 2px 2px 8px var(--shadow-color);
@@ -296,10 +425,12 @@ h5 {
   color: var(--hover-color);
 }
 
+/* Secondary lead text */
 .lead-secondary {
   color: var(--secondary-font-color);
 }
 
+/* Tab link styling */
 .tab-link {
   background-color: var(--main-bg-color);
   color: var(--secondary-font-color);
@@ -319,6 +450,7 @@ h5 {
   border-bottom: 3px solid var(--main-font-color);
 }
 
+/* Image and video styling */
 .sale-image {
   object-fit: cover;
   height: 180px;
@@ -347,12 +479,16 @@ h5 {
   opacity: 0.8;
 }
 
-/* Sale Detail */
+/* ==========================================================================
+   Sale Detail
+   ========================================================================== */
+/* Sale detail container */
 .sale-detail-container {
   background-color: var(--main-bg-color);
   min-height: 100vh;
 }
 
+/* Sale title with hover effect */
 .sale-detail-title {
   color: var(--main-font-color);
   font-size: 2.5rem;
@@ -364,6 +500,7 @@ h5 {
   color: var(--hover-color);
 }
 
+/* Sale details styling */
 .sale-details {
   margin-top: 20px;
 }
@@ -395,6 +532,7 @@ h5 {
   font-weight: 600;
 }
 
+/* Carousel and media styling */
 .carousel-custom {
   max-width: 800px;
   margin: 0 auto;
@@ -402,9 +540,9 @@ h5 {
 }
 
 .sale-image-listing {
-  height: 500px; /* fixed height */
+  height: 500px;
   width: 100%;
-  object-fit: contain; /* Show full image */
+  object-fit: contain;
 }
 
 .video-container {
@@ -417,8 +555,8 @@ h5 {
 
 .sale-video {
   width: 100%;
-  height: 450px; /* Larger fixed height */
-  object-fit: contain; /* Show full video */
+  height: 450px;
+  object-fit: contain;
   background-color: #1a2b34;
   padding: 20px;
   border-radius: 10px;
@@ -439,49 +577,18 @@ h5 {
   margin: 0;
 }
 
-.btn-warning-custom {
-  background: linear-gradient(135deg, #ffcc81, #e6b800);
-  color: var(--main-bg-color);
-}
-
-.btn-warning-custom:hover {
-  background: linear-gradient(135deg, #ffd699, #ffcc00);
-  color: var(--main-bg-color);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px var(--shadow-color);
-}
-
-.btn-success-custom {
-  background: linear-gradient(135deg, #28a745, #1d7d38);
-  color: var(--secondary-font-color);
-}
-
-.btn-success-custom:hover {
-  background: linear-gradient(135deg, #34c759, #28a745);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px var(--shadow-color);
-}
-
-.btn-danger-custom {
-  background: linear-gradient(135deg, #dc3545, #b02a37);
-  color: var(--secondary-font-color);
-}
-
-.btn-danger-custom:hover {
-  background: linear-gradient(135deg, #ff4957, #dc3545);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px var(--shadow-color);
-}
-
-/* Authentication */
+/* ==========================================================================
+   Authentication
+   ========================================================================== */
+/* Authentication container with shadow and animation */
 .auth-container {
   background-color: var(--main-bg-color);
-  min-height: 100vh;
   padding: 20px;
   border-radius: 10px;
   animation: fadeIn 1s ease-in;
 }
 
+/* Authentication title with hover effect */
 .auth-title {
   color: var(--main-font-color);
   font-size: 2.5rem;
@@ -495,6 +602,7 @@ h5 {
   color: var(--hover-color);
 }
 
+/* Authentication prompt text */
 .auth-prompt {
   color: var(--secondary-font-color);
   font-size: 1.1rem;
@@ -502,25 +610,36 @@ h5 {
   margin-bottom: 25px;
 }
 
-.auth-link {
+.auth-prompt a {
   color: var(--main-font-color);
   text-decoration: underline;
   transition: color 0.3s ease;
 }
 
-.auth-link:hover {
+.auth-prompt a:hover {
   color: var(--hover-color);
 }
 
+/* Authentication form layout */
 .auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
 }
 
-/* Important: Selector more specific to target the correct elements */
-form .auth-field input,
-.auth-form .auth-field input {
-  background-color: #1a2b34 !important; /* Use !important as last resort */
-  color: var(--secondary-font-color) !important;
+/* Button group for authentication forms */
+.auth-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Input field styling for authentication */
+.auth-field input {
+  background-color: #1a2b34;
+  color: var(--secondary-font-color);
   border: 1px solid var(--secondary-font-color);
   border-radius: 10px;
   padding: 12px;
@@ -529,67 +648,30 @@ form .auth-field input,
   transition: border-color 0.3s ease;
 }
 
-form .auth-field input:focus,
-.auth-form .auth-field input:focus {
-  border-color: var(--hover-color) !important;
+.auth-field input:focus {
+  border-color: var(--hover-color);
   outline: none;
   box-shadow: 0 0 5px var(--hover-color);
 }
 
-.auth-divider {
-  border-color: var(--secondary-font-color);
-  opacity: 0.5;
-  margin: 20px 0;
-}
-
-.auth-button-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-}
-
-/* Status messages for auth */
+/* Status message styling */
 .status-message {
   font-size: 1.2rem;
   font-weight: 500;
   margin-top: 20px;
 }
 
-.custom-input {
-  background-color: #1a2b34 !important;
-  color: var(--secondary-font-color) !important;
-  border: 1px solid var(--secondary-font-color) !important;
-  border-radius: 10px !important;
-  padding: 12px !important;
-  margin-bottom: 15px !important;
+.text-muted ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+  color: var(--secondary-font-color);
 }
 
-.custom-input:focus {
-  border-color: var(--hover-color) !important;
-  box-shadow: 0 0 5px var(--hover-color) !important;
-}
-
-.btn-custom.btn-success-custom {
-  background: linear-gradient(
-    135deg,
-    var(--main-font-color),
-    #095d8f
-  ) !important;
-  color: var(--secondary-font-color) !important;
-  border: none !important;
-  border-radius: 25px !important;
-  padding: 10px 20px !important;
-  text-transform: uppercase !important;
-  transition: all 0.3s ease !important;
-}
-
-.btn-custom.btn-success-custom:hover {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 5px 15px var(--shadow-color) !important;
-  color: var(--hover-color) !important;
-}
-
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+/* Fade-in animation for containers */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -599,10 +681,14 @@ form .auth-field input:focus,
   }
 }
 
-/* Footer */
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+/* Ensure footer sticks to the bottom with margin */
 footer {
   margin-top: auto;
 }
+
 footer p {
   margin-top: 20px;
 }
