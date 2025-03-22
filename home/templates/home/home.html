@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 {% block title %}
-    Home - Sell Your Stuff
+    Home - Sell Your
+    Stuff
 {% endblock title %}
 {% block content %}
+    <!-- Home Page Section -->
     <div class="text-center home-background"
-         style="background-image: url('{% static 'images/home_page.jpg' %}');">
+         style="background-image: url('{% static 'images/home_page.jpg' %}')">
         <div class="main-text">
             <h1>Buy Smart, Sell Fast</h1>
             <h2>Where Unwanted, Becomes loved!</h2>
@@ -18,9 +21,49 @@
                 </p>
             {% else %}
                 <p>
-                    <a href="{% url 'account_login' %}">Sign In</a> or <a href="{% url 'account_signup' %}">Sign Up</a> to Buy & Sell.
+                    <a href="{% url 'account_login' %}">Sign In</a> or
+                    <a href="{% url 'account_signup' %}">Sign Up</a> to Buy & Sell.
                 </p>
             {% endif %}
         </div>
     </div>
+    <!-- End of Home Page Section -->
+
+    <!-- Newsletter Subscription Section -->
+    <section id="newsletter"
+             class="newsletter-section py-5"
+             data-has-messages="{% if messages %}true{% else %}false{% endif %}"
+             data-success-message="{% if messages %}{% for message in messages %}{% if message.tags == 'success' %}true{% endif %}{% endfor %}{% else %}false{% endif %}">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 col-10 text-center">
+                    <h2 class="auth-title">Stay Updated!</h2>
+                    <p class="auth-prompt">Subscribe to our newsletter for the latest deals and updates.</p>
+                    
+                    {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                            <div class="thank-you-message alert alert-success mb-4 animate__animated animate__fadeIn">
+                                <i class="bi bi-check-circle-fill me-2"></i>{{ message }}
+                                <p class="mt-2 mb-0 small">We'll keep you updated with our best deals!</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <form method="post" class="newsletter-form" id="newsletter-form" action="{% url 'home' %}#newsletter">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.email|add_class:"form-control" }}
+                            {% if form.email.errors %}
+                                <div class="error-message alert alert-danger mt-2">
+                                    {% for error in form.email.errors %}<small>{{ error }}</small>{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End of Newsletter Subscription Section -->
 {% endblock content %}
