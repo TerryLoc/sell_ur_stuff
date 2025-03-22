@@ -1,199 +1,212 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block title %}
     {{ user.username }}'s Profile - Sell Your Stuff
 {% endblock title %}
-
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center animate__animated animate__fadeIn">
-        <!-- Profile Header and Image -->
-        <div class="col-lg-10 col-md-12">
-            <div class="card bg-dark text-light shadow-lg border-0 mb-4">
-                <div class="card-body text-center p-5">
-                    <h2 class="profile-header text-uppercase">{{ user.username }}'s Dashboard</h2>
-                    <div class="mt-3">
-                        {% if profile.profile_picture %}
-                            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture rounded-circle img-fluid" width="150" height="150">
-                        {% else %}
-                            <img src="{% static 'images/default_profile.jpg' }" alt="Default Profile Picture" class="default-profile-picture rounded-circle img-fluid" width="150" height="150">
+    <div class="container mt-5">
+        <div class="row justify-content-center animate__animated animate__fadeIn">
+            <!-- Profile Header and Image -->
+            <div class="col-lg-10 col-md-12">
+                <div class="card bg-dark text-light shadow-lg border-0 mb-4">
+                    <div class="card-body text-center p-5">
+                        <h2 class="profile-header text-uppercase">{{ user.username }}'s Dashboard</h2>
+                        <div class="mt-3">
+                            {% if profile.profile_picture %}
+                                <img src="{{ profile.profile_picture.url }}"
+                                     alt="Profile Picture"
+                                     class="profile-picture rounded-circle img-fluid"
+                                     width="150"
+                                     height="150">
+                            {% else %}
+                                <img src="{% static 'images/default_profile.jpg' }"
+                                     alt="Default Profile Picture"
+                                     class="default-profile-picture rounded-circle img-fluid"
+                                     width="150"
+                                     height="150">
+                            {% endif %}
+                        </div>
+                        {% if user == request.user %}
+                            <a href="{% url 'profile_edit' %}"
+                               class="btn btn-primary mt-3 px-4 button_profile">Edit Profile</a>
                         {% endif %}
                     </div>
-                    {% if user == request.user %}
-                        <a href="{% url 'profile_edit' %}" class="btn btn-primary mt-3 px-4 button_profile">Edit Profile</a>
-                    {% endif %}
                 </div>
             </div>
-        </div>
-        <!-- User Info and Activity -->
-        <div class="col-lg-10 col-md-12">
-            <div class="row g-4">
-                <!-- User Info Card -->
-                <div class="col-md-4">
-                    <div class="card bg-dark text-light shadow-lg border-0 h-100 animate__animated animate__fadeInLeft">
-                        <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase user-info-title">User Info</h5>
-                            <div class="user_info">
-                                <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-                                <p><strong>Email:</strong> {{ user.email }}</p>
-                                <p><strong>Location:</strong> {{ profile.location|default:"Not set" }}</p>
-                                <p><strong>Joined:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
-                                <p><strong>Bio:</strong> {{ profile.bio|default:"No bio yet" }}</p>
-                                <p><strong>Phone:</strong> {{ profile.phone_number|default:"Not provided" }}</p>
-                                <p><strong>Facebook:</strong> {{ profile.facebook|default:"Not linked" }}</p>
+            <!-- User Info and Activity -->
+            <div class="col-lg-10 col-md-12">
+                <div class="row g-4">
+                    <!-- User Info Card -->
+                    <div class="col-md-4">
+                        <div class="card bg-dark text-light shadow-lg border-0 h-100 animate__animated animate__fadeInLeft">
+                            <div class="card-body p-4">
+                                <h5 class="card-title text-uppercase user-info-title">User Info</h5>
+                                <div class="user_info">
+                                    <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                                    <p><strong>Email:</strong> {{ user.email }}</p>
+                                    <p><strong>Location:</strong> {{ profile.location|default:"Not set" }}</p>
+                                    <p><strong>Joined:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
+                                    <p><strong>Bio:</strong> {{ profile.bio|default:"No bio yet" }}</p>
+                                    <p><strong>Phone:</strong> {{ profile.phone_number|default:"Not provided" }}</p>
+                                    <p><strong>Facebook:</strong> {{ profile.facebook|default:"Not linked" }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Activity Cards -->
-                <div class="col-md-8">
-                    <!-- Active Sale Items -->
-                    <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
-                        <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover-color">Active Sale Items</h5>
-                            {% if active_sales %}
-                                <ul class="list-group list-group-flush">
-                                    {% for sale in active_sales %}
-                                        <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
-                                            <a href="{% url 'sale_detail' sale.id %}" class="text-light">{{ sale.title }}</a>
-                                            <span class="text-muted small">{{ sale.created_at|date:"M d, Y H:i" }}</span>
-                                        </li>
-                                    {% empty %}
-                                        <p class="text-muted">No active sale items.</p>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">No active sale items.</p>
-                            {% endif %}
+                    <!-- Activity Cards -->
+                    <div class="col-md-8">
+                        <!-- Active Sale Items -->
+                        <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
+                            <div class="card-body p-4">
+                                <h5 class="card-title text-uppercase card-title-hover-color">Active Sale Items</h5>
+                                {% if active_sales %}
+                                    <ul class="list-group list-group-flush">
+                                        {% for sale in active_sales %}
+                                            <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
+                                                <a href="{% url 'sale_detail' sale.id %}" class="text-light">{{ sale.title }}</a>
+                                                <span class="text-muted small">{{ sale.created_at|date:"M d, Y H:i" }}</span>
+                                            </li>
+                                        {% empty %}
+                                            <p class="text-muted">No active sale items.</p>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted">No active sale items.</p>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <!-- Sold Items -->
-                    <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
-                        <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase sold-items-title">Sold Items</h5>
-                            {% if sold_sales %}
-                                <ul class="list-group list-group-flush">
-                                    {% for purchase in sold_sales %}
-                                        <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
-                                            <a href="{% url 'sale_detail' purchase.sale.id %}" class="text-light">{{ purchase.sale.title }}</a>
-                                            <span class="text-muted small">Sold {{ purchase.purchased_at|date:"M d, Y H:i" }} - €{{ purchase.price_paid }}</span>
-                                        </li>
-                                    {% empty %}
-                                        <p class="text-muted">No items sold yet.</p>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">No items sold yet.</p>
-                            {% endif %}
+                        <!-- Sold Items -->
+                        <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
+                            <div class="card-body p-4">
+                                <h5 class="card-title text-uppercase sold-items-title">Sold Items</h5>
+                                {% if sold_sales %}
+                                    <ul class="list-group list-group-flush">
+                                        {% for purchase in sold_sales %}
+                                            <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
+                                                <a href="{% url 'sale_detail' purchase.sale.id %}" class="text-light">{{ purchase.sale.title }}</a>
+                                                <span class="text-muted small">Sold {{ purchase.purchased_at|date:"M d, Y H:i" }} - €{{ purchase.price_paid }}</span>
+                                            </li>
+                                        {% empty %}
+                                            <p class="text-muted">No items sold yet.</p>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted">No items sold yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <!-- Your Purchases -->
-                    <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
-                        <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover-color">Your Purchases</h5>
-                            {% if purchases %}
-                                <ul class="list-group list-group-flush">
-                                    {% for purchase in purchases %}
-                                        <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
-                                            <a href="{% url 'sale_detail' purchase.sale.id %}" class="text-light">{{ purchase.sale.title }}</a>
-                                            <span class="text-muted small">Bought {{ purchase.purchased_at|date:"M d, Y H:i" }} - €{{ purchase.price_paid }}</span>
-                                        </li>
-                                    {% empty %}
-                                        <p class="text-muted">No purchases yet.</p>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">No purchases yet.</p>
-                            {% endif %}
+                        <!-- Your Purchases -->
+                        <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
+                            <div class="card-body p-4">
+                                <h5 class="card-title text-uppercase card-title-hover-color">Your Purchases</h5>
+                                {% if purchases %}
+                                    <ul class="list-group list-group-flush">
+                                        {% for purchase in purchases %}
+                                            <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
+                                                <a href="{% url 'sale_detail' purchase.sale.id %}" class="text-light">{{ purchase.sale.title }}</a>
+                                                <span class="text-muted small">Bought {{ purchase.purchased_at|date:"M d, Y H:i" }} - €{{ purchase.price_paid }}</span>
+                                            </li>
+                                        {% empty %}
+                                            <p class="text-muted">No purchases yet.</p>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted">No purchases yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <!-- Offers Received -->
-                    <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
-                        <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover-color">Offers Received</h5>
-                            {% if offers %}
-                                <ul class="list-group list-group-flush">
-                                    {% for offer in offers %}
-                                        <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center flex-wrap">
-                                            <div>
-                                                €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}" class="text-light">{{ offer.sale.title }}</a>"
-                                                by {{ offer.buyer.username }} ({{ offer.created_at|date:"M d, Y H:i" }})
-                                                {% if offer.counter_amount %}
-                                                    <br><small class="text-muted">Counter: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
-                                                {% endif %}
-                                            </div>
-                                            <div class="mt-2 mt-md-0">
-                                                {% if offer.status == "pending" %}
-                                                    <a href="{% url 'accept_offer' offer.id %}" class="btn btn-success btn-sm mx-1">Accept</a>
-                                                    <a href="{% url 'reject_offer' offer.id %}" class="btn btn-danger btn-sm mx-1">Reject</a>
-                                                    <a href="{% url 'counter_offer' offer.id %}" class="btn btn-primary btn-sm mx-1">Counter</a>
-                                                {% else %}
-                                                    <span class="badge bg-secondary">{{ offer.status }}</span>
-                                                {% endif %}
-                                            </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">No offers received yet.</p>
-                            {% endif %}
+                        <!-- Offers Received -->
+                        <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
+                            <div class="card-body p-4">
+                                <h5 class="card-title text-uppercase card-title-hover-color">Offers Received</h5>
+                                {% if offers %}
+                                    <ul class="list-group list-group-flush">
+                                        {% for offer in offers %}
+                                            <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center flex-wrap">
+                                                <div>
+                                                    €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}" class="text-light">{{ offer.sale.title }}</a>"
+                                                    by {{ offer.buyer.username }} ({{ offer.created_at|date:"M d, Y H:i" }})
+                                                    {% if offer.counter_amount %}
+                                                        <br>
+                                                        <small class="text-muted">Counter: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="mt-2 mt-md-0 offer-actions">
+                                                    {% if offer.status == "pending" %}
+                                                        <a href="{% url 'accept_offer' offer.id %}"
+                                                           class="btn-custom accept btn-sm mx-1">Accept</a>
+                                                        <a href="{% url 'reject_offer' offer.id %}"
+                                                           class="btn-custom reject btn-sm mx-1">Reject</a>
+                                                        <a href="{% url 'counter_offer' offer.id %}"
+                                                           class="btn-custom counter btn-sm mx-1">Counter</a>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary">{{ offer.status }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted">No offers received yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <!-- Your Offers -->
-                    <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
-                        <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase card-title-hover-color">Your Offers</h5>
-                            {% if offers_made %}
-                                <ul class="list-group list-group-flush">
-                                    {% for offer in offers_made %}
-                                        <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center flex-wrap">
-                                            <div>
-                                                €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}" class="text-light">{{ offer.sale.title }}</a>"
-                                                ({{ offer.created_at|date:"M d, Y H:i" }})
-                                                {% if offer.counter_amount %}
-                                                    <br><small class="text-muted">Counter: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
-                                                {% endif %}
-                                            </div>
-                                            <div class="mt-2 mt-md-0">
-                                                {% if offer.status == "accepted" and offer.sale.status == "pending" %}
-                                                    <a href="{% url 'pay_offer' offer.id %}" class="btn btn-success btn-sm mx-1">Pay Now</a>
-                                                {% elif offer.counter_status == "pending" %}
-                                                    <a href="{% url 'respond_counter_offer' offer.id %}" class="btn btn-success btn-sm mx-1">Respond</a>
-                        
-                                                {% else %}
-                                                    <span class="badge bg-secondary">{{ offer.status }}</span>
-                                                {% endif %}
-                                            </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">No offers made yet.</p>
-                            {% endif %}
+                        <!-- Your Offers -->
+                        <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
+                            <div class="card-body p-4">
+                                <h5 class="card-title text-uppercase card-title-hover-color">Your Offers</h5>
+                                {% if offers_made %}
+                                    <ul class="list-group list-group-flush">
+                                        {% for offer in offers_made %}
+                                            <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center flex-wrap">
+                                                <div>
+                                                    €{{ offer.amount }} on "<a href="{% url 'sale_detail' offer.sale.id %}" class="text-light">{{ offer.sale.title }}</a>"
+                                                    ({{ offer.created_at|date:"M d, Y H:i" }})
+                                                    {% if offer.counter_amount %}
+                                                        <br>
+                                                        <small class="text-muted">Counter: €{{ offer.counter_amount }} ({{ offer.counter_status }})</small>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="mt-2 mt-md-0">
+                                                    {% if offer.status == "accepted" and offer.sale.status == "pending" %}
+                                                        <a href="{% url 'pay_offer' offer.id %}"
+                                                           class="btn btn-success btn-sm mx-1">Pay Now</a>
+                                                    {% elif offer.counter_status == "pending" %}
+                                                        <a href="{% url 'respond_counter_offer' offer.id %}"
+                                                           class="btn btn-success btn-sm mx-1">Respond</a>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary">{{ offer.status }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted">No offers made yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <!-- Notifications -->
-                    <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
-                        <div class="card-body p-4">
-                            <h5 class="card-title text-uppercase notification-title">Notifications</h5>
-                            {% if all_notifications %}
-                                <ul class="list-group list-group-flush">
-                                    {% for notification in all_notifications %}
-                                        <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
-                                            {{ notification.message }}
-                                            {% if not notification.is_read %}<span class="badge bg-danger">Unread</span>{% endif %}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="text-muted">No notifications yet.</p>
-                            {% endif %}
+                        <!-- Notifications -->
+                        <div class="card bg-dark text-light shadow-lg border-0 mb-4 animate__animated animate__fadeInRight">
+                            <div class="card-body p-4">
+                                <h5 class="card-title text-uppercase notification-title">Notifications</h5>
+                                {% if all_notifications %}
+                                    <ul class="list-group list-group-flush">
+                                        {% for notification in all_notifications %}
+                                            <li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
+                                                {{ notification.message }}
+                                                {% if not notification.is_read %}<span class="badge bg-danger">Unread</span>{% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="text-muted">No notifications yet.</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock content %}

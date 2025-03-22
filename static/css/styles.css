@@ -94,7 +94,7 @@ a {
 }
 
 /* ==========================================================================
-   Buttons
+   Buttons (Updated)
    ========================================================================== */
 /* Base custom button style with gradient and hover effects */
 .btn-custom {
@@ -103,7 +103,7 @@ a {
   border: none;
   padding: 10px 20px;
   border-radius: 25px;
-  margin: 10px;
+  margin: 5px;
   text-transform: uppercase;
   transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
@@ -114,29 +114,69 @@ a {
   color: var(--hover-color);
 }
 
-/* Outline button variant */
-.btn-custom-outline {
-  background: transparent;
-  border: 2px solid var(--secondary-font-color);
+/* Smaller button variant for inline actions */
+.btn-custom.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+/* Specific button variants */
+.btn-custom.accept {
+  background: linear-gradient(135deg, #28a745, #1d7d38);
+}
+
+.btn-custom.accept:hover {
+  background: linear-gradient(135deg, #34c759, #28a745);
+}
+
+.btn-custom.reject {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
+}
+
+.btn-custom.reject:hover {
+  background: linear-gradient(135deg, #ff4957, #dc3545);
+}
+
+.btn-custom.counter {
+  background: linear-gradient(135deg, var(--main-font-color), #095d8f);
+}
+
+.btn-custom.counter:hover {
+  background: linear-gradient(135deg, #0d75b5, #095d8f);
+}
+
+.btn-custom.cancel {
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+}
+
+.btn-custom.cancel:hover {
+  background: linear-gradient(135deg, #5a6268, #495057);
+}
+
+/* Success button variant (used elsewhere, e.g., counter offer form) */
+.btn-success-custom {
+  background: linear-gradient(135deg, #28a745, #1d7d38);
   color: var(--secondary-font-color);
-  padding: 8px 18px;
-  border-radius: 25px;
-  text-transform: uppercase;
   transition: all 0.3s ease;
 }
 
-.btn-custom-outline:hover {
-  background: var(--secondary-font-color);
-  color: var(--main-bg-color);
+.btn-success-custom:hover {
+  background: linear-gradient(135deg, #34c759, #28a745);
   transform: translateY(-3px);
   box-shadow: 0 5px 15px var(--shadow-color);
 }
 
-/* Profile button variant */
-.button_profile {
-  background: var(--main-font-color);
-  border: none;
+/* Danger button variant (used elsewhere) */
+.btn-danger-custom {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
   color: var(--secondary-font-color);
+  transition: all 0.3s ease;
+}
+
+.btn-danger-custom:hover {
+  background: linear-gradient(135deg, #ff4957, #dc3545);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow-color);
 }
 
 /* ==========================================================================
@@ -338,6 +378,39 @@ a {
   background-color: #222;
 }
 
+/* Offer actions container */
+.offer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Adjust badge styling for status */
+.offer-actions .badge {
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+/* List group item spacing */
+.list-group-item {
+  padding: 15px 0;
+  border-bottom: 1px solid var(--secondary-font-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+/* Small text for counter offer details */
+.list-group-item .text-muted {
+  color: var(--secondary-font-color);
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
 /* ==========================================================================
    Sales Listings
    ========================================================================== */
@@ -502,44 +575,6 @@ a {
 .sale-actions .inline-form {
   display: inline-block;
   margin: 0;
-}
-
-/* Custom button variants */
-.btn-warning-custom {
-  background: linear-gradient(135deg, #ffcc81, #e6b800);
-  color: var(--main-bg-color);
-  transition: all 0.3s ease;
-}
-
-.btn-warning-custom:hover {
-  background: linear-gradient(135deg, #ffd699, #ffcc00);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px var(--shadow-color);
-}
-
-.btn-success-custom {
-  background: linear-gradient(135deg, #28a745, #1d7d38);
-  color: var(--secondary-font-color);
-  transition: all 0.3s ease;
-}
-
-.btn-success-custom:hover {
-  background: linear-gradient(135deg, #34c759, #28a745);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px var(--shadow-color);
-}
-
-.btn-danger-custom,
-.cancel {
-  background: linear-gradient(135deg, #dc3545, #b02a37);
-  color: var(--secondary-font-color);
-  transition: all 0.3s ease;
-}
-
-.btn-danger-custom:hover {
-  background: linear-gradient(135deg, #ff4957, #dc3545);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px var(--shadow-color);
 }
 
 /* ==========================================================================
