@@ -10,6 +10,12 @@
   --secondary-font-color: #d5d7d8; /* Secondary text color (light gray) */
   --hover-color: #ffcc81; /* Hover/accent color (orange) */
   --shadow-color: rgba(0, 0, 0, 0.5); /* Shadow effect color */
+
+  /* For form backgrounds and secondary elements */
+  --dark-bg-color: #1a2b34;
+  --border-radius-standard: 10px;
+  --border-radius-rounded: 25px;
+  --transition-standard: all 0.3s ease;
 }
 
 /* ==========================================================================
@@ -94,7 +100,7 @@ a {
 }
 
 /* ==========================================================================
-   Buttons (Updated)
+   Buttons
    ========================================================================== */
 /* Base custom button style with gradient and hover effects */
 .btn-custom {
@@ -103,9 +109,9 @@ a {
   border: none;
   padding: 10px 20px;
   border-radius: 25px;
-  margin: 5px;
+  margin: 10px;
   text-transform: uppercase;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  transition: var(--transition-standard);
 }
 
 .btn-custom:hover {
@@ -135,14 +141,6 @@ a {
 
 .btn-custom.reject:hover {
   background: linear-gradient(135deg, #ff4957, #dc3545);
-}
-
-.btn-custom.counter {
-  background: linear-gradient(135deg, var(--main-font-color), #095d8f);
-}
-
-.btn-custom.counter:hover {
-  background: linear-gradient(135deg, #0d75b5, #095d8f);
 }
 
 .btn-custom.cancel {
@@ -262,6 +260,50 @@ a {
   padding: 20px 0;
 }
 
+/* ==========================================================================
+   Newsletter Section
+   ========================================================================== */
+.newsletter-section {
+  background-color: var(--main-bg-color);
+  padding: 50px 0;
+}
+
+.newsletter-section .auth-title {
+  color: var(--main-font-color);
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.newsletter-section .auth-prompt {
+  color: var(--secondary-font-color);
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.newsletter-section .form-control {
+  background-color: var(--dark-bg-color);
+  color: var(--secondary-font-color);
+  border: 1px solid var(--secondary-font-color);
+  border-radius: 10px;
+  padding: 12px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 15px;
+  transition: border-color 0.3s ease;
+}
+
+.newsletter-section .form-control:focus {
+  border-color: var(--hover-color);
+  outline: none;
+  box-shadow: 0 0 5px var(--hover-color);
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  animation: fadeIn 0.3s;
+}
 /* ==========================================================================
    Cards
    ========================================================================== */
@@ -396,7 +438,6 @@ a {
 /* List group item spacing */
 .list-group-item {
   padding: 15px 0;
-  border-bottom: 1px solid var(--secondary-font-color);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
