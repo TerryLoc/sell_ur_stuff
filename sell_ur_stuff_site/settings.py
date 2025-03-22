@@ -32,7 +32,7 @@ STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
 # S0 we don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DEBUG", False) == True
 
 ALLOWED_HOSTS = [
     ".herokuapp.com",
@@ -127,12 +127,18 @@ LOGOUT_REDIRECT_URL = "/"  # Redirect after logout
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# Database configuration for Heroku
+if "DATABASE_URL" in os.environ:
+    # Use PostgreSQL in production
+    DATABASES = {"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))}
+else:
+    # Use SQLite locally
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
 
 
 # Password validation
