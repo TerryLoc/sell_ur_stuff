@@ -32,9 +32,9 @@ STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
+    "CLOUDINARY_CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+    "CLOUDINARY_API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+    "CLOUDINARY_API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
 }
 
 # S0 we don't run with debug turned on in production!
@@ -150,6 +150,7 @@ else:
         }
     }
     # Keep local media settings for development
+
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
 
