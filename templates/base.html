@@ -52,9 +52,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
                         </li>
                     {% else %}
@@ -65,6 +62,10 @@
                             <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
                         </li>
                     {% endif %}
+                    <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+                        </li>
+                    
                 </ul>
             </div>
         </div>
@@ -96,7 +97,7 @@
 
     <!-- Footer -->
     <footer class="text-center py-3 text-light">
-        <p>© 2025 Sell Your Stuff | Made with love for the bargain</p>
+        <p>© 2025 Sell Your Stuff | Made for the bargain</p>
     </footer>
     
     <!-- JS file -->
