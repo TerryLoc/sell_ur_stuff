@@ -4,13 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from allauth.account.views import LoginView, SignupView
 from django.contrib.sitemaps.views import sitemap  # Add this import
-from .sitemaps import StaticSitemap, SaleSitemap, ProfileSitemap
+from .sitemaps import StaticSitemap, SaleSitemap
 
 sitemaps = {
     # Added the sitemaps for the static pages, sales, and profiles
     "static": StaticSitemap,
     "sales": SaleSitemap,
-    "profiles": ProfileSitemap,
 }
 
 urlpatterns = [
