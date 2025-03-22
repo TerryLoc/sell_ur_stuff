@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Server Error - Sell Your Stuff
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5 auth-container animate__animated animate__fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-10 text-center">
+            <h1 class="auth-title">500 - Server Error</h1>
+            <p class="auth-prompt">
+                Something went wrong on our end. We're working to fix it!
+            </p>
+            <div class="button-group mt-4">
+                <a href="{% url 'home' %}" class="btn-custom btn-success-custom">Back to Home</a>
+                <a href="{% url 'contact' %}" class="btn-custom">Contact Support</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
