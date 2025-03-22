@@ -12,7 +12,7 @@ Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folk
 - **Vision**: To be Ireland’s go-to spot for second-hand treasures, spreading the love of reusing and connecting people worldwide.
 - **Legal Structure**: Starting as a sole trader in Ireland, with plans to become a limited company as we grow.
 - **Location**: We’re 100% online, hosted on Heroku with Cloudinary for our photos. I’m running this from my little corner of Ireland, with a laptop and a dream!
-- **Founder**: [Your Name], a proud Irish developer who’s mad about coding (Django is my jam!), sustainability, and building something that makes people smile. This project is my heart and soul—I want to make a difference, one preloved item at a time.
+- **Founder**: Terry a proud Irish developer who’s mad about coding (Django is my jam!), sustainability, and building something that makes people smile. This project is my heart and soul—I want to make a difference, one preloved item at a time.
 
 #### 3. Market Analysis
 - **Industry Overview**: The second-hand e-commerce scene is buzzing like a trad session in a Galway pub! Globally, it’s set to hit €300 billion by 2027, growing at 15% a year (based on 2023 reports). People are mad for sustainable shopping, and we’re here for it!
@@ -27,7 +27,7 @@ Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folk
 - **Market Needs**: Irish buyers and sellers want a platform that’s safe, simple, and feels like home. They’re tired of clunky sites or ones that don’t get the Irish vibe. We’re here to give them a space where they can haggle like they’re at a local market, all from their phone.
 
 #### 4. Organization and Management
-- **Founder/CEO**: [Your Name] – I’m the heart behind this, coding away, dreaming big, and making sure every user feels the Irish welcome. I live for Django, Python, and a good cup of Barry’s Tea while I work.
+- **Founder/CEO**: Terry – I’m the heart behind this, coding away, dreaming big, and making sure every user feels the Irish welcome. I live for Django, Python, and a good cup of Barry’s Tea while I work.
 - **Future Team** (as we grow):
   - **Tech Wizard**: To help me keep the site running smoothly and add new features.
   - **Marketing Star**: To spread the word across Ireland with some proper Irish charm.
