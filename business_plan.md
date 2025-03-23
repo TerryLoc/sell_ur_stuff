@@ -5,6 +5,9 @@
 #### 1. Executive Summary
 Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folks can buy and sell second-hand treasures—think preloved jumpers, vintage teapots, or that guitar you swore you’d learn to play! Built with Django for a rock-solid foundation this platform is all about bringing people together to share and save. I’m pouring my heart into this because I believe in the magic of giving items a second life while putting a few extra euros in your pocket. We’re starting in Ireland, but I dream of taking this craic global! We’ll need €12,000 to get the ball rolling—covering development, marketing, and hosting on Heroku. We’ll make money through small transaction fees and premium features, all while building a community that’s as warm as a cuppa on a rainy day.
 
+[Facebook Page](https://www.facebook.com/profile.php?id=61574801600705) to get the word out!
+
+
 #### 2. Company Description
 - **Business Name**: Sell Your Stuff
 - **Mission**: To create a fun, Irish online space where anyone can buy and sell second-hand goodies, making sustainability a joy and community the heart of it all.
@@ -166,8 +169,6 @@ Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folk
 ---
 
 ### Conclusion
+
 Sell Your Stuff is my love letter to Ireland—a place where we can share our preloved treasures, save a few euros, and do our bit for the planet. With Django keeping us steady and an image database making our photos shine, we’re ready to bring the craic to second-hand shopping. I’m putting my heart into this because I believe in the power of community, sustainability, and a good bargain. With €12,000, we’ll launch, grow, and make Sell Your Stuff a name every Irish household knows. Let’s build a platform that’s as warm as an Irish welcome and as fun as a trad session—together, we’ll make second-hand magic! 💚
 
----
-
-This plan is now in euros, reflects the Irish context, and has a fun, heartfelt tone. If you’d like to tweak any part—like adding more Irish flair or diving deeper into a section—just let me know! Sláinte! 🚀
