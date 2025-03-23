@@ -36,12 +36,33 @@ MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
 
 DEBUG = True
 
+# Database configuration
+if "DATABASE_URL" in os.environ:
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=True,
+            default="postgres://localhost",  # Fallback for safety
+        )
+    }
+    # Ensure the ENGINE is set correctly
+    DATABASES["default"]["ENGINE"] = "django.db.backends.postgresql"
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+# Application definition
 ALLOWED_HOSTS = [
     ".herokuapp.com",
     "localhost",
     "127.0.0.1",
 ]
 
+# Logging configuration for Heroku deployment
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -142,16 +163,6 @@ ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-# Database configuration
-if "DATABASE_URL" in os.environ:
-    DATABASES = {"default": dj_database_url.config(conn_max_age=600, ssl_require=True)}
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
 
 # Use local storage in development
 # MEDIA_ROOT = BASE_DIR / "media"
