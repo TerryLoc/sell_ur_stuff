@@ -30,9 +30,11 @@ MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
 
 
 # Debug settings: Ensure DEBUG is False in production
-DEBUG = (
-    os.getenv("DEBUG", "False") == "True" if "DATABASE_URL" not in os.environ else False
-)
+# DEBUG = (
+#     os.getenv("DEBUG", "False") == "True" if "DATABASE_URL" not in os.environ else False
+# )
+
+DEBUG = True
 
 ALLOWED_HOSTS = [
     ".herokuapp.com",
