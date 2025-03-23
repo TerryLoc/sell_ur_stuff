@@ -6,6 +6,8 @@
 <p>The purpose of this application is to revolutionize the online classifieds marketplace by building a user-friendly, dynamic platform that facilitates buying and selling items while leveraging multimedia. Unlike traditional classifieds sites, our application integrates video functionality, allowing sellers to upload short videos showcasing their products. This visual component provides buyers with a more comprehensive and engaging view of items, increasing trust and speeding up the sales process.</p>
 <p>Sellers can also boost their product visibility by paying for a 24-hour feature on a dedicated "Sales Blitz" page. This premium service ensures prominent placement and increased exposure to potential buyers, helping sellers secure quicker sales.</p>
 
+<i>If you wish to check out <a href="business_plan.md">Business Plan</a> first, please do.</i>
+
 <h2>Table of Contents</h2>
 <ul>
     <li><a href="#project-purpose">Project Purpose</a></li>
