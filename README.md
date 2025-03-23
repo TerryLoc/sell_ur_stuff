@@ -1,64 +1,121 @@
+# SELL UR STUFF - APP / SITE
+
+
+
+## Table of Contents
+
+- [SELL UR STUFF - APP / SITE](#sell-ur-stuff---app--site)
+  - [Table of Contents](#table-of-contents)
+  - [Project Purpose](#project-purpose)
+  - [Target Audience](#target-audience)
+  - [The Problem It Solves](#the-problem-it-solves)
+  - [User Stories](#user-stories)
+    - [A. Seller Stories](#a-seller-stories)
+    - [B. Buyer Stories](#b-buyer-stories)
+    - [C. Administrator Stories](#c-administrator-stories)
+  - [Project Requirements](#project-requirements)
+    - [A. E-commerce Requirements](#a-e-commerce-requirements)
+    - [B. Authentication \& Authorization Requirements](#b-authentication--authorization-requirements)
+  - [Tech Stack](#tech-stack)
+  - [Agile Workflow](#agile-workflow)
+    - [GitHub Issues](#github-issues)
+    - [GitHub Project Board](#github-project-board)
+    - [Sprints](#sprints)
+  - [Setup Instructions](#setup-instructions)
+    - [Prerequisites](#prerequisites)
+    - [Local Development Setup](#local-development-setup)
+    - [Media Storage (Local)](#media-storage-local)
+  - [Deployment to Heroku](#deployment-to-heroku)
+    - [Prerequisites](#prerequisites-1)
+    - [Deployment Steps](#deployment-steps)
+    - [Media Storage (Production)](#media-storage-production)
+  - [Known Issues](#known-issues)
+  - [Future Enhancements](#future-enhancements)
+  - [Contact](#contact)
 
 ---
 
-# SELL UR STUFF - APP / SITE
-
 ## Project Purpose
 
-The purpose of this application is to revolutionize the online classifieds marketplace by building a user-friendly, dynamic platform that not only facilitates the buying and selling of items but also leverages the power of multimedia. Unlike traditional classifieds sites, our application integrates video functionality, allowing sellers to upload short videos showcasing their products. This visual component aims to give buyers a more comprehensive and engaging view of the items on offer, thereby increasing trust and speeding up the sales process.
+The purpose of this application is to revolutionize the online classifieds marketplace by building a user-friendly, dynamic platform that facilitates buying and selling items while leveraging multimedia. Unlike traditional classifieds sites, our application integrates video functionality, allowing sellers to upload short videos showcasing their products. This visual component provides buyers with a more comprehensive and engaging view of items, increasing trust and speeding up the sales process.
 
-In addition to the enhanced listing experience, sellers have the option to boost their product visibility by paying for a 24-hour feature on a dedicated “Sales Blitz” page. This premium service is designed to help sellers secure quicker sales by giving their listings prominent placement and increased exposure to potential buyers actively searching for deals.
+Sellers can also boost their product visibility by paying for a 24-hour feature on a dedicated “Sales Blitz” page. This premium service ensures prominent placement and increased exposure to potential buyers, helping sellers secure quicker sales.
 
 ## Target Audience
 
-- **Private Sellers**: Individuals looking to offload personal belongings quickly, from household items to personal gadgets, without the hassle of complex listing procedures.
-- **Casual Sellers**: Users who may not have a large inventory but want to test the waters of online selling using an intuitive and visually appealing platform.
-- **Tech-Savvy Users**: Individuals who are comfortable with using modern, multimedia-rich platforms and are looking for a more engaging alternative to traditional classifieds.
-- **Value Seekers**: Buyers who appreciate the transparency provided by video listings, enabling them to make more informed purchase decisions.
+- **Private Sellers**: Individuals looking to offload personal belongings quickly, from household items to gadgets, without complex listing procedures.
+- **Casual Sellers**: Users with small inventories who want an intuitive, visually appealing platform to test online selling.
+- **Tech-Savvy Users**: Individuals comfortable with multimedia-rich platforms, seeking a modern alternative to traditional classifieds.
+- **Value Seekers**: Buyers who value transparency through video listings for informed purchase decisions.
 
 ## The Problem It Solves
 
-Traditional classified advertisement platforms often suffer from outdated user interfaces, a lack of multimedia integration, and limited options for sellers to enhance the visibility of their listings. These challenges result in slower sales cycles and a less engaging experience for both buyers and sellers.
+Traditional classified platforms often have outdated interfaces, lack multimedia integration, and offer limited visibility options for sellers, leading to slower sales and a less engaging experience. Our application addresses these issues by:
 
-Our application addresses these issues by:
-
-- **Enhancing User Experience**: Offering a modern, streamlined interface that is both accessible and intuitive, encouraging users to interact more deeply with listings.
-- **Multimedia Integration**: Allowing sellers to upload videos, thereby providing richer, more engaging content that builds buyer confidence and increases conversion rates.
-- **Paid Boost Options**: Giving sellers the ability to pay for increased exposure via a dedicated 24-hour sales page, which promotes rapid turnover and caters to users in need of a quick sale.
-- **Targeted Functionality**: Focusing on private and casual sellers who seek a more efficient marketplace solution, while also offering the technological edge that appeals to the modern, tech-savvy consumer.
+- **Enhancing User Experience**: Providing a modern, streamlined interface that’s accessible and intuitive.
+- **Multimedia Integration**: Allowing video uploads for richer, more engaging content that builds buyer confidence.
+- **Paid Boost Options**: Offering a 24-hour “Sales Blitz” page for increased exposure and faster sales.
+- **Targeted Functionality**: Catering to private and casual sellers while appealing to tech-savvy consumers.
 
 ## User Stories
 
 ### A. Seller Stories
 
-- **Seller-01**: As a seller, I want to register an account so that I can list my products securely and manage my listings over time.
-- **Seller-02**: As a seller, I want to create a product listing with detailed descriptions and upload a video showcasing my product so that buyers get a clear and engaging view of the item.
-- **Seller-03**: As a seller, I want to edit or delete my listings so that I can manage outdated or sold items easily.
-- **Seller-04**: As a seller, I want to pay for a 24-hour boost to feature my listing on a dedicated “Sales Blitz” page so that my product gets increased exposure for a quicker sale.
-- **Seller-05**: As a seller, I want to view the status of my listings and any boost transactions so that I can track the effectiveness of my promotional efforts.
+- **Seller-01**: As a seller, I want to register an account to list and manage my products securely.
+- **Seller-02**: As a seller, I want to create a product listing with descriptions and a video to give buyers a clear, engaging view.
+  - *Example*: The "Create Listing" form allows sellers to add a title, description, price, and upload images/videos.
+  
+    ![Create Listing Form](/sell_ur_stuff/static/images/readme/sale_create.png)  
+    *Caption*: The "Create Listing" form where sellers can input details and upload media for their products.
+
+- **Seller-03**: As a seller, I want to edit or delete listings to manage outdated or sold items.
+
+  - *Example*: The "Your Offers" section shows the status of offers and provides a "Pay Now" option for accepted offers.
+  
+    ![Your Offers Section](/sell_ur_stuff/static/images/readme/offer_page.png)  
+    *Caption*: The "Your Offers" section displaying an accepted offer with a "Pay Now" button.
 
 ### B. Buyer Stories
 
-- **Buyer-01**: As a buyer, I want to browse and search for product listings so that I can easily find items that interest me.
-- **Buyer-02**: As a buyer, I want to view detailed product pages that include both text and video so that I can make informed purchasing decisions.
-- **Buyer-03**: As a buyer, I want to contact sellers securely through a messaging or inquiry system so that I can ask questions about a product without leaving the platform.
-- **Buyer-04**: As a buyer, I want clear feedback when interacting with the site so that I always know what to expect next.
+- **Buyer-01**: As a buyer, I want to browse and search for product listings to find items that interest me.
+  - *Example*: Listings are categorized into "Active," "Sold," and "Pending" tabs for easy browsing.
+  
+    ![Listing Tabs](/sell_ur_stuff/static/images/readme/listing_table.png)  
+    *Caption*: Tabs for browsing listings: "Active," "Sold," and "Pending."
+
+- **Buyer-02**: As a buyer, I want to view detailed product pages with text and video for informed decisions.
+  - *Example*: A product listing for "headphones" shows the price, status, and a preview image.
+  
+    ![Product Listing](/sell_ur_stuff/static/images/readme/item_sections.png)  
+    *Caption*: A product listing for "headphones" with price and status details.
+
+- **Buyer-03**: As a buyer, I want to contact sellers securely via a messaging system without leaving the platform.
+- **Buyer-04**: As a buyer, I want clear feedback when interacting with the site to know what to expect.
+  - *Example*: After making an offer, buyers receive feedback if the offer is too low or accepted.
+  
+    ![Offer Feedback](/sell_ur_stuff/static/images/readme/buyer_offer_payment.png)  
+    *Caption*: Feedback message indicating an offer is below the minimum threshold.
 
 ### C. Administrator Stories
 
-- **Admin-01**: As an administrator, I want to manage user accounts and roles so that I can ensure only authorized users have access to sensitive operations.
-- **Admin-02**: As an administrator, I want to review and moderate product listings and user-generated content to maintain quality and compliance with site policies.
-- **Admin-03**: As an administrator, I want to view reports on sales, user activity, and boost transactions so that I can assess the platform’s performance and address issues proactively.
-- **Admin-04**: As an administrator, I want to manage payment transactions so that the e-commerce functionality operates smoothly.
-- **Admin-05**: As an administrator, I want to configure SEO settings and monitor site indexing so that the platform achieves optimal online visibility.
+- **Admin-01**: As an administrator, I want to manage user accounts and roles to ensure authorized access.
+- **Admin-02**: As an administrator, I want to review and moderate listings and content to maintain quality.
+- **Admin-03**: As an administrator, I want to view reports on sales, user activity, and boost transactions to assess performance.
+- **Admin-04**: As an administrator, I want to manage payment transactions for smooth e-commerce functionality.
+- **Admin-05**: As an administrator, I want to configure SEO settings and monitor site indexing for optimal visibility.
 
 ## Project Requirements
 
 ### A. E-commerce Requirements
 
-- Integrate an online payment system (e.g., Stripe) to handle transactions for boosted listings.
+- Integrate an online payment system (e.g., Stripe) for boosted listings.
+  - *Example*: A confirmation message appears after a successful payment.
+  
+    ![Payment Successful](/sell_ur_stuff/static/images/readme/payment_processed.png)  
+    *Caption*: Payment confirmation message after purchasing "headphones."
+
 - Enable video uploads with validations (file type, size, etc.).
-- Create an administrative dashboard for reviewing transactions and overall sales performance.
+- Create an administrative dashboard for reviewing transactions and sales performance.
 
 ### B. Authentication & Authorization Requirements
 
@@ -81,6 +138,36 @@ Our application addresses these issues by:
 - **Payment Processing**: Stripe
 - **Deployment**: Heroku
 - **Environment Management**: `python-dotenv` for managing environment variables
+
+## Agile Workflow
+
+This project uses GitHub Issues and Projects to manage development in an Agile manner, with sprints and a Kanban board to track progress.
+
+[Sell Your Stuff ERD](https://dbdocs.io/terryloughran/Sell-Your-Stuff) for further project flow.
+
+### GitHub Issues
+
+- Each user story and task is documented as a GitHub Issue.
+- Issues are labeled (e.g., `user-story`, `seller`, `buyer`, `admin`, `task`) and assigned to milestones (sprints).
+- Example: [User Story] Seller-01: Register an Account (#2)
+
+### GitHub Project Board
+
+- The project board is divided into columns: **Backlog**, **To Do**, **In Progress**, **In Review**, and **Done**.
+- Issues are moved through these columns as work progresses.
+- Link to the project board: [Sell Ur Stuff Project Board](https://github.com/users/TerryLoc/projects/4).
+
+### Sprints
+
+- **Sprint 1 (Setup and Authentication)**:
+  - Issues: `Project Setup and Environment Configuration (#1)`, `Authentication & Authorization (#2)`
+  - Focus: Set up the project environment and implement user registration/login.
+- **Sprint 2 (Product Listings and E-commerce)**:
+  - Issues: `Product Listing and CRUD Operations (#3)`, `E-commerce and Payment Integration (#4)`
+  - Focus: Implement product listings with video uploads and Stripe payment for boosts.
+- **Sprint 3 (UX and SEO)**:
+  - Issues: `Front-End Design and User Experience (UX) (#5)`, `SEO and Marketing Integration (#6)`
+  - Focus: Enhance the UI/UX and implement SEO features.
 
 ## Setup Instructions
 
@@ -144,6 +231,7 @@ Our application addresses these issues by:
    - Access the admin panel at `http://localhost:8000/admin/`.
 
 ### Media Storage (Local)
+
 - Media files (e.g., profile pictures, videos) are stored locally in `sell_ur_stuff/media/`.
 - Ensure the `media` directory exists:
   ```bash
@@ -215,25 +303,84 @@ Our application addresses these issues by:
    - The site should be live at `https://sell-ur-stuff-19632c616966.herokuapp.com/`.
 
 ### Media Storage (Production)
+
 - Media files are stored in an Amazon S3 bucket.
 - Ensure your S3 bucket has a public read policy for objects:
   ```json
   {
-      "Version": "2012-10-17",
-      "Statement": [
-          {
-              "Effect": "Allow",
-              "Principal": "*",
-              "Action": "s3:GetObject",
-              "Resource": "arn:aws:s3:::your-bucket-name/*"
-          }
-      ]
-  }
-  ```
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::bucket-name/*"
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam:::account-id/the-user"
+            },
+            "Action": [
+                "s3:PutObject",
+                "s3:PutObjectAcl"
+            ],
+            "Resource": "arn:aws:s3:::bucket-name/*"
+        }
+    ]
+
 - Adjust the S3 bucket’s Block Public Access settings to allow public read access via policies:
   - Uncheck “Block all public access”.
   - Keep ACL blocking enabled for security.
   - Uncheck policy blocking to allow public read access via the bucket policy.
+
+## UX Design
+
+### Design Process
+
+The UX design for **Sell Ur Stuff** focused on creating an intuitive and engaging experience for private sellers, casual sellers, tech-savvy users, and value seekers. The process included:
+
+### Wireframes
+
+- Created wireframes for key pages (e.g., homepage, product listing page, profile page) using tools like Figma.
+- **Homepage**: Featured a search bar, featured listings (Sales Blitz), and navigation links to Market, Profiles, and Contact.
+- **Product Listing Page**: Included a video player, product description, and a “Contact Seller” button.
+- **Profile Page**: Displayed the user’s profile picture, a list of their listings, and an “Edit Profile” button.
+
+### Mockups
+
+- Developed high-fidelity mockups to finalize the design.
+- Used a clean, modern design with a focus on multimedia (e.g., large video player for product listings).
+- Ensured responsiveness with a mobile-first approach (e.g., collapsible navigation menu on mobile).
+
+### User Feedback
+
+- Conducted informal user testing with peers to gather feedback on usability.
+- Adjusted the design to improve navigation (e.g., added a “Back to Listings” button on product pages).
+
+### Implementation
+
+The wireframes and mockups were implemented using Django templates and Bootstrap for styling.
+
+- **Homepage**: `templates/home/home.html` includes a search bar and featured listings.
+- **Product Listing Page**: `templates/market/listing_detail.html` includes a video player.
+- **Profile Page**: `templates/profiles/profile.html` displays the user’s profile picture (`<img src="">`) and listings.
+- The design ensures responsiveness across devices, tested using Chrome DevTools.
+
+### Diagrams
+
+- Wireframes and mockups are stored in the `docs/ux/` directory (create this directory if it doesn’t exist).
+- Example: `docs/ux/homepage-wireframe.png`, `docs/ux/product-listing-mockup.png`.
+
+## Testing
+
+Testing procedures are documented in [TESTING.md](TESTING.md). Key areas include:
+
+- **Functionality**: Tested all user stories (e.g., registration, product listing creation, payment for boosts).
+- **Usability**: Ensured intuitive navigation and clear feedback (e.g., form validation errors).
+- **Responsiveness**: Tested on multiple devices using Chrome DevTools.
+- **Data Management**: Verified media storage (local filesystem and S3) and database operations.
+- Automated tests are implemented in each app (e.g., `profiles/tests.py` for profile picture uploads).
 
 ## Project Structure
 
@@ -255,7 +402,7 @@ sell_ur_stuff/
 
 ## Issues Encountered
 
-During development, we ran into several challenges that were resolved. These are documented here for future reference:
+During development, we faced several challenges, which are documented here for reference:
 
 - **Media Serving in Development**:
   - **Issue**: Profile pictures (e.g., `glass-3077869_640.jpg`) were not displaying locally, returning a 404 error at `http://localhost:8000/media/profile_pics/glass-3077869_640.jpg`, despite the file existing in `sell_ur_stuff/media/profile_pics/`.
@@ -264,7 +411,7 @@ During development, we ran into several challenges that were resolved. These are
 
 - **S3 Configuration in Production**:
   - **Issue**: Images were not accessible on Heroku after switching from Cloudinary to Amazon S3, due to S3’s Block Public Access settings.
-  - **Cause**: The S3 bucket had “Block all public access” enabled, which prevented public read access to objects, even with a bucket policy allowing `s3:GetObject`.
+  - **Cause**: The S3 bucket had “Block all public access” enabled, preventing public read access to objects, even with a bucket policy allowing `s3:GetObject`.
   - **Resolution**: Adjusted the Block Public Access settings to allow public read access via bucket policies (unchecked “Block public access to buckets and objects granted through new public bucket or access point policies” and “Block public and cross-account access...”). Added a bucket policy to allow public read access to objects.
 
 - **Cloudinary Leftovers**:
@@ -296,6 +443,7 @@ During development, we ran into several challenges that were resolved. These are
 
 - **Email Verification**: Currently set to `none` (`ACCOUNT_EMAIL_VERIFICATION = "none"`). Set to `mandatory` in production and configure an email backend (e.g., SendGrid).
 - **Video Uploads**: Ensure video file validations (size, format) are implemented in the `market` app.
+- **Images**: I cannot seem to get the images to show on the live site. I tried `cloudinary` and am now using `AWS`, but I cannot get either to allow me to upload. I have hit a wall!
 
 ## Future Enhancements
 
@@ -303,22 +451,8 @@ During development, we ran into several challenges that were resolved. These are
 - Implement video compression for faster uploads and streaming.
 - Add analytics for sellers to track listing views and engagement.
 - Integrate a review/rating system for buyers and sellers.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+- Enhance the newsletter subscription feature with better user feedback.
 
 ## Contact
 
-For questions or support, contact the project maintainer at [your-email@example.com].
-
----
-
-### Notes for You
-- **GitHub Repository**: Replace `https://github.com/your-username/sell-ur-stuff.git` with the actual repository URL.
-- **Email**: Update the contact email in the “Contact” section.
-- **License**: Add a `LICENSE` file to your repository if you haven’t already (e.g., MIT License).
-- **Issues Encountered**: I’ve included the main issues we faced (media serving, S3 configuration, Cloudinary leftovers, and database setup). Let me know if you’d like to add more.
-- **Future Enhancements**: Modify this section based on your roadmap if needed.
-
-This README provides a detailed overview of the project, setup instructions, deployment steps, and a record of the issues we encountered, making it a valuable resource for anyone working on **Sell Your Stuff**. Let me know if you’d like to adjust any sections! 💚 Sláinte! 🚀
+For questions or support, contact the project maintainer [TERRY](https://github.com/TerryLoc).
