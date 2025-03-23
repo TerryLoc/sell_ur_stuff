@@ -101,3 +101,36 @@ python manage.py test profiles
 | **Production (S3)** | - Upload a profile picture on Heroku and verify it’s stored in the S3 bucket.<br>- Check the S3 bucket to ensure the file exists (e.g., `profile_pics/glass-3077869_640.jpg`).<br>- Delete the profile picture and verify it’s removed from S3. |
 
 ---
+
+### Testing Payment
+
+The **Sell Ur Stuff** application uses Stripe for payment processing (e.g., for boosting listings on the "Sales Blitz" page). To ensure payment functionality works correctly without risking real transactions, testing is conducted in a sandbox environment using Stripe's test mode.
+
+#### Use a Sandbox Environment
+
+- Set up Stripe in test mode by using your Stripe test API keys in the `.env` file:
+  ```env
+  STRIPE_PUBLIC_KEY=pk_test_your-test-public-key
+  STRIPE_SECRET_KEY=sk_test_your-test-secret-key
+  ```
+- Use Stripe's provided test cards to simulate transactions. These cards work with any future expiration date (e.g., `12/25`) and a CVV (e.g., `123` for Visa/MasterCard, `1234` for Amex). Common test card numbers include:
+
+  | Card Type            | Test Card Number      | Notes                                |
+  | -------------------- | --------------------- | ------------------------------------ |
+  | **Visa**             | `4111 1111 1111 1111` | General-purpose test card.           |
+  | **MasterCard**       | `5555 5555 5555 4444` | General-purpose test card.           |
+  | **American Express** | `3782 822463 10005`   | Requires 4-digit CVV (e.g., `1234`). |
+
+#### Test Scenarios
+
+Test the payment functionality for boosting a listing using the following scenarios:
+
+| Scenario                   | Test Card Number      | Expected Outcome                         | Steps to Test                                                                                                                                                                                                                           |
+| -------------------------- | --------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Successful Transaction** | `4242 4242 4242 4242` | Payment succeeds, listing is boosted.    | - Log in as a seller.<br>- Go to a listing and click "Boost".<br>- Enter the card details (e.g., `4242 4242 4242 4242`, expiry `12/25`, CVV `123`).<br>- Verify the payment succeeds and the listing appears on the "Sales Blitz" page. |
+| **Declined Transaction**   | `4000 0000 0000 9995` | Payment fails with "insufficient funds". | - Repeat the steps above with the card `4000 0000 0000 9995`.<br>- Verify an error message is displayed indicating the payment was declined.                                                                                            |
+| **3D Secure**              | `4000 0000 0000 3220` | Payment portal appeared                  | Stripe 3D Secure test card. Testing work and confirmation of purchase page was generated.                                                                                                                                               | - Note: 3D Secure testing requires a specific test card (e.g., `4000 0000 0000 3220` for Stripe). This scenario is not currently implemented but can be added in the future. |
+
+#### Notes
+- Ensure Stripe is configured in test mode during development and testing to avoid real charges.
+- After testing, verify that the admin dashboard (`/admin/`) correctly reflects the test transactions (e.g., for Admin-04: Manage Payment Transactions).
