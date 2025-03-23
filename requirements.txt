@@ -1,4 +1,5 @@
 asgiref==3.8.1
+awscli==1.38.18
 boto3==1.37.18
 botocore==1.37.18
 certifi==2025.1.31
@@ -14,6 +15,7 @@ django-allauth==65.3.1
 django-storages==1.14.5
 django-widget-tweaks==1.5.0
 djlint==1.36.4
+docutils==0.16
 EditorConfig==0.17.0
 gunicorn==23.0.0
 idna==3.10
@@ -24,6 +26,7 @@ packaging==24.2
 pathspec==0.12.1
 pillow==11.1.0
 psycopg2-binary==2.9.10
+pyasn1==0.6.1
 pycparser==2.22
 PyJWT==2.10.1
 python-dateutil==2.9.0.post0
@@ -31,6 +34,7 @@ python-dotenv==1.0.1
 PyYAML==6.0.2
 regex==2024.11.6
 requests==2.32.3
+rsa==4.7.2
 s3transfer==0.11.4
 six==1.17.0
 sqlparse==0.5.3

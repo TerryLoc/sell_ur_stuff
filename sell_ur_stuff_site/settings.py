@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "profiles",
     "contact",
     "widget_tweaks",
+    # Third-party apps
+    "storages",
     # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
@@ -123,8 +125,13 @@ if "DATABASE_URL" in os.environ:
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
     AWS_S3_FILE_OVERWRITE = False
-    AWS_S3_FILE_EXPIRES = 60  # Optional: Cache control for 60 seconds
-    AWS_QUERYSTRING_AUTH = False  # Optional: Disable signed URLs for public access
+    AWS_S3_FILE_EXPIRES = 60
+    AWS_QUERYSTRING_AUTH = False
+
+    # Additional settings
+    AWS_DEFAULT_ACL = "public-read"
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
 else:
     # Use local storage in development
     MEDIA_URL = "/media/"
