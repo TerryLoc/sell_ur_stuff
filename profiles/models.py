@@ -4,6 +4,10 @@ from sales.models import Sale
 
 
 class UserProfile(models.Model):
+    """
+    A model to store information about a user.
+    """
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     profile_picture = models.ImageField(
         upload_to="profile_pics/",
@@ -17,10 +21,12 @@ class UserProfile(models.Model):
     address = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.user.username
+        return f"{self.user.username}'s profile"  # Changed accordingly after testing
 
 
 class Purchase(models.Model):
+    """A model to store information about a purchase."""
+
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="purchases")
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
     purchased_at = models.DateTimeField(auto_now_add=True)
@@ -33,6 +39,8 @@ class Purchase(models.Model):
 
 
 class Notification(models.Model):
+    """A model to store notifications for users."""
+
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="notifications"
     )
