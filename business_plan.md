@@ -4,14 +4,14 @@
 ### Business Plan for Sell Your Stuff
 
 #### 1. Executive Summary
-Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folks can buy and sell second-hand treasures—think preloved jumpers, vintage teapots, or that guitar you swore you’d learn to play! Built with Django for a rock-solid foundation this platform is all about bringing people together to share and save, sustainability. I’m pouring my heart into this because I believe in the magic of giving items a second life while putting a few extra euros in your pocket. We’re starting in Ireland, but I dream of taking this craic global! We’ll need €12,000 to get the ball rolling—covering development, marketing, and hosting on Heroku. We’ll make money through small transaction fees and premium features, all while building a community that’s as warm as a cuppa on a rainy day.
+Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folks can buy and sell second-hand treasures—think preloved jumpers, vintage teapots, or that guitar you swore you’d learn to play! Built with Django for a rock-solid foundation this platform is all about bringing people together to share and save. I’m pouring my heart into this because I believe in the magic of giving items a second life while putting a few extra euros in your pocket. We’re starting in Ireland, but I dream of taking this craic global! We’ll need €12,000 to get the ball rolling—covering development, marketing, and hosting on Heroku. We’ll make money through small transaction fees and premium features, all while building a community that’s as warm as a cuppa on a rainy day.
 
 #### 2. Company Description
 - **Business Name**: Sell Your Stuff
 - **Mission**: To create a fun, Irish online space where anyone can buy and sell second-hand goodies, making sustainability a joy and community the heart of it all.
 - **Vision**: To be Ireland’s go-to spot for second-hand treasures, spreading the love of reusing and connecting people worldwide.
 - **Legal Structure**: Starting as a sole trader in Ireland, with plans to become a limited company as we grow.
-- **Location**: We’re 100% online, hosted on Heroku with Cloudinary for our photos. I’m running this from my little corner of Ireland, with a laptop and a dream!
+- **Location**: We’re 100% online, hosted on Heroku. I’m running this from my little corner of Ireland, with a laptop and a dream!
 - **Founder**: [Your Name], a proud Irish developer who’s mad about coding (Django is my jam!), sustainability, and building something that makes people smile. This project is my heart and soul—I want to make a difference, one preloved item at a time.
 
 #### 3. Market Analysis
@@ -23,7 +23,7 @@ Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folk
 - **Competitors**:
   - **Direct**: eBay, Depop, DoneDeal, Adverts.
   - **Indirect**: Car boot sales, Facebook Marketplace.
-  - **Our Edge**: Sell Your Stuff is like a friendly Irish marketplace stall—easy to use, packed with features like offer negotiations and notifications, and built with love. Django keeps us fast and scalable, while Cloudinary makes sure your photos look class, even on a dodgy Wi-Fi connection!
+  - **Our Edge**: Sell Your Stuff is like a friendly Irish marketplace stall—easy to use, packed with features like offer negotiations and notifications, and built with love. Django keeps us fast and scalable, even on a dodgy Wi-Fi connection!
 - **Market Needs**: Irish buyers and sellers want a platform that’s safe, simple, and feels like home. They’re tired of clunky sites or ones that don’t get the Irish vibe. We’re here to give them a space where they can haggle like they’re at a local market, all from their phone.
 
 #### 4. Organization and Management
@@ -38,12 +38,12 @@ Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folk
 #### 5. Service or Product Line
 - **Core Offering**: A lively online marketplace for second-hand stuff—everything from GAA jerseys to granny’s old rocking chair.
 - **Key Features** (Built with Love):
-  - **User Profiles**: Create your own space with a profile pic (thanks, Cloudinary!), a bio, and your contact deets—show off your Irish charm!
+  - **User Profiles**: Create your own space with a profile pic, a bio, and your contact deets—show off your Irish charm!
   - **Sales Listings**: List your items with photos, a description, and a price. It’s as easy as chatting at the pub.
   - **Offer System**: Make an offer, haggle with a counteroffer, and seal the deal—it’s like bargaining at a market, but online!
   - **Notifications**: Get a wee nudge when someone makes an offer or buys your stuff.
   - **Payments**: Stripe handles payments securely (already set up with `STRIPE_PUBLIC_KEY` and `STRIPE_SECRET_KEY` in `settings.py`).
-  - **Photos**: Cloudinary makes sure your pics load fast and look gorgeous, whether it’s a sunny day in Kerry or a rainy one in Sligo.
+  - **Photos**: Well make sure your pics load fast and look gorgeous, whether it’s a sunny day in Kerry or a rainy one in Sligo.
 - **Future Features** (I Can’t Wait!):
   - A search bar to find treasures faster than you can say “Céad Míle Fáilte.”
   - Suggestions for items you might love, like a matchmaker for second-hand goods.
@@ -81,7 +81,7 @@ Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folk
 - **Startup Costs**:
   - Website Development: €1,500 (already spent on the current setup—worth every cent!).
   - Heroku Hosting: €8/month x 12 = €96.
-  - Cloudinary (Free Tier to Start): €0 (we’ll upgrade to a paid plan at €80/month after 10,000 uploads).
+  - Cloudinary or AWS (Free Tier to Start): €0 (we’ll upgrade to a paid plan at €80/month after 10,000 uploads).
   - Domain (`sellyourstuff.ie`): €20/year.
   - Marketing: €5,000.
   - Legal/Accounting: €800.
@@ -107,8 +107,8 @@ Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folk
     - **Total Revenue**: €44,000.
 - **Expenses**:
   - **Year 1**: €7,416 (startup costs) + €1,600 (ongoing marketing) = €9,016.
-  - **Year 2**: €4,000 (marketing) + €960 (Heroku) + €960 (Cloudinary paid plan) = €5,920.
-  - **Year 3**: €8,000 (marketing) + €960 (Heroku) + €960 (Cloudinary) + €4,000 (hiring) = €13,920.
+  - **Year 2**: €4,000 (marketing) + €960 (Heroku) + €960 (image database paid plan) = €5,920.
+  - **Year 3**: €8,000 (marketing) + €960 (Heroku) + €960 (image database) + €4,000 (hiring) = €13,920.
 - **Profit/Loss**:
   - **Year 1**: €3,400 - €9,016 = -€5,616 (a small loss, but we’re building something special!).
   - **Year 2**: €14,600 - €5,920 = €8,680 (profit—time to celebrate with a pint!).
@@ -123,18 +123,18 @@ Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folk
 - **Technology**:
   - Backend: Django 5.1.4, hosted on Heroku—solid as a rock.
   - Database: SQLite locally, PostgreSQL on Heroku (via `DATABASE_URL`).
-  - Photos: Cloudinary to keep images fast and fabulous.
+  - Photos: image database to keep images fast and fabulous.
   - Payments: Stripe for safe, easy transactions.
 - **Deployment**:
   - Heroku’s CI/CD pipeline keeps updates smooth as Irish butter.
-  - I’ll keep an eye on things with Heroku logs and Cloudinary stats.
+  - I’ll keep an eye on things with Heroku logs.
 - **Customer Support**:
   - I’ll handle queries myself at first, with a big Irish smile.
   - Future: Hire a support star and add a ticketing system for that extra touch.
 
 #### 10. Milestones and Timeline
 - **Month 1-3**:
-  - Fix image issues (local and Cloudinary uploads—sorted!).
+  - Fix image issues (local and image database uploads—sorted!).
   - Launch beta with 100 users—our first Irish crew!
   - Spend €1,200 on marketing (social media ads with a bit of Irish flair).
 - **Month 4-6**:
@@ -167,7 +167,7 @@ Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folk
 ---
 
 ### Conclusion
-Sell Your Stuff is my love letter to Ireland—a place where we can share our preloved treasures, save a few euros, and do our bit for the planet. With Django keeping us steady and Cloudinary making our photos shine, we’re ready to bring the craic to second-hand shopping. I’m putting my heart into this because I believe in the power of community, sustainability, and a good bargain. With €12,000, we’ll launch, grow, and make Sell Your Stuff a name every Irish household knows. Let’s build a platform that’s as warm as an Irish welcome and as fun as a trad session—together, we’ll make second-hand magic! 💚
+Sell Your Stuff is my love letter to Ireland—a place where we can share our preloved treasures, save a few euros, and do our bit for the planet. With Django keeping us steady and an image database making our photos shine, we’re ready to bring the craic to second-hand shopping. I’m putting my heart into this because I believe in the power of community, sustainability, and a good bargain. With €12,000, we’ll launch, grow, and make Sell Your Stuff a name every Irish household knows. Let’s build a platform that’s as warm as an Irish welcome and as fun as a trad session—together, we’ll make second-hand magic! 💚
 
 ---
 
