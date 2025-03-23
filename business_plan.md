@@ -1,7 +1,6 @@
 
 ---
-
-### Business Plan for Sell Your Stuff
+### My Business Plan for Sell Your Stuff
 
 #### 1. Executive Summary
 Dia duit! Welcome to **Sell Your Stuff**, an Irish online marketplace where folks can buy and sell second-hand treasures—think preloved jumpers, vintage teapots, or that guitar you swore you’d learn to play! Built with Django for a rock-solid foundation this platform is all about bringing people together to share and save. I’m pouring my heart into this because I believe in the magic of giving items a second life while putting a few extra euros in your pocket. We’re starting in Ireland, but I dream of taking this craic global! We’ll need €12,000 to get the ball rolling—covering development, marketing, and hosting on Heroku. We’ll make money through small transaction fees and premium features, all while building a community that’s as warm as a cuppa on a rainy day.
