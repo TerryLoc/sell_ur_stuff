@@ -104,7 +104,7 @@ python manage.py test profiles
 
 ### Testing Payment
 
-The **Sell Ur Stuff** application uses Stripe for payment processing (e.g., for boosting listings on the "Sales Blitz" page). To ensure payment functionality works correctly without risking real transactions, testing is conducted in a sandbox environment using Stripe's test mode.
+The **Sell Ur Stuff** application uses Stripe for payment processing. To ensure payment functionality works correctly without risking real transactions, testing is conducted in a sandbox environment using Stripe's test mode.
 
 #### Use a Sandbox Environment
 
