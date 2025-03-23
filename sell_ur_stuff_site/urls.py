@@ -12,6 +12,7 @@ sitemaps = {
     "sales": SaleSitemap,
 }
 
+
 urlpatterns = [
     # Override Allauth's login and signup views
     path(
