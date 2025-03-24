@@ -44,6 +44,17 @@ AWS_S3_CUSTOM_DOMAIN = "sellyourtuff.s3.amazonaws.com"
 MEDIA_URL = "https://sellyourtuff.s3.amazonaws.com/"
 print("Finished loading settings.py")
 
+# Manually override default_storage
+try:
+    from django.core.files.storage import default_storage as default_storage_original
+    from sell_ur_stuff_site.storage import CustomS3Boto3Storage
+
+    default_storage = CustomS3Boto3Storage()
+    print(f"Manually set default_storage to: {default_storage.__class__.__name__}")
+except Exception as e:
+    print(f"Failed to manually set default_storage: {e}")
+    raise
+
 # Debug settings
 DEBUG = (
     os.getenv("DEBUG", "False") == "True" if "DATABASE_URL" not in os.environ else False
