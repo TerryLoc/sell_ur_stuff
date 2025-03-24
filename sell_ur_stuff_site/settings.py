@@ -20,11 +20,14 @@ print("Loading settings.py")
 try:
     DEFAULT_FILE_STORAGE = "sell_ur_stuff_site.storage.CustomS3Boto3Storage"
     print(f"DEFAULT_FILE_STORAGE set to: {DEFAULT_FILE_STORAGE}")
-    # Force import to catch errors
+    # Force import and instantiation to catch errors
     from sell_ur_stuff_site.storage import CustomS3Boto3Storage
 
     print("Successfully imported CustomS3Boto3Storage")
     # Force instantiation
+    custom_storage = CustomS3Boto3Storage()
+    print("Successfully instantiated CustomS3Boto3Storage")
+    # Check default_storage
     from django.core.files.storage import default_storage
 
     print(f"Storage backend at startup: {default_storage.__class__.__name__}")
@@ -41,7 +44,7 @@ AWS_S3_CUSTOM_DOMAIN = "sellyourtuff.s3.amazonaws.com"
 MEDIA_URL = "https://sellyourtuff.s3.amazonaws.com/"
 print("Finished loading settings.py")
 
-# Debug settings: Ensure DEBUG is False in production
+# Debug settings
 DEBUG = (
     os.getenv("DEBUG", "False") == "True" if "DATABASE_URL" not in os.environ else False
 )
@@ -52,10 +55,9 @@ if "DATABASE_URL" in os.environ:
         "default": dj_database_url.config(
             conn_max_age=600,
             ssl_require=True,
-            default="postgres://localhost",  # Fallback for safety
+            default="postgres://localhost",
         )
     }
-    # Ensure the ENGINE is set correctly
     DATABASES["default"]["ENGINE"] = "django.db.backends.postgresql"
 else:
     DATABASES = {
