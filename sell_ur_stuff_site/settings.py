@@ -16,17 +16,18 @@ STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
 # Media storage configuration
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+print("Loading settings.py")
+DEFAULT_FILE_STORAGE = "sell_ur_stuff_site.storage.CustomS3Boto3Storage"
+print(f"DEFAULT_FILE_STORAGE set to: {DEFAULT_FILE_STORAGE}")
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_S3_FILE_OVERWRITE = False
-AWS_S3_FILE_EXPIRES = 60
 AWS_QUERYSTRING_AUTH = False
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-
+AWS_S3_CUSTOM_DOMAIN = "sellyourtuff.s3.amazonaws.com"
+MEDIA_URL = "https://sellyourtuff.s3.amazonaws.com/"
+print("Finished loading settings.py")
 
 # Debug settings: Ensure DEBUG is False in production
 DEBUG = (
