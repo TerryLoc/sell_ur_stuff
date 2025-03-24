@@ -1,6 +1,8 @@
 import os
 from storages.backends.s3boto3 import S3Boto3Storage
 
+print("Loading storage.py")
+
 
 class CustomS3Boto3Storage(S3Boto3Storage):
     def __init__(self):
