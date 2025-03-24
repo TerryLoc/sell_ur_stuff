@@ -399,17 +399,15 @@ git push heroku main</code></pre>
 <h3>Implementation</h3>
 <p>The wireframes and mockups were implemented using Django templates and Bootstrap for styling.</p>
 <ul>
-    <li><strong>Homepage</strong>: <code>templates/home/home.html</code> includes a search bar and featured listings.</li>
-    <li><strong>Product Listing Page</strong>: <code>templates/market/listing_detail.html</code> includes a video player.</li>
-    <li><strong>Profile Page</strong>: <code>templates/profiles/profile.html</code> displays the user's profile picture (<code>&lt;img src=""&gt;</code>) and listings.</li>
+    <li><strong>Homepage</strong>: <img src="static/images/readme/landing.jpg" alt="landing"width="300px" margin=" 0 auto"/> includes a search bar and featured listings.</li>
+    <li><strong>Product Listing Page</strong>: <img src="static/images/readme/marketplace.jpg" alt="market"width="300px" margin=" 0 auto"/> includes a video player.</li>
+    <li><strong>Profile Page</strong>: <img src="static/images/readme/profile.jpg" alt="profile"width="300px" margin=" 0 auto"/> displays the user's profile picture and listings.</li>
+    <li><strong>Contact Page</strong>: <img src="static/images/readme/contact.jpg" alt="contact"width="300px" margin=" 0 auto"/> so user can get in touch with the team.</li>
+    <li><strong>Login Page</strong>: <img src="static/images/readme/login.jpg" alt="login"width="300px" margin=" 0 auto"/> so user can securely access the site.</li>
+    <li><strong>SignIn Page</strong>: <img src="static/images/readme/register.jpg" alt="login"width="300px" margin=" 0 auto"/> For new user to sign up and get selling or buying</li>
     <li>The design ensures responsiveness across devices, tested using Chrome DevTools.</li>
 </ul>
 
-<h3>Diagrams</h3>
-<ul>
-    <li>Wireframes and mockups are stored in the <code>docs/ux/</code> directory (create this directory if it doesn't exist).</li>
-    <li>Example: <code>docs/ux/homepage-wireframe.png</code>, <code>docs/ux/product-listing-mockup.png</code>.</li>
-</ul>
 
 <h2 id="testing">Testing</h2>
 <p>Testing procedures are documented in <a href="TESTING.md">TESTING.md</a>. Key areas include:</p>
