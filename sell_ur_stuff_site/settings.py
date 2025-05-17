@@ -15,6 +15,13 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
+if STRIPE_SECRET_KEY:
+    stripe.api_key = STRIPE_SECRET_KEY
+    print("Stripe API key configured for production/Heroku.") # This will show in Heroku logs
+else:
+    # This case should ideally not happen in Heroku if the Config Var is set
+    print("CRITICAL: STRIPE_SECRET_KEY is not set in the environment!")
+
 # Manually override default_storage and ensure it persists
 try:
     from django.core.files.storage import default_storage as default_storage_original
