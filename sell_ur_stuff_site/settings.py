@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 import dj_database_url  # For Heroku deployment
+import stripe  # For Stripe API
 
 load_dotenv()
 
