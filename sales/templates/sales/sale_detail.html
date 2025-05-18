@@ -1,107 +1,177 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}{{ sale.title }} - Sell Your Stuff{% endblock title %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block title %}{{ sale.title }} -
+Sell Your Stuff{% endblock title %} {% block content %}
 <div class="container mt-5 sale-detail-container">
-    <!-- Header -->
-    <div class="row justify-content-center mb-4 animate__animated animate__fadeIn">
-        <div class="col-lg-10">
-            <div class="card bg-dark text-light shadow-lg border-0">
-                <div class="card-body text-center p-4">
-                    <h1 class="sale-detail-title">{{ sale.title }}</h1>
-                    <p class="lead lead-secondary">Listed by {{ sale.user.username }} on {{ sale.created_at|date:"M d, Y" }}</p>
-                </div>
-            </div>
+  <!-- Header -->
+  <div
+    class="row justify-content-center mb-4 animate__animated animate__fadeIn">
+    <div class="col-lg-10">
+      <div class="card bg-dark text-light shadow-lg border-0">
+        <div class="card-body text-center p-4">
+          <h1 class="sale-detail-title">{{ sale.title }}</h1>
+          <p class="lead lead-secondary">
+            Listed by {{ sale.user.username }} on {{ sale.created_at }}
+          </p>
+          {% if sale.status == "available" %}
+          <p class="status-message text-success">Status: Available</p>
+          {% else %}
+          <p class="status-message text-danger">Status: Sold</p>
+          {% endif %}
         </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Main Content -->
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <div class="card bg-dark text-light shadow-lg border-0 animate__animated animate__fadeInUp">
-                <div class="card-body p-5">
-                    <!-- Carousel -->
-                    {% if sale.main_image or sale.image_1 or sale.image_2 or sale.image_3 %}
-                        <div id="saleCarousel" class="carousel slide mb-5 carousel-custom" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                {% if sale.main_image %}
-                                    <div class="carousel-item active">
-                                        <img src="{{ sale.main_image.url }}" alt="{{ sale.title }}" class="d-block w-100 sale-image-listing" height="" width="">
-                                    </div>
-                                {% endif %}
-                                {% if sale.image_1 %}
-                                    <div class="carousel-item {% if not sale.main_image %}active{% endif %}">
-                                        <img src="{{ sale.image_1.url }}" alt="{{ sale.title }} - Image 1" class="d-block w-100 sale-image-listing" height="" width="">
-                                    </div>
-                                {% endif %}
-                                {% if sale.image_2 %}
-                                    <div class="carousel-item {% if not sale.main_image and not sale.image_1 %}active{% endif %}">
-                                        <img src="{{ sale.image_2.url }}" alt="{{ sale.title }} - Image 2" class="d-block w-100 sale-image-listing" height="" width="">
-                                    </div>
-                                {% endif %}
-                                {% if sale.image_3 %}
-                                    <div class="carousel-item {% if not sale.main_image and not sale.image_1 and not sale.image_2 %}active{% endif %}">
-                                        <img src="{{ sale.image_3.url }}" alt="{{ sale.title }} - Image 3" class="d-block w-100 sale-image-listing" height="" width="">
-                                    </div>
-                                {% endif %}
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#saleCarousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon carousel-control-custom" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#saleCarousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon carousel-control-custom" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    {% endif %}
-
-                    <!-- Video -->
-                    {% if sale.video %}
-                        <div class="video-container mb-5">
-                            <video controls class="sale-video">
-                                <source src="{{ sale.video.url }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                    {% endif %}
-
-                    <!-- Details -->
-                    <div class="sale-details">
-                        <p class="sale-description">{{ sale.description }}</p>
-                        <p class="sale-price">Price: <span class="price-highlight">€{{ sale.price }}</span></p>
-                        {% if highest_offer and sale.status == "available" %}
-                            <p class="highest-offer">Highest Offer: <span class="offer-highlight">€{{ highest_offer.amount }}</span></p>
-                        {% endif %}
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="sale-actions mt-4 text-center">
-                        {% if user == sale.user and sale.status == "available" %}
-                            <a href="{% url 'sale_update' sale.id %}" class="btn btn-custom btn-warning-custom me-2">Edit Listing</a>
-                            <form method="post" action="{% url 'sale_delete' sale.id %}" class="inline-form">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-custom btn-danger-custom">Delete Listing</button>
-                            </form>
-                        {% elif sale.status == "available" %}
-                            <a href="{% url 'buy_product' sale.id %}" class="btn btn-custom btn-success-custom me-2">Buy Now</a>
-                            <a href="{% url 'make_offer' sale.id %}" class="btn btn-custom btn-warning-custom">Make Offer</a>
-                        {% else %}
-                            {% if purchase %}
-                                <p class="status-message text-success">Congrats on your purchase!</p>
-                            {% elif user == sale.user %}
-                                <p class="status-message text-success">Great News! This item has sold for €{{ offer.amount }}.</p>
-                            {% else %}
-                                <p class="status-message text-muted">This item has been sold.</p>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
+ <!-- Main Content -->
+ <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div
+        class="card bg-dark text-light shadow-lg border-0 animate__animated animate__fadeInUp">
+        <div class="card-body p-5">
+          <!-- Carousel -->
+          {% if sale.main_image or sale.image_1 or sale.image_2 or sale.image_3 %}
+          <div
+            id="saleCarousel"
+            class="carousel slide mb-5 carousel-custom"
+            data-bs-ride="carousel">
+            <div class="carousel-inner">
+              {% if sale.main_image %}
+              <div class="carousel-item active">
+                <img
+                  src="{{ sale.main_image.url }}"
+                  alt="{{ sale.title }}"
+                  class="d-block w-100 sale-image-listing"
+                  height=""
+                  width="" />
+              </div>
+              {% endif %} {% if sale.image_1 %}
+              <div
+                class="carousel-item {% if not sale.main_image %}active{% endif %}">
+                <img
+                  src="{{ sale.image_1.url }}"
+                  alt="{{ sale.title }} - Image 1"
+                  class="d-block w-100 sale-image-listing"
+                  height=""
+                  width="" />
+              </div>
+              {% endif %} {% if sale.image_2 %}
+              <div
+                class="carousel-item {% if not sale.main_image and not sale.image_1 %}active{% endif %}">
+                <img
+                  src="{{ sale.image_2.url }}"
+                  alt="{{ sale.title }} - Image 2"
+                  class="d-block w-100 sale-image-listing"
+                  height=""
+                  width="" />
+              </div>
+              {% endif %} {% if sale.image_3 %}
+              <div
+                class="carousel-item {% if not sale.main_image and not sale.image_1 and not sale.image_2 %}active{% endif %}">
+                <img
+                  src="{{ sale.image_3.url }}"
+                  alt="{{ sale.title }} - Image 3"
+                  class="d-block w-100 sale-image-listing"
+                  height=""
+                  width="" />
+              </div>
+              {% endif %}
             </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#saleCarousel"
+              data-bs-slide="prev">
+              <span
+                class="carousel-control-prev-icon carousel-control-custom"
+                aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#saleCarousel"
+              data-bs-slide="next">
+              <span
+                class="carousel-control-next-icon carousel-control-custom"
+                aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          {% endif %}
+
+          <!-- Video -->
+          {% if sale.video %}
+          <div class="video-container mb-5">
+            <video controls class="sale-video">
+              <source src="{{ sale.video.url }}" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          {% endif %}
+
+          <!-- Details -->
+          <div class="sale-details">
+            <p class="sale-description">{{ sale.description }}</p>
+            <p class="sale-price">
+              Price: <span class="price-highlight">€{{ sale.price }}</span>
+            </p>
+            {% if highest_offer and sale.status == "available" %}
+            <p class="highest-offer">
+              Highest Offer:
+              <span class="offer-highlight">€{{ highest_offer.amount }}</span>
+            </p>
+            {% endif %}
+          </div>
+
+          <!-- Actions -->
+          <div class="sale-actions mt-4 text-center">
+            {% if user == sale.user and sale.status == "available" %}
+            <a
+              href="{% url 'sale_update' sale.id %}"
+              class="btn btn-custom btn-warning-custom me-2"
+              >Edit Listing</a
+            >
+            <form
+              method="post"
+              action="{% url 'sale_delete' sale.id %}"
+              class="inline-form">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-custom btn-danger-custom">
+                Delete Listing
+              </button>
+            </form>
+            {% elif sale.status == "available" %}
+            <a
+              href="{% url 'buy_product' sale.id %}"
+              class="btn btn-custom btn-success-custom me-2"
+              >Buy Now</a
+            >
+            <a
+              href="{% url 'make_offer' sale.id %}"
+              class="btn btn-custom btn-warning-custom"
+              >Make Offer</a
+            >
+            {% else %} {% if purchase %}
+            <p class="status-message text-success">
+              Congrats on your purchase!
+            </p>
+            {% elif user == sale.user %}
+            <p class="status-message text-success">
+              Great News! This item has sold for €{{ offer.amount }}.
+            </p>
+            {% else %}
+            <p class="status-message text-muted">This item has been sold.</p>
+            {% endif %} {% endif %}
+          </div>
         </div>
+      </div>
+      <!-- Back to Market Button - Placed after the card, within the same column -->
+      <div class="text-center mt-4">
+        <a href="{% url 'market_list' %}" class="btn btn-outline-light btn-sm">
+          <i class="fas fa-arrow-left me-2"></i>Back to Market
+        </a>
+      </div>
     </div>
+  </div>
 </div>
 
 {% endblock content %}
