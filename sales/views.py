@@ -199,7 +199,8 @@ def make_offer(request, sale_id):
             offer.save()
             Notification.objects.create(
                 user=sale.user,
-                message=f"New offer of €{offer.amount} on your item '{sale.title}' from {request.user.username}!",
+                message=f"New offer of €{offer.amount} 
+                on your item '{sale.title}' from {request.user.username}!",
             )
             return redirect("sale_detail", sale_id=sale.id)
     else:
@@ -401,7 +402,8 @@ def offer_payment_success(request):
     # Notify the seller
     Notification.objects.create(
         user=sale.user,
-        message=f"Your item '{sale.title}' has been sold for €{offer.amount} to {request.user.username}.",
+        message=f"Your item '{sale.title}' 
+        has been sold for €{offer.amount} to {request.user.username}.",
     )
 
     messages.success(
@@ -448,7 +450,8 @@ def payment_result(request):
             # Notify the seller
             Notification.objects.create(
                 user=sale.user,
-                message=f"Your item '{sale.title}' has been sold for €{offer.amount} to {request.user.username}.",
+                message=f"Your item '{sale.title}' 
+                has been sold for €{offer.amount} to {request.user.username}.",
             )
 
             messages.success(
