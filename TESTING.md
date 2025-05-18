@@ -213,6 +213,6 @@ This section outlines some of the key issues encountered and resolved for the re
   
 7.  **Admin Panel Registration (Addressing Assessor Feedback LO1):**
 *   **Symptom/Feedback:** "Furthermore those models present in the sales app have not been registered on the admin panel. Ensure to do so."
-*   **Fix:** In `sales/admin.py`, imported the `Sale`, `Offer`, and `Purchase` models and registered them using `admin.site.register()`. This allows for easier management of these models through the Django admin interface.
+*   **Fix:** In `sales/admin.py`, imported the `Sale` and `Offer` models and registered them using `admin.site.register()`. This allows for easier management of these models through the Django admin interface.
 
 This summary documents the troubleshooting process and key fixes applied to the project.
