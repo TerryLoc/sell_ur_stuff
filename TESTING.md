@@ -176,3 +176,43 @@ The goal was to ensure that Django uses `CustomS3Boto3Storage` (configured to up
 ---
 
 This section provides a clear, tabular breakdown of the process, making it easy to follow the debugging and resolution steps.
+
+
+---------------------------------------
+---------------------------------------
+
+## Resubmission Summary
+
+This section outlines some of the key issues encountered and resolved for the resubmission.
+
+### Resolved Issues:
+
+1.  **Stripe API Authentication (Heroku):**
+    *   **Symptom:** `stripe._error.AuthenticationError: Invalid API Key provided` in Heroku logs.
+    *   **Fix:** Ensured `STRIPE_SECRET_KEY` was correctly set as a Heroku Config Var and that `stripe.api_key = os.getenv("STRIPE_SECRET_KEY")` (or `settings.STRIPE_SECRET_KEY`) was being initialized in `settings.py` before any Stripe API calls.
+
+2.  **Gunicorn Worker Boot Failure (Heroku):**
+    *   **Symptom:** `gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>` in Heroku logs.
+    *   **Fix:** Added `import stripe` at the top of `sell_ur_stuff_site/settings.py` to resolve a `NameError` during app startup.
+
+3.  **Local Development Server - `ModuleNotFoundError`:**
+    *   **Symptom:** `ModuleNotFoundError: No module named 'dotenv'` when running `python manage.py runserver`.
+    *   **Fix:** Ensured the project's virtual environment (`.venv`) was activated in the terminal session before running Django management commands. The venv was located at `../.venv/` relative to the `sell_ur_stuff` project directory.
+
+4.  **Django Template Syntax Error:**
+    *   **Symptom:** `TemplateSyntaxError: Invalid block tag ... expected 'endblock'. Did you forget to register or load this tag?` pointing to an `{% endif %}`.
+    *   **Fix:** Identified and added a missing `{% endif %}` tag for an `{% if highest_offer and sale.status == "available" %}` block within `sales/templates/sales/sale_detail.html`.
+
+5.  **VS Code Python Interpreter Resolution:**
+    *   **Symptom:** VS Code error `Failed to resolve env "/path/to/project/sell_ur_stuff/.venv/bin/python"`.
+    *   **Fix:** Corrected the Python interpreter path in VS Code settings to point to the actual virtual environment location (`/Users/terryloughran/vs-projects-code-ins/.venv/bin/python`) which was one level above the Django project directory.
+
+6.  **Heroku Python Version Warning:**
+    *   **Symptom:** Heroku build log warning: `No Python version was specified`.
+    *   **Fix:** Created a `.python-version` file in the project root directory with the content `3.13` to explicitly specify the Python version for Heroku builds.
+  
+7.  **Admin Panel Registration (Addressing Assessor Feedback LO1):**
+*   **Symptom/Feedback:** "Furthermore those models present in the sales app have not been registered on the admin panel. Ensure to do so."
+*   **Fix:** In `sales/admin.py`, imported the `Sale`, `Offer`, and `Purchase` models and registered them using `admin.site.register()`. This allows for easier management of these models through the Django admin interface.
+
+This summary documents the troubleshooting process and key fixes applied to the project.
